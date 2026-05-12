@@ -121,6 +121,16 @@ bool Window::release()
 	return true;
 }
 
+void Window::onCreate()
+{
+
+}
+
+void Window::onUpdate()
+{
+
+}
+
 void Window::onDestroy()
 {
 	m_isRunning = false;
