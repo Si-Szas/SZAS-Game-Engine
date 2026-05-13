@@ -1,10 +1,10 @@
-#include <DX3D/All.h>
+#include <SZAS/All.h>
 
 int main()
 {
 	try
 	{
-		dx3d::Game game{};
+		szas::Game game({szas::Logger::LogLevel::Information});
 		game.run();
 	} //Catch runtime errors
 	catch(const std::runtime_error&)

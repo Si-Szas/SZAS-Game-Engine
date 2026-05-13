@@ -1,14 +1,15 @@
 #pragma once
-#include <DX3D/Core/Base.h>
+#include <SZAS/Core/Base.h>
+#include <SZAS/Core/Common.h>
 
-namespace dx3d
+namespace szas
 {
 	//Follows RAII. Resources acquired during initialization and released during destruction.
 	class Window : public Base
 	{
 		public:
 			//CONSTRUCTOR
-			Window();
+			explicit Window(const WindowDescriptor& descriptor);
 			//DESTRUCTOR
 			virtual ~Window() override;
 

@@ -73,12 +73,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>Bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>DX3D/Include;DX3D/Source;$(IncludePath)</IncludePath>
+    <IncludePath>SZAS/Include;SZAS/Source;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>Bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>DX3D/Include;DX3D/Source;$(IncludePath)</IncludePath>
+    <IncludePath>SZAS/Include;SZAS/Source;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -118,6 +118,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,21 +135,29 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DX3D\Source\DX3D\Core\Base.cpp" />
-    <ClCompile Include="DX3D\Source\DX3D\Game\Game.cpp" />
-    <ClCompile Include="DX3D\Source\DX3D\Game\Win32\Win32Game.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Core\Logger.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\RenderSystem.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Core\Base.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Game\Game.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Game\Win32\Win32Game.cpp" />
     <ClCompile Include="Game\main.cpp" />
-    <ClCompile Include="DX3D\Source\DX3D\Window\Win32\Win32Window.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Window\Win32\Win32Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DX3D\Include\DX3D\All.h" />
-    <ClInclude Include="DX3D\Include\DX3D\Core\Base.h" />
-    <ClInclude Include="DX3D\Include\DX3D\Core\Core.h" />
-    <ClInclude Include="DX3D\Include\DX3D\Window\Window.h" />
-    <ClInclude Include="DX3D\Include\DX3D\Game\Game.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Core\Common.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Core\Logger.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\RenderSystem.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Graphics\GraphicsEngine.h" />
+    <ClInclude Include="SZAS\Include\SZAS\All.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Core\Base.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Core\Core.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Window\Window.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Game\Game.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,4 +2,4 @@
 
 #pragma once
 
-#include <DX3D/Game/Game.h>
+#include <SZAS/Game/Game.h>

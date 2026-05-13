@@ -1,13 +1,14 @@
 #pragma once
-#include <DX3D/Core/Base.h>
-#include <DX3D/Core/Core.h>
+#include <SZAS/Core/Base.h>
+#include <SZAS/Core/Core.h>
 
-namespace dx3d{
+namespace szas
+{
 	class Game : public Base
 	{
 		public:
 			//CONSTRUCTOR
-			Game();
+			explicit Game(const GameDescriptor& descriptor);
 
 			//FUNCTIONS
 				//final is used to indicate that run cannot be further overwritten or inherited
@@ -17,6 +18,9 @@ namespace dx3d{
 			virtual ~Game() override;
 
 		private:
+			std::unique_ptr<Logger> m_loggerPtr{};
+			//Last defined attirbute is first to be allocated, so we want our window to be first
+			std::unique_ptr<GraphicsEngine> m_graphicsEngine{};
 			//Using smart pointers avoid memory leaks in case a pointer is not deleted
 			std::unique_ptr <Window> m_display{};
 			//Game loop is running

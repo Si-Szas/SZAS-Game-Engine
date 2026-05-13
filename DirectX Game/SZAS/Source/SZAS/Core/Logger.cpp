@@ -1,0 +1,26 @@
+#include <SZAS/Core/Logger.h>
+#include <iostream>
+
+szas::Logger::Logger(LogLevel logLevel): m_logLevel(logLevel)
+{
+	std::clog << "| Szas | DirectX C++ Game Engine |\n";
+	std::clog << "|--------------------------------|\n\n";
+}
+
+void szas::Logger::log(LogLevel level, const char* message) const
+{
+	//Lambda function to convert log level to string
+	auto logLevelToString = [](LogLevel level) {
+		switch (level) {
+			case LogLevel::Error: return "LOG ERROR";
+			case LogLevel::Warning: return "LOG Warning";
+			case LogLevel::Information: return "LOG Information";
+			default: return "Unknown";
+		}
+	};
+
+	//If level is set to error, print all error messages
+	//Information should get all types of messages
+	if (level > m_logLevel) return;
+	std::clog << "[SZAS " << logLevelToString(level) << "]: " << message << "\n";
+}
