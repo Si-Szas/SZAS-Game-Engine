@@ -1,4 +1,5 @@
 #include <SZAS/Graphics/RenderSystem.h>
+#include <SZAS/Graphics/GraphicsLogUtility.h>
 
 szas::RenderSystem::RenderSystem(const RenderSystemDescriptor& descriptor): Base(descriptor.base)
 {
@@ -11,7 +12,7 @@ szas::RenderSystem::RenderSystem(const RenderSystemDescriptor& descriptor): Base
 	#endif
 
 	//Creates D3D11 Device to allow us to render graphics in the window
-	auto hr = D3D11CreateDevice
+	SZASGraphicsLogErrorAndThrow(D3D11CreateDevice
 	(
 		//INPUT PARAMETERS--------
 		NULL,						//DXGI Adapter (Adapter installed on the system)
@@ -25,13 +26,10 @@ szas::RenderSystem::RenderSystem(const RenderSystemDescriptor& descriptor): Base
 		&m_d3dDevice,				//Visual GPU to manage GPU-related resources
 		&featureLevel,				//Feature Level chosen internally
 		&m_d3dContext				//Device context
-	);
+	), 
+		//Error if initialization failed
+		"Direct3D11 initialization failed.");
 
-	if (FAILED(hr)) 
-	{
-		getLogger().log(Logger::LogLevel::Error, "Direct3D11 initialization failed.");
-		throw std::runtime_error("[ERROR] Direct3D11 initialization failed.");
-	}
 }
 
 szas::RenderSystem::~RenderSystem()

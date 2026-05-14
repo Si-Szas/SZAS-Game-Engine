@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="SZAS\Include\SZAS\Core\Common.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Logger.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsLogUtility.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\RenderSystem.h" />
     <ClInclude Include="SZAS\Include\SZAS\Graphics\GraphicsEngine.h" />
     <ClInclude Include="SZAS\Include\SZAS\All.h" />
