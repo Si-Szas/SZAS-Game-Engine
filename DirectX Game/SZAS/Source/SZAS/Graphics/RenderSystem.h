@@ -22,5 +22,11 @@ namespace szas
 			Microsoft::WRL::ComPtr<ID3D11Device> m_d3dDevice{};
 			//Device object
 			Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_d3dContext{};
+			//Pointer to IDXGI Device
+			Microsoft::WRL::ComPtr<IDXGIDevice> m_dxgiDevice{};
+			//Pointer to IDXGI Device
+			Microsoft::WRL::ComPtr<IDXGIAdapter> m_dxgiAdapter{};
+			// Factory to let us create DXGI Resources like a Swap Chain
+			Microsoft::WRL::ComPtr<IDXGIFactory> m_dxgiFactory{};
 	};
 }

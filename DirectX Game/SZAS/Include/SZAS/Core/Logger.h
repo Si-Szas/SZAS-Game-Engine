@@ -25,6 +25,12 @@ namespace szas{
 		
 	};
 	
+	#define SZASLogInformation(message)\
+		getLogger().log((Logger::LogLevel::Information), message);
+
+	#define SZASLogWarning(message)\
+		getLogger().log((Logger::LogLevel::Warning), message);
+
 	//Macro to log error messages
 	#define SZASLogError(message)\
 		getLogger().log((Logger::LogLevel::Error), message);

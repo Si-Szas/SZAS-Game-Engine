@@ -29,7 +29,21 @@ szas::RenderSystem::RenderSystem(const RenderSystemDescriptor& descriptor): Base
 	), 
 		//Error if initialization failed
 		"Direct3D11 initialization failed.");
-
+	//Ask object if it supports an interface, and if so, return a pointer to that interface
+	SZASGraphicsLogErrorAndThrow(
+		m_d3dDevice->QueryInterface(IID_PPV_ARGS(&m_dxgiDevice)),
+		"QueryInterface() failed to retrieve IDXGI Device."
+	);
+	//We have access now to DXGI through the device, so we now need to get the adapter
+	SZASGraphicsLogErrorAndThrow(
+		m_dxgiDevice->GetParent(IID_PPV_ARGS(&m_dxgiAdapter)),
+		"GetParent() failed to retrieve IDXGI Adapter."
+	);
+	//Call get Parent on Adapter to get the Factory
+	SZASGraphicsLogErrorAndThrow(
+		m_dxgiAdapter->GetParent(IID_PPV_ARGS(&m_dxgiFactory)),
+		"GetParent() failed to retrieve IDXGI Factory."
+	);
 }
 
 szas::RenderSystem::~RenderSystem()
