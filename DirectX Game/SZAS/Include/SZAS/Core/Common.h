@@ -1,6 +1,7 @@
 #pragma once
 #include <SZAS/Core/Core.h>
 #include <SZAS/Core/Logger.h>
+#include <SZAS/Math/Rect.h>
 
 namespace szas 
 {
@@ -13,6 +14,13 @@ namespace szas
 	struct WindowDescriptor
 	{
 		BaseDescriptor base;
+		Rect size{};
+	};
+
+	struct DisplayDescriptor
+	{
+		WindowDescriptor window;
+		RenderSystem& renderSystem;
 	};
 
 	struct GraphicsEngineDescriptor 
@@ -25,8 +33,15 @@ namespace szas
 		BaseDescriptor base;
 	};
 
+	struct SwapChainDescriptor
+	{
+		void* windowHandle{};
+		Rect windowSize{};
+	};
+
 	struct GameDescriptor
 	{
+		Rect windowSize{ 1280, 720 };
 		Logger::LogLevel logLevel = Logger::LogLevel::Error;
 	};
 }

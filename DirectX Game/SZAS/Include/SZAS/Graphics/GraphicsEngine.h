@@ -11,12 +11,15 @@ namespace szas
 			//CONSTRUCTOR
 			explicit GraphicsEngine(const GraphicsEngineDescriptor& descriptor);
 
+			//FUNCTIONS
+			RenderSystem& getRenderSystem() const noexcept;
+			
 			//DESTRUCTOR
 			virtual ~GraphicsEngine() override;
 
 		private:
 			//Define a smart pointer to a render system variable of class Render System
-			std::unique_ptr<RenderSystem> m_renderSystem{};
+			std::shared_ptr<RenderSystem> m_renderSystem{};
 	};
 }
 

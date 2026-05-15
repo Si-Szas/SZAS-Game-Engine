@@ -13,7 +13,8 @@ namespace szas
 			//DESTRUCTOR
 			virtual ~Window() override;
 
-		private:
+		protected:
 			void* m_handle{}; //Void pointer to not expose public header files
+			Rect m_size{};
 	};
 }

@@ -110,7 +110,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -127,7 +127,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\Game\Display.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\SwapChain.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Core\Logger.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\RenderSystem.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.cpp" />
@@ -149,6 +151,10 @@
     <ClCompile Include="SZAS\Source\SZAS\Window\Win32\Win32Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Include\SZAS\Game\Display.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Math\Rect.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsResource.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\SwapChain.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Common.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Logger.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsLogUtility.h" />

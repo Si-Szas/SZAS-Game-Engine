@@ -22,7 +22,7 @@ namespace szas
 			//Last defined attirbute is first to be allocated, so we want our window to be first
 			std::unique_ptr<GraphicsEngine> m_graphicsEngine{};
 			//Using smart pointers avoid memory leaks in case a pointer is not deleted
-			std::unique_ptr <Window> m_display{};
+			std::unique_ptr <Display> m_display{};
 			//Game loop is running
 			bool m_isRunning{ true };
 	};

@@ -39,6 +39,12 @@
     <ClCompile Include="SZAS\Source\SZAS\Core\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\SwapChain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\Game\Display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SZAS\Include\SZAS\Core\Base.h">
@@ -69,6 +75,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsLogUtility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\SwapChain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\Math\Rect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\Game\Display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

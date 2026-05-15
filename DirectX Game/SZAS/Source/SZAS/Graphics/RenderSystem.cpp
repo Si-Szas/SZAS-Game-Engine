@@ -1,5 +1,6 @@
 #include <SZAS/Graphics/RenderSystem.h>
 #include <SZAS/Graphics/GraphicsLogUtility.h>
+#include <SZAS/Graphics/SwapChain.h>
 
 szas::RenderSystem::RenderSystem(const RenderSystemDescriptor& descriptor): Base(descriptor.base)
 {
@@ -48,4 +49,16 @@ szas::RenderSystem::RenderSystem(const RenderSystemDescriptor& descriptor): Base
 
 szas::RenderSystem::~RenderSystem()
 {
+}
+
+szas::SwapChainPtr szas::RenderSystem::createSwapChain(const SwapChainDescriptor& descriptor) const
+{
+	//You can use using namespace szas but it should only be in cpp files and only if necessary
+	return std::make_shared<SwapChain>(descriptor, getGraphicsResourceDescriptor());
+}
+
+szas::GraphicsResourceDescriptor szas::RenderSystem::getGraphicsResourceDescriptor() const noexcept
+{
+	return { {m_logger}, shared_from_this(), *m_d3dDevice.Get(), *m_dxgiFactory.Get()};
+
 }

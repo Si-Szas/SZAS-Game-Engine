@@ -1,4 +1,5 @@
 #pragma once
+#include <SZAS/Graphics/GraphicsResource.h>
 #include <SZAS/Core/Common.h>
 #include <SZAS/Core/Core.h>
 #include <SZAS/Core/Base.h>
@@ -7,14 +8,20 @@
 
 namespace szas 
 {
-	class RenderSystem final: public Base
+	class RenderSystem final: public Base, public std::enable_shared_from_this<RenderSystem>
 	{
 		public:
 			//CONSTRUCTOR
 			explicit RenderSystem(const RenderSystemDescriptor& descriptor);
+			
+			//FUNCTIONS
+			SwapChainPtr createSwapChain(const SwapChainDescriptor& descriptor) const;
 			//DESTRUCTOR
 			virtual ~RenderSystem() override;
-
+			
+		private:
+			GraphicsResourceDescriptor getGraphicsResourceDescriptor() const noexcept;
+			
 		private:
 			//We cannot use smart pointers for D3D Devices. Instead we use Com Objects
 			//Use reference counting for memory management. Counts how many references or owners point to it.
