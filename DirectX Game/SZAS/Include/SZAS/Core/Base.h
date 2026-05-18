@@ -12,7 +12,7 @@ namespace szas
 
 			//DESTRUCTOR
 			virtual ~Base();
-			virtual Logger& getLogger() const noexcept final;
+			virtual Logger& GetLogger() noexcept final;
 	
 		protected:
 			//RULE OF 5, prevents the copying of shallow-level data of a window (or anything) to a variable of the same type

@@ -8,8 +8,17 @@ namespace szas
 		public:
 			//CONSTRUCTOR
 			explicit SwapChain(const SwapChainDescriptor& swapChainDescriptor, const GraphicsResourceDescriptor& graphicsResourceDescriptor);
-	
+		
+			//FUNCTIONS
+			void Present(bool vsync = false);
+	private:
+			//FUNCTIONS
+			void ReloadBuffers();
+
 		private:
-			Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain;
+			Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain{};
+			Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView{};
+	
+			friend class DeviceContext;
 	};
 }

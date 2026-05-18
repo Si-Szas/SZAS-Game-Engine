@@ -139,10 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\DeviceContext.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Game\Display.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\SwapChain.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Core\Logger.cpp" />
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\RenderSystem.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Core\Base.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Game\Game.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="SZAS\Source\SZAS\Window\Win32\Win32Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\DeviceContext.h" />
     <ClInclude Include="SZAS\Include\SZAS\Game\Display.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Rect.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsResource.h" />
@@ -158,13 +160,14 @@
     <ClInclude Include="SZAS\Include\SZAS\Core\Common.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Logger.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsLogUtility.h" />
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\RenderSystem.h" />
-    <ClInclude Include="SZAS\Include\SZAS\Graphics\GraphicsEngine.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsDevice.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.h" />
     <ClInclude Include="SZAS\Include\SZAS\All.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Base.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Core.h" />
     <ClInclude Include="SZAS\Include\SZAS\Window\Window.h" />
     <ClInclude Include="SZAS\Include\SZAS\Game\Game.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Math\Vec4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

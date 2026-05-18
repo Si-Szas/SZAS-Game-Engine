@@ -9,6 +9,9 @@ namespace szas
 			//CONSTRUCTOR
 			explicit Display(const DisplayDescriptor& descriptor);
 
+			//GETTER
+			SwapChain& GetSwapChain() noexcept;
+
 		private:
 			SwapChainPtr m_swapChain{};
 	};

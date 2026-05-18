@@ -17,7 +17,17 @@ namespace szas{
 
 			//Log Method
 			//const tells function that the function doesn't alter state of the class
-			void log(LogLevel level, const char* message) const;
+			void Log(LogLevel level, const char* message);
+
+			//DESTRUCTOR
+			~Logger();
+
+		protected:
+			//Never be possible to replace a log instance with a new one
+			Logger(const Logger&) = delete;
+			Logger(Logger&&) = delete;
+			Logger& operator = (const Logger&) = delete;
+			Logger& operator = (Logger&&) = delete;
 
 		private:
 			LogLevel m_logLevel = LogLevel::Error;
@@ -26,14 +36,14 @@ namespace szas{
 	};
 	
 	#define SZASLogInformation(message)\
-		getLogger().log((Logger::LogLevel::Information), message);
+		GetLogger().Log((Logger::LogLevel::Information), message);
 
 	#define SZASLogWarning(message)\
-		getLogger().log((Logger::LogLevel::Warning), message);
+		GetLogger().Log((Logger::LogLevel::Warning), message);
 
 	//Macro to log error messages
 	#define SZASLogError(message)\
-		getLogger().log((Logger::LogLevel::Error), message);
+		GetLogger().Log((Logger::LogLevel::Error), message);
 		//Place enumeration in () to avoid errors
 
 	//Create a macro using the defined preprocesser directive

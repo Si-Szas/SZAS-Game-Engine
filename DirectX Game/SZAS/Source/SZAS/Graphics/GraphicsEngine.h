@@ -12,14 +12,18 @@ namespace szas
 			explicit GraphicsEngine(const GraphicsEngineDescriptor& descriptor);
 
 			//FUNCTIONS
-			RenderSystem& getRenderSystem() const noexcept;
+				GraphicsDevice& GetGraphicsDevice() noexcept;
 			
+			//RENDER
+			void Render(SwapChain& swapChain); //Important for rendering objects to the screen (app window)
+
 			//DESTRUCTOR
 			virtual ~GraphicsEngine() override;
 
 		private:
 			//Define a smart pointer to a render system variable of class Render System
-			std::shared_ptr<RenderSystem> m_renderSystem{};
+			std::shared_ptr<GraphicsDevice> m_graphicsDevice{};
+			DeviceContextPtr m_deviceContext{};
 	};
 }
 

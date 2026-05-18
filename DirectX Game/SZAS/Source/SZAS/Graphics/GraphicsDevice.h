@@ -8,19 +8,23 @@
 
 namespace szas 
 {
-	class RenderSystem final: public Base, public std::enable_shared_from_this<RenderSystem>
+	class GraphicsDevice final: public Base, public std::enable_shared_from_this<GraphicsDevice>
 	{
 		public:
 			//CONSTRUCTOR
-			explicit RenderSystem(const RenderSystemDescriptor& descriptor);
+			explicit GraphicsDevice(const GraphicsDeviceDescriptor& descriptor);
 			
 			//FUNCTIONS
-			SwapChainPtr createSwapChain(const SwapChainDescriptor& descriptor) const;
+			SwapChainPtr CreateSwapChain(const SwapChainDescriptor& descriptor) const;
+			DeviceContextPtr CreateDeviceContext();
+			
+			void ExecuteCommandList(DeviceContext& context);
+
 			//DESTRUCTOR
-			virtual ~RenderSystem() override;
+			virtual ~GraphicsDevice() override;
 			
 		private:
-			GraphicsResourceDescriptor getGraphicsResourceDescriptor() const noexcept;
+			GraphicsResourceDescriptor GetGraphicsResourceDescriptor() const noexcept;
 			
 		private:
 			//We cannot use smart pointers for D3D Devices. Instead we use Com Objects

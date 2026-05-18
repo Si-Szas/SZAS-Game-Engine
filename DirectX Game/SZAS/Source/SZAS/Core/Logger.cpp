@@ -7,7 +7,7 @@ szas::Logger::Logger(LogLevel logLevel): m_logLevel(logLevel)
 	std::clog << "|--------------------------------|\n\n";
 }
 
-void szas::Logger::log(LogLevel level, const char* message) const
+void szas::Logger::Log(LogLevel level, const char* message)
 {
 	//Lambda function to convert log level to string
 	auto logLevelToString = [](LogLevel level) {
@@ -23,4 +23,8 @@ void szas::Logger::log(LogLevel level, const char* message) const
 	//Information should get all types of messages
 	if (level > m_logLevel) return;
 	std::clog << "[SZAS " << logLevelToString(level) << "]: " << message << "\n";
+}
+
+szas::Logger::~Logger()
+{
 }

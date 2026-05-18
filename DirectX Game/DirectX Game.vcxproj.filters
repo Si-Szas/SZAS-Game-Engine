@@ -33,7 +33,7 @@
     <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\RenderSystem.cpp">
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsDevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SZAS\Source\SZAS\Core\Logger.cpp">
@@ -43,6 +43,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SZAS\Source\SZAS\Game\Display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\DeviceContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,10 +65,10 @@
     <ClInclude Include="SZAS\Include\SZAS\All.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Include\SZAS\Graphics\GraphicsEngine.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\RenderSystem.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\Core\Logger.h">
@@ -87,6 +90,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\Game\Display.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\DeviceContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\Math\Vec4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

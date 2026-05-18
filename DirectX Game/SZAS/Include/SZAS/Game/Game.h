@@ -12,10 +12,13 @@ namespace szas
 
 			//FUNCTIONS
 				//final is used to indicate that run cannot be further overwritten or inherited
-			virtual void run() final;
+			virtual void Run() final;
 
 			//DESTRUCTOR
 			virtual ~Game() override;
+
+		private:
+			void OnInternalUpdate(); //Act as a callback where we can place all the code that we need to execute each frame
 
 		private:
 			std::unique_ptr<Logger> m_loggerPtr{};

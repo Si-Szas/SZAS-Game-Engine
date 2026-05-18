@@ -1,15 +1,37 @@
 #include <SZAS/Graphics/GraphicsEngine.h>
-#include <SZAS/Graphics/RenderSystem.h>
+#include <SZAS/Graphics/GraphicsDevice.h>
+#include <SZAS/Graphics/DeviceContext.h>
+#include <SZAS/Graphics/SwapChain.h>
 
 szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor) : Base(descriptor.base)
 {
-	m_renderSystem = std::make_shared<RenderSystem>(RenderSystemDescriptor{ m_logger });
+	m_graphicsDevice = std::make_shared<GraphicsDevice>(GraphicsDeviceDescriptor{ m_logger });
+
+	//Creates the deferred device context
+	auto& device = *m_graphicsDevice;
+	m_deviceContext = device.CreateDeviceContext();
 }
 
-szas::RenderSystem& szas::GraphicsEngine::getRenderSystem() const noexcept
+szas::GraphicsDevice& szas::GraphicsEngine::GetGraphicsDevice() noexcept
 {
 	//Using * on a unique pointer gives us a non null reference
-	return *m_renderSystem;
+	return *m_graphicsDevice;
+}
+
+void szas::GraphicsEngine::Render(SwapChain& swapChain)
+{
+	auto& context = *m_deviceContext;
+	//We want to first clear the buffer, then after rendering on a back buffer, we want to move that back to the front buffer
+	context.ClearAndSetBackBuffer(swapChain, {0.529, 0.18, 0.749, 1});
+	//Record render command that clears content of back buffer and binds it so we can render elements onto it
+	
+	//Allow the GPU to execute the list of commands recorded by the device context in order to finally render something to the back buffer
+	auto& device = *m_graphicsDevice;
+	//Pass device context where we will extract the commands from
+	device.ExecuteCommandList(context);
+
+	//Present our back buffer with its rendered content on the window
+	swapChain.Present();
 }
 
 szas::GraphicsEngine::~GraphicsEngine()

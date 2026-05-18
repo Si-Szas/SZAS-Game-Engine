@@ -3,7 +3,7 @@
 
 namespace szas 
 {
-	#define SZASGraphicsLogErrorAndThrow(hr, message)\
+	#define SZASGraphicsLogThrowOnFail(hr, message)\
 	{\
 		auto res = (hr);\
 		if(FAILED(res))\

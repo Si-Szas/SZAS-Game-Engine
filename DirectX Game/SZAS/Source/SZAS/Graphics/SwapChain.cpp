@@ -26,11 +26,48 @@ szas::SwapChain::SwapChain(const SwapChainDescriptor& swapChainDescriptor, const
 	dxgiDescriptor.Windowed = TRUE;
 
 	//Fails if we pass 0 negative values for the width or the height, which is why we use the standard max function
-	SZASGraphicsLogErrorAndThrow(m_dxgiFactory.CreateSwapChain
+	SZASGraphicsLogThrowOnFail(m_dxgiFactory.CreateSwapChain
 	(
 		&m_d3dDevice,		//Pass device, type IUknown, since it can accept multiple types of devices
 		&dxgiDescriptor,	//Address of swap chain descriptor
 		&m_swapChain //Retrieve output parameter, dxgi swapp chain
 	),
 		"CreateSwapChain() failed.");
+
+	//Ensures that RTV of back buffer ready to be used by Device Context
+	ReloadBuffers();
+}
+
+void szas::SwapChain::Present(bool vsync)
+{
+	SZASGraphicsLogThrowOnFail(
+	m_swapChain->Present
+	(
+		vsync,		//Synchronization interval (syncrhonizes frame presentation with monitor's vertical refresh rate
+		0			//Presentation flag
+	), "Present() failed.");
+}
+
+void szas::SwapChain::ReloadBuffers()
+{
+	//Retrieve the back buffer and 
+	// Create the render target view from it
+
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> buffer{};
+
+	//Retrieve back buffer
+	SZASGraphicsLogThrowOnFail(
+	m_swapChain->GetBuffer(
+		0,						//Buffer index, always use 0
+		IID_PPV_ARGS(&buffer)	//Pass pointer where buffer will be stored
+	), "GetBuffer() failed.");
+
+	//Create Render Target View from D3D Device
+	SZASGraphicsLogThrowOnFail(
+	m_d3dDevice.CreateRenderTargetView(
+		buffer.Get(),			//Texture resource we want to create the view from (we pass the back buffer)
+		nullptr,				//Render target view descriptor (nullptr for default)
+		&m_renderTargetView		//Pointer to receive RTV instance
+		
+	), "CreateRenderTargetView() failed.");
 }

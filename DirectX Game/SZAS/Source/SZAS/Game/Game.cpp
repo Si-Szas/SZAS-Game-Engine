@@ -9,12 +9,17 @@ szas::Game::Game(const GameDescriptor& descriptor) :
 	m_loggerPtr(&m_logger)
 {
 	m_graphicsEngine = std::make_unique<GraphicsEngine>(GraphicsEngineDescriptor{ m_logger });
-	m_display = std::make_unique<Display>(DisplayDescriptor{ {m_logger, descriptor.windowSize}, m_graphicsEngine->getRenderSystem()});
+	m_display = std::make_unique<Display>(DisplayDescriptor{ {m_logger, descriptor.windowSize}, m_graphicsEngine->GetGraphicsDevice()});
 
 	SZASLogInformation("Game successfully initialized.");
 }
 
 szas::Game::~Game()
 {
-	SZASLogInformation("Game deallocation started.");
+	SZASLogInformation("Game is shutting down...");
+}
+
+void szas::Game::OnInternalUpdate()
+{
+	m_graphicsEngine->Render(m_display->GetSwapChain());
 }

@@ -20,7 +20,7 @@ namespace szas
 	struct DisplayDescriptor
 	{
 		WindowDescriptor window;
-		RenderSystem& renderSystem;
+		GraphicsDevice& graphicsDevice;
 	};
 
 	struct GraphicsEngineDescriptor 
@@ -28,7 +28,7 @@ namespace szas
 		BaseDescriptor base;
 	};
 
-	struct RenderSystemDescriptor
+	struct GraphicsDeviceDescriptor
 	{
 		BaseDescriptor base;
 	};

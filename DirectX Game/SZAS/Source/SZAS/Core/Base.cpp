@@ -6,7 +6,7 @@ szas::Base::Base(const BaseDescriptor& descriptor): m_logger(descriptor.logger)
 
 }
 
-Logger& szas::Base::getLogger() const noexcept
+Logger& szas::Base::GetLogger() noexcept
 {
 	return m_logger;
 }

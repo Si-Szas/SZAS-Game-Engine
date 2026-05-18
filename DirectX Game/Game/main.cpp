@@ -5,7 +5,7 @@ int main()
 	try
 	{
 		szas::Game game({{1280,720}, szas::Logger::LogLevel::Information });
-		game.run();
+		game.Run();
 	} //Catch runtime errors
 	catch(const std::runtime_error&)
 	{

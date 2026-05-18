@@ -10,11 +10,13 @@ namespace szas {
 	class Game;
 	//Graphics Engine
 	class GraphicsEngine;
-	class RenderSystem;
+	class GraphicsDevice;
 	//Logger
 	class Logger;
 	//Swap Chain
 	class SwapChain;
+	//Device Context
+	class DeviceContext;
 
 	//Type Aliases
 	using i32 = int;
@@ -23,4 +25,6 @@ namespace szas {
 	using d64 = double;
 	//All resources shared by render system, and they can have multiple owners, so we can use shared pointer
 	using SwapChainPtr = std::shared_ptr<SwapChain>;
+	//Alias to device context pointer
+	using DeviceContextPtr = std::shared_ptr<DeviceContext>;
 }
