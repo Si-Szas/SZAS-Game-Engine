@@ -39,6 +39,35 @@ namespace szas
 		Rect windowSize{};
 	};
 
+	enum class ShaderType 
+	{
+		VertexShader = 0,
+		PixelShader
+	};
+
+	struct ShaderCompileDescriptor
+	{
+		//Instead of using a string, we use const char to make it ABI safe
+		//ABI is application binary interface, a structure is ABI safe if it has same memory layout and size across all major compilers
+		const char* shaderSourceName{};	//Source name of the shader
+		const void* shaderSourceCode{}; //Point to actual source code of shader
+		size_t shaderSourceCodeSize{};  //Size of the source code in bytes (use size_t) since it can be large
+		const char* shaderEntryPoint{};	//Entry point of the shader, which is a string
+		ShaderType shaderType{};		//Type of shader we are compiling
+	};
+
+	struct GraphicsPipelineStateDescriptor
+	{
+		const ShaderBinary& vertexShader;
+		const ShaderBinary& pixelShader;
+	};
+
+	struct ShaderBinaryData
+	{
+		const void* data{};
+		size_t dataSize{};
+	};
+
 	struct GameDescriptor
 	{
 		Rect windowSize{ 1280, 720 };

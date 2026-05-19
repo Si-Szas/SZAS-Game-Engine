@@ -7,7 +7,7 @@ namespace szas
 	{
 		public:
 			//CONSTRUCTOR
-			explicit SwapChain(const SwapChainDescriptor& swapChainDescriptor, const GraphicsResourceDescriptor& graphicsResourceDescriptor);
+			SwapChain(const SwapChainDescriptor& swapChainDescriptor, const GraphicsResourceDescriptor& graphicsResourceDescriptor);
 		
 			//FUNCTIONS
 			void Present(bool vsync = false);

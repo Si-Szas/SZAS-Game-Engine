@@ -3,6 +3,8 @@
 szas::SwapChain::SwapChain(const SwapChainDescriptor& swapChainDescriptor, const GraphicsResourceDescriptor& graphicsResourceDescriptor):
 	GraphicsResource(graphicsResourceDescriptor)
 {
+	if (!swapChainDescriptor.windowHandle) SZASLogThrowInvalidArgument("No Window Handle provided.");
+
 	DXGI_SWAP_CHAIN_DESC dxgiDescriptor{};
 
 	//Define attributes of buffers used by swap chain

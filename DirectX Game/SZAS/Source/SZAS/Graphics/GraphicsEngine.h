@@ -24,6 +24,7 @@ namespace szas
 			//Define a smart pointer to a render system variable of class Render System
 			std::shared_ptr<GraphicsDevice> m_graphicsDevice{};
 			DeviceContextPtr m_deviceContext{};
+			GraphicsPipelineStatePtr m_pipeline{};
 	};
 }
 

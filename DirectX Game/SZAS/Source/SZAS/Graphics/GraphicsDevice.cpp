@@ -2,6 +2,8 @@
 #include <SZAS/Graphics/GraphicsLogUtility.h>
 #include <SZAS/Graphics/SwapChain.h>
 #include <SZAS/Graphics/DeviceContext.h>
+#include <SZAS/Graphics/ShaderBinary.h>
+#include <SZAS/Graphics/GraphicsPipelineState.h>
 
 szas::GraphicsDevice::GraphicsDevice(const GraphicsDeviceDescriptor& descriptor): Base(descriptor.base)
 {
@@ -50,7 +52,7 @@ szas::GraphicsDevice::~GraphicsDevice()
 {
 }
 
-szas::SwapChainPtr szas::GraphicsDevice::CreateSwapChain(const SwapChainDescriptor& descriptor) const
+szas::SwapChainPtr szas::GraphicsDevice::CreateSwapChain(const SwapChainDescriptor& descriptor)
 {
 	//You can use using namespace szas but it should only be in cpp files and only if necessary
 	return std::make_shared<SwapChain>(descriptor, GetGraphicsResourceDescriptor());
@@ -59,6 +61,16 @@ szas::SwapChainPtr szas::GraphicsDevice::CreateSwapChain(const SwapChainDescript
 szas::DeviceContextPtr szas::GraphicsDevice::CreateDeviceContext()
 {
 	return std::make_shared<DeviceContext>(GetGraphicsResourceDescriptor());
+}
+
+szas::ShaderBinaryPtr szas::GraphicsDevice::CompileShader(const ShaderCompileDescriptor& descriptor)
+{
+	return std::make_shared<ShaderBinary>(descriptor, GetGraphicsResourceDescriptor());
+}
+
+szas::GraphicsPipelineStatePtr szas::GraphicsDevice::CreateGraphicsPipelineState(const GraphicsPipelineStateDescriptor& descriptor)
+{
+	return std::make_shared<GraphicsPipelineState>(descriptor, GetGraphicsResourceDescriptor());
 }
 
 //This function retrieves command lists, then executes it

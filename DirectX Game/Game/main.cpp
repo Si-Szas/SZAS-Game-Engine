@@ -10,6 +10,10 @@ int main()
 	catch(const std::runtime_error&)
 	{
 		return EXIT_FAILURE;
+	} //Catch any exception of type invalid argument
+	catch(const std::invalid_argument)
+	{
+		return EXIT_FAILURE;
 	} //Catch generic exceptions
 	catch (const std::exception&)
 	{

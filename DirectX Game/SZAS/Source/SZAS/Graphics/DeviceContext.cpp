@@ -1,5 +1,6 @@
 #include <SZAS/Graphics/DeviceContext.h>
 #include <SZAS/Graphics/SwapChain.h>
+#include <SZAS/Graphics/GraphicsPipelineState.h>
 
 szas::DeviceContext::DeviceContext(const GraphicsResourceDescriptor& descriptor) :
 	GraphicsResource(descriptor)
@@ -31,5 +32,23 @@ void szas::DeviceContext::ClearAndSetBackBuffer(const SwapChain& swapChain, cons
 		1,			//Number of render target views (we set all in one view, our back buffer)
 		&RTV,		//An array of pointers to the views (we simulate an array using &)
 		nullptr		//Depth Stensive View
+	);
+}
+
+void szas::DeviceContext::SetGraphicsPipelineState(const GraphicsPipelineState& pipeline)
+{
+	//Actually binds vertex shader to GPU pipeline (use this vertex shader for the next draw calls)
+	//It's like in GDGRAP1 where you had to call what shader you wanted to use before drawing specific things
+	m_context->VSSetShader(
+		pipeline.m_vertexShader.Get(),	//Get the Vertex Shader in Pipeline
+		nullptr,						//Related to dynamic shader linkage
+		0								//Related to dynamic shader linkage
+	);
+
+	//Do the same but for pixel shader
+	m_context->PSSetShader(
+		pipeline.m_pixelShader.Get(),	//Get Pixel Shader in Pipeline
+		nullptr,
+		0
 	);
 }

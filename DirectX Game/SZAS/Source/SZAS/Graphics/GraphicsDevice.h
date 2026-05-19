@@ -15,9 +15,11 @@ namespace szas
 			explicit GraphicsDevice(const GraphicsDeviceDescriptor& descriptor);
 			
 			//FUNCTIONS
-			SwapChainPtr CreateSwapChain(const SwapChainDescriptor& descriptor) const;
+			SwapChainPtr CreateSwapChain(const SwapChainDescriptor& descriptor);
 			DeviceContextPtr CreateDeviceContext();
-			
+			ShaderBinaryPtr CompileShader(const ShaderCompileDescriptor& descriptor);
+			GraphicsPipelineStatePtr CreateGraphicsPipelineState(const GraphicsPipelineStateDescriptor& descriptor);
+
 			void ExecuteCommandList(DeviceContext& context);
 
 			//DESTRUCTOR

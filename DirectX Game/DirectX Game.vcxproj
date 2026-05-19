@@ -118,7 +118,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,10 +135,12 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsPipelineState.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\ShaderBinary.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\DeviceContext.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Game\Display.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\SwapChain.cpp" />
@@ -152,6 +154,9 @@
     <ClCompile Include="SZAS\Source\SZAS\Window\Win32\Win32Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsPipelineState.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsUtility.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\ShaderBinary.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\DeviceContext.h" />
     <ClInclude Include="SZAS\Include\SZAS\Game\Display.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Rect.h" />

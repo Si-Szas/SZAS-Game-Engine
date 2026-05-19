@@ -17,6 +17,10 @@ namespace szas {
 	class SwapChain;
 	//Device Context
 	class DeviceContext;
+	//Shader Binary
+	class ShaderBinary;
+	//Graphics Pipeline State
+	class GraphicsPipelineState;
 
 	//Type Aliases
 	using i32 = int;
@@ -27,4 +31,8 @@ namespace szas {
 	using SwapChainPtr = std::shared_ptr<SwapChain>;
 	//Alias to device context pointer
 	using DeviceContextPtr = std::shared_ptr<DeviceContext>;
+	//Alias so ShaderPtr
+	using ShaderBinaryPtr = std::shared_ptr<ShaderBinary>;
+	//Graphics Pipeline State
+	using GraphicsPipelineStatePtr = std::shared_ptr<GraphicsPipelineState>;
 }

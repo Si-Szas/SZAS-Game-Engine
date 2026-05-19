@@ -34,24 +34,13 @@ namespace szas{
 	
 		
 	};
-	
-	#define SZASLogInformation(message)\
-		GetLogger().Log((Logger::LogLevel::Information), message);
-
-	#define SZASLogWarning(message)\
-		GetLogger().Log((Logger::LogLevel::Warning), message);
-
-	//Macro to log error messages
-	#define SZASLogError(message)\
-		GetLogger().Log((Logger::LogLevel::Error), message);
-		//Place enumeration in () to avoid errors
-
-	//Create a macro using the defined preprocesser directive
-	//Tells compiler to replace all instances of a specific name of a value before compilation	
-	#define SZASLogErrorAndThrow(message)\
-	{\
-		SZASLogError(message);\
-		throw std::runtime_error(message);\
-	}
-
 }
+
+#define SZASLog(logger, type, message)\
+	logger.Log((type), message)
+
+#define SZASLogThrow(logger, exception, type, message)\
+	{\
+		SZASLog(logger, type, message);\
+		throw exception(message);\
+	}
