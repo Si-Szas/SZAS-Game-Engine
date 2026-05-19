@@ -16,6 +16,30 @@ szas::GraphicsPipelineState::GraphicsPipelineState(const GraphicsPipelineStateDe
 	//Retrieve Pixel Shader Binary Data
 	auto ps = graphicsPipelineStateDescriptor.pixelShader.GetShaderData();
 
+	constexpr D3D11_INPUT_ELEMENT_DESC elements[] =
+	{	
+		{
+			"POSITION",						//Semantic name
+			0,								//Semantic index (if they share the same type)
+			DXGI_FORMAT_R32G32B32_FLOAT,	//Format of position attirbute
+			0,								//Input slot (which vertex buffer the element comes from)
+			0,								//Aligned byte offset. Byte offset from start.
+			D3D11_INPUT_PER_VERTEX_DATA,	//Input slot class attribute that specifies if a vertex attributes comes per vertex or per instance
+			0								//Instance step date attribute required for instance rendering
+		}
+	};
+
+	//Create Input Layout
+	SZASGraphicsLogThrowOnFail(
+	m_d3dDevice.CreateInputLayout
+	(
+		elements,				//Pointer to a list of D3D11 Input Elements desc objects
+		std::size(elements),	//Size of input elements
+		vs.data,				//Shader byte code. Defines vertex data structure, which is defined in vertex shader
+		vs.dataSize,
+		&m_inputLayout			//Output parameter. Input layout
+	), "CreateInputLayout() failed.");
+
 	//Get a reference to the D3D11 Device and call its CreateVertexShader
 		//This method creates a vertex shader object from bytecode (takes HLSL bytecode)
 		// Returns a d3d11 vertex shader object that can be bound to gpu pipeline)

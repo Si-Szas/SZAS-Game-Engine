@@ -11,6 +11,9 @@ namespace szas
 		
 			//FUNCTIONS
 			void Present(bool vsync = false);
+
+			//GETTER
+			Rect GetSize() const noexcept;
 	private:
 			//FUNCTIONS
 			void ReloadBuffers();
@@ -18,7 +21,8 @@ namespace szas
 		private:
 			Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain{};
 			Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView{};
-	
+			Rect m_size{};
+
 			friend class DeviceContext;
 	};
 }

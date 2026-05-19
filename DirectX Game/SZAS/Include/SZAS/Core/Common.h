@@ -68,6 +68,13 @@ namespace szas
 		size_t dataSize{};
 	};
 
+	struct VertexBufferDescriptor
+	{
+		const void* vertexList{};	//Vertex list
+		ui32 vertexListSize{};		//Size in bytes of the vertex list
+		ui32 vertexSize;			//Holds size in bytes of a single vertex
+	};
+
 	struct GameDescriptor
 	{
 		Rect windowSize{ 1280, 720 };

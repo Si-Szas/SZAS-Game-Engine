@@ -4,6 +4,7 @@
 #include <SZAS/Graphics/DeviceContext.h>
 #include <SZAS/Graphics/ShaderBinary.h>
 #include <SZAS/Graphics/GraphicsPipelineState.h>
+#include <SZAS/Graphics/VertexBuffer.h>
 
 szas::GraphicsDevice::GraphicsDevice(const GraphicsDeviceDescriptor& descriptor): Base(descriptor.base)
 {
@@ -71,6 +72,11 @@ szas::ShaderBinaryPtr szas::GraphicsDevice::CompileShader(const ShaderCompileDes
 szas::GraphicsPipelineStatePtr szas::GraphicsDevice::CreateGraphicsPipelineState(const GraphicsPipelineStateDescriptor& descriptor)
 {
 	return std::make_shared<GraphicsPipelineState>(descriptor, GetGraphicsResourceDescriptor());
+}
+
+szas::VertexBufferPtr szas::GraphicsDevice::CreateVertexBuffer(const VertexBufferDescriptor& descriptor)
+{
+	return std::make_shared<VertexBuffer>(descriptor, GetGraphicsResourceDescriptor());
 }
 
 //This function retrieves command lists, then executes it

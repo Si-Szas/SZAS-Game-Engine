@@ -1,7 +1,7 @@
 #include <SZAS/Graphics/SwapChain.h>
 
 szas::SwapChain::SwapChain(const SwapChainDescriptor& swapChainDescriptor, const GraphicsResourceDescriptor& graphicsResourceDescriptor):
-	GraphicsResource(graphicsResourceDescriptor)
+	GraphicsResource(graphicsResourceDescriptor), m_size(swapChainDescriptor.windowSize)
 {
 	if (!swapChainDescriptor.windowHandle) SZASLogThrowInvalidArgument("No Window Handle provided.");
 
@@ -48,6 +48,11 @@ void szas::SwapChain::Present(bool vsync)
 		vsync,		//Synchronization interval (syncrhonizes frame presentation with monitor's vertical refresh rate
 		0			//Presentation flag
 	), "Present() failed.");
+}
+
+szas::Rect szas::SwapChain::GetSize() const noexcept
+{
+	return m_size;
 }
 
 void szas::SwapChain::ReloadBuffers()

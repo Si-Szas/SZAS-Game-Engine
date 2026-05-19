@@ -16,23 +16,12 @@ namespace szas
 			auto errorMsg = errorBlob ? static_cast<const char*>(errorBlob->GetBufferPointer()) : nullptr;
 
 			if (FAILED(hr))
-			{
-				if (errorMsg)
-				{
-					//Log error message
-					SZASLogThrow(logger, std::runtime_error, Logger::LogLevel::Error, errorMsg);
-				}
-				else 
-				{
-					SZASLogThrow(logger, std::runtime_error, Logger::LogLevel::Error, "Shader Compilation failed.");
-				}
-			}
-
+				SZASLogThrow(logger, std::runtime_error, Logger::LogLevel::Error, errorMsg ? errorMsg : "Shader Compilation failed.");
+			
 			//If the function succeeded but there are still messages, then there are warnings
-			if(errorMsg)
-			{
+			if(errorMsg) 
 				SZASLog(logger, Logger::LogLevel::Warning, errorMsg);
-			}
+
 		}
 	}
 }

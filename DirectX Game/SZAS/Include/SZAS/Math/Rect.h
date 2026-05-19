@@ -8,8 +8,8 @@ namespace szas
 		public:
 			//Parameterless constructor with an empty body
 			Rect() = default;
-			Rect(i32 width, i32 height) : left(0), top(0), width(width), height(height) {}
-			Rect(i32 left, i32 top, i32 width, i32 height) : left(left), top(top), width(width), height(height) {}
+			Rect(i32 _width, i32 _height) : left(0), top(0), width(_width), height(_height) {}
+			Rect(i32 _left, i32 _top, i32 _width, i32 _height) : left(_left), top(_top), width(_width), height(_height) {}
 		public:
 			i32 left{}, top{}, width{}, height{};
 	};

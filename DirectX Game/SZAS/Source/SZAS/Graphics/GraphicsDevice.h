@@ -19,6 +19,7 @@ namespace szas
 			DeviceContextPtr CreateDeviceContext();
 			ShaderBinaryPtr CompileShader(const ShaderCompileDescriptor& descriptor);
 			GraphicsPipelineStatePtr CreateGraphicsPipelineState(const GraphicsPipelineStateDescriptor& descriptor);
+			VertexBufferPtr CreateVertexBuffer(const VertexBufferDescriptor& descriptor);
 
 			void ExecuteCommandList(DeviceContext& context);
 

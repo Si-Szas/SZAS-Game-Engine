@@ -152,8 +152,10 @@
     <ClCompile Include="SZAS\Source\SZAS\Game\Win32\Win32Game.cpp" />
     <ClCompile Include="Game\main.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Window\Win32\Win32Window.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Include\SZAS\Math\Vec3.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsPipelineState.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsUtility.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\ShaderBinary.h" />
@@ -173,6 +175,7 @@
     <ClInclude Include="SZAS\Include\SZAS\Window\Window.h" />
     <ClInclude Include="SZAS\Include\SZAS\Game\Game.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Vec4.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\VertexBuffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,6 +2,8 @@
 #include <SZAS/Graphics/GraphicsDevice.h>
 #include <SZAS/Graphics/DeviceContext.h>
 #include <SZAS/Graphics/SwapChain.h>
+#include <SZAS/Graphics/VertexBuffer.h>
+#include <SZAS/Math/Vec3.h>
 
 szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor) : Base(descriptor.base)
 {
@@ -15,12 +17,17 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	constexpr char shaderSourceCode[] =
 		//Row string literal, helps us define a row of strings in one
 		R"(
-			void VSMain()
+			//Define a semantic. A label that tells the GPU what the label represents and how it should be used in the pipeline
+			//Retrieve data from vertex buffer
+			float4 VSMain(float3 pos: POSITION): SV_Position
 			{
+				return float4(pos.xyz, 1.0f);
 			}
-	
-			void PSMain()
+			//Indicate the output of a pixel shader. Defines final color writes to render target
+			//Defines RGBA. This is because render target is back buffer which is in RGBA format
+			float4 PSMain(): SV_Target
 			{
+				return float4(1.0f, 1.0f , 0.0f, 1.0f);
 			}
 		)";
 
@@ -47,6 +54,22 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 
 	//Create Graphics Pipeline State
 	m_pipeline = device.CreateGraphicsPipelineState({*vs, *ps});
+
+	//Create vertex list for now
+	const Vec3 vertexList[] =
+	{
+		{-0.5f, -0.5f, 0.0f},
+		{0.0f, 0.5f, 0.0f},
+		{0.5f, -0.5f, 0.0f}
+	};
+
+	//Create Vertex Buffer and store it
+	m_vertexBuffer = device.CreateVertexBuffer
+	({
+		vertexList,					//Vertex List
+		std::size(vertexList),		//Vertex List Size
+		sizeof(Vec3)				//Vertex Size
+	});
 }
 
 szas::GraphicsDevice& szas::GraphicsEngine::GetGraphicsDevice() noexcept
@@ -65,6 +88,24 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 	//Use Pipeline
 		//Bind all objects inside graphics pipeline state (shaders) to actual GPU pipeline
 	context.SetGraphicsPipelineState(*m_pipeline);
+
+	//Call set viewport size method and retrieve size from swap chain
+	context.SetViewportSize(swapChain.GetSize());
+
+	//Bind the vertex buffer to the graphics pipeline (input assembler stage)
+		//First retieve reference to vertex buffer
+		//Then call Set Vertex to bind buffer to pipeline
+	auto& vertexBuffer = *m_vertexBuffer;
+	context.SetVertexBuffer(vertexBuffer);
+	
+	//////////// DRAW TRIANGLES ////////////
+		//Can only be called once graphics pipeline is set up. Provides all shaders
+		//Set viewport size which defines area of render target (back buffer)
+		//Bind vertex buffer to graphics pipeline, which provides vertices from which geometric shapes and raster image will be generated
+	context.DrawTriangleList(
+		vertexBuffer.GetVertexListSize(),		//Vertex List size
+		0u										//Index we want to start drawing at
+	);
 
 	//Allow the GPU to execute the list of commands recorded by the device context in order to finally render something to the back buffer
 	auto& device = *m_graphicsDevice;

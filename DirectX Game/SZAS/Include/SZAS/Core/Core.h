@@ -21,6 +21,8 @@ namespace szas {
 	class ShaderBinary;
 	//Graphics Pipeline State
 	class GraphicsPipelineState;
+	//Vertex Buffer
+	class VertexBuffer;
 
 	//Type Aliases
 	using i32 = int;
@@ -35,4 +37,6 @@ namespace szas {
 	using ShaderBinaryPtr = std::shared_ptr<ShaderBinary>;
 	//Graphics Pipeline State
 	using GraphicsPipelineStatePtr = std::shared_ptr<GraphicsPipelineState>;
+	//Vertex Buffer Pointer
+	using VertexBufferPtr = std::shared_ptr<VertexBuffer>;
 }
