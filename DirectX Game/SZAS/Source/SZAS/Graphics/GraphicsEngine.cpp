@@ -4,6 +4,7 @@
 #include <SZAS/Graphics/SwapChain.h>
 #include <SZAS/Graphics/VertexBuffer.h>
 #include <SZAS/Math/Vec3.h>
+#include <fstream>
 
 szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor) : Base(descriptor.base)
 {
@@ -13,31 +14,26 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	auto& device = *m_graphicsDevice;
 	m_deviceContext = device.CreateDeviceContext();
 
-	//Create a ShaderSourceCode using constexpr (evaluate value at compile time)
-	constexpr char shaderSourceCode[] =
-		//Row string literal, helps us define a row of strings in one
-		R"(
-			//Define a semantic. A label that tells the GPU what the label represents and how it should be used in the pipeline
-			//Retrieve data from vertex buffer
-			float4 VSMain(float3 pos: POSITION): SV_Position
-			{
-				return float4(pos.xyz, 1.0f);
-			}
-			//Indicate the output of a pixel shader. Defines final color writes to render target
-			//Defines RGBA. This is because render target is back buffer which is in RGBA format
-			float4 PSMain(): SV_Target
-			{
-				return float4(1.0f, 1.0f , 0.0f, 1.0f);
-			}
-		)";
+	//Define the Shader File Path
+		// Relative paths are relative to the root of project folder (DirectX Game Folder)
+	constexpr char shaderFilePath[] = "SZAS/Assets/Shaders/Basic.hlsl";
+	//Read the contents of the shader file
+	std::ifstream shaderStream(shaderFilePath);
+	if (!shaderStream) SZASLogThrowError("Failed to open shader file.");
+	//Retrieve file data. So calling Range would call the entire shader into a string
+	std::string shaderFileData{
+		std::istreambuf_iterator<char>(shaderStream),	//Beginning of the file
+		std::istreambuf_iterator<char>()				//Beginning of the end
+	};
 
-	constexpr char shaderSourceName[] = "Basic";
-	constexpr auto shaderSourceCodeSize = std::size(shaderSourceCode);
+	//Create a ShaderSourceCode using constexpr (evaluate value at compile time)
+	auto shaderSourceCode = shaderFileData.c_str();
+	auto shaderSourceCodeSize = shaderFileData.length();
 
 	//Call our compile shader method, pass the shader we created
 		//VERTEX SHADER
 	auto vs = device.CompileShader({
-		shaderSourceName,
+		shaderFilePath,
 		shaderSourceCode,
 		shaderSourceCodeSize,
 		"VSMain",
@@ -45,7 +41,7 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	});
 	//PIXEL SHADER
 	auto ps = device.CompileShader({
-		shaderSourceName,
+		shaderFilePath,
 		shaderSourceCode,
 		shaderSourceCodeSize,
 		"PSMain",
@@ -56,11 +52,17 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	m_pipeline = device.CreateGraphicsPipelineState({*vs, *ps});
 
 	//Create vertex list for now
-	const Vec3 vertexList[] =
+	const Vertex vertexList[] =
 	{
-		{-0.5f, -0.5f, 0.0f},
-		{0.0f, 0.5f, 0.0f},
-		{0.5f, -0.5f, 0.0f}
+		///// TRIANGLE 1 /////
+		/* V0 */ { {-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f}	},
+		/* V1 */ { {-0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f}	},
+		/* V2 */ { {0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}		},
+
+		///// TRIANGLE 2 /////
+		/* V3 */ { {0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}     },
+		/* V4 */ { {0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 1.0f, 1.0f}    },
+		/* V5 */ { {-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f}   }
 	};
 
 	//Create Vertex Buffer and store it
@@ -68,7 +70,7 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	({
 		vertexList,					//Vertex List
 		std::size(vertexList),		//Vertex List Size
-		sizeof(Vec3)				//Vertex Size
+		sizeof(Vertex)				//Vertex Size
 	});
 }
 
@@ -82,7 +84,7 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 {
 	auto& context = *m_deviceContext;
 	//We want to first clear the buffer, then after rendering on a back buffer, we want to move that back to the front buffer
-	context.ClearAndSetBackBuffer(swapChain, {0.529, 0.18, 0.749, 1});
+	context.ClearAndSetBackBuffer(swapChain, {0.251f, 0.141f, 0.31f, 1.0f});
 	//Record render command that clears content of back buffer and binds it so we can render elements onto it
 	
 	//Use Pipeline

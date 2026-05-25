@@ -16,14 +16,28 @@ szas::GraphicsPipelineState::GraphicsPipelineState(const GraphicsPipelineStateDe
 	//Retrieve Pixel Shader Binary Data
 	auto ps = graphicsPipelineStateDescriptor.pixelShader.GetShaderData();
 
+	//float3 position : POSITION0;
+	//float4 color : COLOR0;
 	constexpr D3D11_INPUT_ELEMENT_DESC elements[] =
 	{	
+		//// POSITION ATTRIBUTE ////
 		{
 			"POSITION",						//Semantic name
 			0,								//Semantic index (if they share the same type)
 			DXGI_FORMAT_R32G32B32_FLOAT,	//Format of position attirbute
 			0,								//Input slot (which vertex buffer the element comes from)
 			0,								//Aligned byte offset. Byte offset from start.
+			D3D11_INPUT_PER_VERTEX_DATA,	//Input slot class attribute that specifies if a vertex attributes comes per vertex or per instance
+			0								//Instance step date attribute required for instance rendering
+		},
+
+		//// COLOR ATTRIBUTE ////
+		{
+			"COLOR",						//Semantic name
+			0,								//Semantic index (if they share the same type)
+			DXGI_FORMAT_R32G32B32A32_FLOAT,	//Format of position attirbute
+			0,								//Input slot (which vertex buffer the element comes from)
+			12,								//Aligned byte offset. Byte offset from start. This is after the position attribute and pos is 3 floats, each 4 bytes, then 3*4
 			D3D11_INPUT_PER_VERTEX_DATA,	//Input slot class attribute that specifies if a vertex attributes comes per vertex or per instance
 			0								//Instance step date attribute required for instance rendering
 		}

@@ -1,6 +1,8 @@
 #pragma once
 #include <SZAS/Core/Core.h>
 #include <SZAS/Core/Base.h>
+#include <SZAS/Math/Vec3.h>
+#include <SZAS/Math/Vec4.h>
 
 namespace szas
 {
@@ -19,6 +21,13 @@ namespace szas
 
 			//DESTRUCTOR
 			virtual ~GraphicsEngine() override;
+
+		private:
+			struct Vertex 
+			{
+				Vec3 position;
+				Vec4 color;
+			};
 
 		private:
 			//Define a smart pointer to a render system variable of class Render System
