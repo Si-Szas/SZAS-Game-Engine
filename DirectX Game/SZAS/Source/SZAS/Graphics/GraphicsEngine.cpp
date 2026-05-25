@@ -53,18 +53,32 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	//Create Graphics Pipeline State
 	m_pipeline = device.CreateGraphicsPipelineState({*vertexShaderSignature, *ps});
 
-	//Create vertex list for now
 	const Vertex vertexList[] =
 	{
-		///// TRIANGLE 1 /////
-		/* V0 */ { {-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f}	},
-		/* V1 */ { {-0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f}	},
-		/* V2 */ { {0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}		},
+		//// GREEN RECTANGLE ////
+		// Triangle 1 //
+			/* V0 */ { {-0.75f, 0.25f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
+			/* V1 */ { {-0.75f, 0.75f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
+			/* V2 */ { {-0.25f, 0.25f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
+		// Triangle 2 //				
+			/* V3 */ { {-0.75f, 0.75f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
+			/* V4 */ { {-0.25f, 0.75f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
+			/* V5 */ { {-0.25f, 0.25f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
+			
+		//// RAINBOW TRIANGLE ////
+			/* V6 */ { {-0.25f, -0.75f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f}},
+			/* V7 */ { {0.0f, 0.5f, 0.0f},    {0.0f, 1.0f, 1.0f, 1.0f} },
+			/* V8 */ { {0.25f, -0.75f, 0.0f}, {1.0f, 0.0f, 1.0f, 1.0f} },
 
-		///// TRIANGLE 2 /////
-		/* V3 */ { {0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}     },
-		/* V4 */ { {0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 1.0f, 1.0f}    },
-		/* V5 */ { {-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f}   }
+		//// RAINBOW RECTANGLE ////
+			// Triangle 1 //
+			/* V8 */  { {0.35f, -0.85f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f}},
+			/* V9 */  { {0.35f, 0.85f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f} },
+			/* V10 */ { {0.85f, -0.85f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}},
+			// Triangle 2
+			/* V11 */ { {0.35f, 0.85f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f} },
+			/* V12 */ { {0.85f, 0.85f, 0.0f}, {1.0f, 0.0f, 1.0f, 1.0f} },
+			/* V13 */ { {0.85f, -0.85f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}},
 	};
 
 	//Create Vertex Buffer and store it
