@@ -10,7 +10,7 @@ namespace szas
 			ShaderBinary(const ShaderCompileDescriptor& shaderCompileDescriptor, const GraphicsResourceDescriptor& graphicsResourceDescriptor);
 	
 			//GETTER
-			ShaderBinaryData GetShaderData() const noexcept;
+			BinaryData GetData() const noexcept;
 			ShaderType GetShaderType() const noexcept;
 
 		private:

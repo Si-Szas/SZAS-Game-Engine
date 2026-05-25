@@ -42,7 +42,7 @@ szas::ShaderBinary::ShaderBinary(const ShaderCompileDescriptor& shaderCompileDes
 
 }
 
-szas::ShaderBinaryData szas::ShaderBinary::GetShaderData() const noexcept
+szas::BinaryData szas::ShaderBinary::GetData() const noexcept
 {
 	return
 	{

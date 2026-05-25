@@ -48,8 +48,10 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		ShaderType::PixelShader
 	});
 
+	auto vertexShaderSignature = device.CreateVertexShaderSignature({vs});
+
 	//Create Graphics Pipeline State
-	m_pipeline = device.CreateGraphicsPipelineState({*vs, *ps});
+	m_pipeline = device.CreateGraphicsPipelineState({*vertexShaderSignature, *ps});
 
 	//Create vertex list for now
 	const Vertex vertexList[] =

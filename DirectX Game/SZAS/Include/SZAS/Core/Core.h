@@ -23,6 +23,8 @@ namespace szas {
 	class GraphicsPipelineState;
 	//Vertex Buffer
 	class VertexBuffer;
+	//Vertex Shader Signature
+	class VertexShaderSignature;
 
 	//Type Aliases
 	using i32 = int;
@@ -39,4 +41,6 @@ namespace szas {
 	using GraphicsPipelineStatePtr = std::shared_ptr<GraphicsPipelineState>;
 	//Vertex Buffer Pointer
 	using VertexBufferPtr = std::shared_ptr<VertexBuffer>;
+	//Vertex Shader Signature Pointer
+	using VertexShaderSignaturePtr = std::shared_ptr<VertexShaderSignature>;
 }

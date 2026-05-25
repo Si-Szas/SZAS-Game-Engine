@@ -56,13 +56,18 @@ namespace szas
 		ShaderType shaderType{};		//Type of shader we are compiling
 	};
 
+	struct VertexShaderSignatureDescriptor
+	{
+		const ShaderBinaryPtr& vertexShaderBinary;
+	};
+
 	struct GraphicsPipelineStateDescriptor
 	{
-		const ShaderBinary& vertexShader;
+		const VertexShaderSignature& vertexShader;
 		const ShaderBinary& pixelShader;
 	};
 
-	struct ShaderBinaryData
+	struct BinaryData
 	{
 		const void* data{};
 		size_t dataSize{};
