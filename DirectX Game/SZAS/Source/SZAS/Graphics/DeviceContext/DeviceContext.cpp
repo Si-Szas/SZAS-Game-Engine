@@ -1,7 +1,7 @@
-#include <SZAS/Graphics/DeviceContext.h>
-#include <SZAS/Graphics/SwapChain.h>
-#include <SZAS/Graphics/GraphicsPipelineState.h>
-#include <SZAS/Graphics/VertexBuffer.h>
+#include <SZAS/Graphics/DeviceContext/DeviceContext.h>
+#include <SZAS/Graphics/SwapChain/SwapChain.h>
+#include <SZAS/Graphics/GraphicsPipelineState/GraphicsPipelineState.h>
+#include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
 
 szas::DeviceContext::DeviceContext(const GraphicsResourceDescriptor& descriptor) :
 	GraphicsResource(descriptor)

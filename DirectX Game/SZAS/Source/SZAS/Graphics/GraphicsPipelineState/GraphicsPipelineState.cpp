@@ -1,6 +1,6 @@
-#include <SZAS/Graphics/GraphicsPipelineState.h>
-#include <SZAS/Graphics/ShaderBinary.h>
-#include <SZAS/Graphics/VertexShaderSignature.h>
+#include <SZAS/Graphics/GraphicsPipelineState/GraphicsPipelineState.h>
+#include <SZAS/Graphics/ShaderBinary/ShaderBinary.h>
+#include <SZAS/Graphics/VertexShaderSignature/VertexShaderSignature.h>
 
 szas::GraphicsPipelineState::GraphicsPipelineState(const GraphicsPipelineStateDescriptor& graphicsPipelineStateDescriptor, const GraphicsResourceDescriptor& descriptor):
 	GraphicsResource(descriptor)

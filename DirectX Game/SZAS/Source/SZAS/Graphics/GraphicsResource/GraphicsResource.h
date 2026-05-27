@@ -1,7 +1,7 @@
 #pragma once
 #include <SZAS/Core/Common.h>
 #include <SZAS/Core/Base.h>
-#include <SZAS/Graphics/GraphicsLogUtility.h>
+#include <SZAS/Graphics/GraphicsUtility/GraphicsLogUtility.h>
 
 #include <d3d11.h>
 #include <wrl.h>

@@ -1,8 +1,8 @@
 #include <SZAS/Graphics/GraphicsEngine.h>
-#include <SZAS/Graphics/GraphicsDevice.h>
-#include <SZAS/Graphics/DeviceContext.h>
-#include <SZAS/Graphics/SwapChain.h>
-#include <SZAS/Graphics/VertexBuffer.h>
+#include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
+#include <SZAS/Graphics/DeviceContext/DeviceContext.h>
+#include <SZAS/Graphics/SwapChain/SwapChain.h>
+#include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
 #include <SZAS/Math/Vec3.h>
 #include <fstream>
 

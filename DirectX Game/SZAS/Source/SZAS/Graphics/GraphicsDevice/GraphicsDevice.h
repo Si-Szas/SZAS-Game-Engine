@@ -1,5 +1,5 @@
 #pragma once
-#include <SZAS/Graphics/GraphicsResource.h>
+#include <SZAS/Graphics/GraphicsResource/GraphicsResource.h>
 #include <SZAS/Core/Common.h>
 #include <SZAS/Core/Core.h>
 #include <SZAS/Core/Base.h>

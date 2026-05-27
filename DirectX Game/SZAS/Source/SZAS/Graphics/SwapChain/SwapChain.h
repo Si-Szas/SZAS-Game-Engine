@@ -1,5 +1,5 @@
 #pragma once
-#include <SZAS/Graphics/GraphicsResource.h>
+#include <SZAS/Graphics/GraphicsResource/GraphicsResource.h>
 
 namespace szas
 {

@@ -1,5 +1,5 @@
-#include <SZAS/Graphics/ShaderBinary.h>
-#include <SZAS/Graphics/GraphicsUtility.h>
+#include <SZAS/Graphics/ShaderBinary/ShaderBinary.h>
+#include <SZAS/Graphics/GraphicsUtility/GraphicsUtility.h>
 #include <d3dcompiler.h>
 
 szas::ShaderBinary::ShaderBinary(const ShaderCompileDescriptor& shaderCompileDescriptor, const GraphicsResourceDescriptor& graphicsResourceDescriptor) :

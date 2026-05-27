@@ -1,6 +1,6 @@
 #pragma once
-#include <SZAS/Graphics/GraphicsResource.h>
-#include <SZAS/Graphics/GraphicsLogUtility.h>
+#include <SZAS/Graphics/GraphicsResource/GraphicsResource.h>
+#include <SZAS/Graphics/GraphicsUtility/GraphicsLogUtility.h>
 
 namespace szas
 {

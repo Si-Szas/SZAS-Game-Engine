@@ -1,5 +1,5 @@
 #include <SZAS/Game/Display.h>
-#include <SZAS/Graphics/GraphicsDevice.h>
+#include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
 
 szas::Display::Display(const DisplayDescriptor& descriptor): Window(descriptor.window)
 {

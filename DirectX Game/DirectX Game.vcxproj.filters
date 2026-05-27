@@ -33,31 +33,34 @@
     <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsDevice.cpp">
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsDevice\GraphicsDevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SZAS\Source\SZAS\Core\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\SwapChain.cpp">
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\SwapChain\SwapChain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SZAS\Source\SZAS\Game\Display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\DeviceContext.cpp">
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\DeviceContext\DeviceContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\ShaderBinary.cpp">
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\ShaderBinary\ShaderBinary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsPipelineState.cpp">
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsPipelineState\GraphicsPipelineState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\VertexBuffer.cpp">
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\VertexBuffer\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\VertexShaderSignature.cpp">
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\VertexShaderSignature\VertexShaderSignature.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +83,7 @@
     <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsDevice.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsDevice\GraphicsDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\Core\Logger.h">
@@ -89,13 +92,13 @@
     <ClInclude Include="SZAS\Include\SZAS\Core\Common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsLogUtility.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsUtility\GraphicsLogUtility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\SwapChain.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\SwapChain\SwapChain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsResource.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsResource\GraphicsResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\Math\Rect.h">
@@ -104,28 +107,31 @@
     <ClInclude Include="SZAS\Include\SZAS\Game\Display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\DeviceContext.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\DeviceContext\DeviceContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\Math\Vec4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\ShaderBinary.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\ShaderBinary\ShaderBinary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsUtility.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsUtility\GraphicsUtility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsPipelineState.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsPipelineState\GraphicsPipelineState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\VertexBuffer.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\VertexBuffer\VertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\Math\Vec3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\VertexShaderSignature.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\VertexShaderSignature\VertexShaderSignature.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

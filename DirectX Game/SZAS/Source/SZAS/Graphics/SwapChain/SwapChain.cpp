@@ -1,4 +1,4 @@
-#include <SZAS/Graphics/SwapChain.h>
+#include <SZAS/Graphics/SwapChain/SwapChain.h>
 
 szas::SwapChain::SwapChain(const SwapChainDescriptor& swapChainDescriptor, const GraphicsResourceDescriptor& graphicsResourceDescriptor):
 	GraphicsResource(graphicsResourceDescriptor), m_size(swapChainDescriptor.windowSize)

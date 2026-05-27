@@ -1,11 +1,11 @@
-#include <SZAS/Graphics/GraphicsDevice.h>
-#include <SZAS/Graphics/GraphicsLogUtility.h>
-#include <SZAS/Graphics/SwapChain.h>
-#include <SZAS/Graphics/DeviceContext.h>
-#include <SZAS/Graphics/ShaderBinary.h>
-#include <SZAS/Graphics/GraphicsPipelineState.h>
-#include <SZAS/Graphics/VertexBuffer.h>
-#include <SZAS/Graphics/VertexShaderSignature.h>
+#include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
+#include <SZAS/Graphics/GraphicsUtility/GraphicsLogUtility.h>
+#include <SZAS/Graphics/SwapChain/SwapChain.h>
+#include <SZAS/Graphics/DeviceContext/DeviceContext.h>
+#include <SZAS/Graphics/ShaderBinary/ShaderBinary.h>
+#include <SZAS/Graphics/GraphicsPipelineState/GraphicsPipelineState.h>
+#include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
+#include <SZAS/Graphics/VertexShaderSignature/VertexShaderSignature.h>
 
 szas::GraphicsDevice::GraphicsDevice(const GraphicsDeviceDescriptor& descriptor): Base(descriptor.base)
 {

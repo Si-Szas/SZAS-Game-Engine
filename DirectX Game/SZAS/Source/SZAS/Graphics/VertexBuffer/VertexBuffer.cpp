@@ -1,4 +1,4 @@
-#include <SZAS/Graphics/VertexBuffer.h>
+#include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
 
 szas::VertexBuffer::VertexBuffer(const VertexBufferDescriptor& vertexBufferDescriptor, const GraphicsResourceDescriptor& graphicsResourceDescriptor):
 	GraphicsResource(graphicsResourceDescriptor), 
