@@ -15,11 +15,18 @@ struct VSOutput
     float4 color : COLOR0;
 };
 
+//Define a constant buffer bound to the first hardware slot (0). b is to designate it as constant buffer view
+//cbuffer ConstantData : register(b0)
+//{
+//    row_major float4x4 world;
+//}
+
 //Define a semantic. A label that tells the GPU what the label represents and how it should be used in the pipeline
 //Retrieve data from vertex buffer
 VSOutput VSMain(VSInput input)
 {
     VSOutput output;
+    //output.position = mul(float4(input.position, 1.0f), world);
     output.position = float4(input.position, 1.0f);
     output.color = input.color;
     

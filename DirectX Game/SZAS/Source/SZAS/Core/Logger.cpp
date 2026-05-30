@@ -3,8 +3,6 @@
 
 szas::Logger::Logger(LogLevel logLevel): m_logLevel(logLevel)
 {
-	std::clog << "| Szas | DirectX C++ Game Engine |\n";
-	std::clog << "|--------------------------------|\n\n";
 }
 
 void szas::Logger::Log(LogLevel level, const char* message)

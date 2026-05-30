@@ -2,6 +2,7 @@
 #include <SZAS/Graphics/SwapChain/SwapChain.h>
 #include <SZAS/Graphics/GraphicsPipelineState/GraphicsPipelineState.h>
 #include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
+#include <SZAS/Graphics/ConstantBuffer/ConstantBuffer.h>
 
 szas::DeviceContext::DeviceContext(const GraphicsResourceDescriptor& descriptor) :
 	GraphicsResource(descriptor)
@@ -36,21 +37,6 @@ void szas::DeviceContext::ClearAndSetBackBuffer(const SwapChain& swapChain, cons
 	);
 }
 
-void szas::DeviceContext::DrawTriangleList(ui32 vertexCount, ui32 startVertexLocation)
-{
-	//How it assembles data into geometric primitives
-	//Tells GPU how to connect the vertices
-	//Triangle list specifies how the GPU should treat vertex data, every 3 vertices is an independent triangle
-	m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	//Call Draw function
-	m_context->Draw
-	(
-		vertexCount,		//Vertex Count. Defines number of vertices to draw
-		startVertexLocation //Start vertex location. Allows us to specify the index of the first index in the vertex buffer to start drawing from
-	);
-}
-
 void szas::DeviceContext::SetGraphicsPipelineState(const GraphicsPipelineState& pipeline)
 {
 	//Bind input layout to graphics pipeline. How to interpret bimnary structure of our vertex data and how it maps to vertex shaders expected inputs
@@ -72,28 +58,6 @@ void szas::DeviceContext::SetGraphicsPipelineState(const GraphicsPipelineState& 
 	);
 }
 
-
-void szas::DeviceContext::SetVertexBuffer(const VertexBuffer& buffer)
-{
-	//Get list of buffers
-	auto buff = buffer.m_buffer.Get();
-	//Retrieve vertex size from vertex buffer class
-	auto stride = buffer.m_vertexSize;
-	//Initialize offset
-	auto offset = 0u;
-
-		//Defines one or more vertex buffers to the input assembler stage of the graphics pipeline
-		//How we tell where vertex data is stored and how to interpret it
-	m_context->IASetVertexBuffers
-		(
-			0,			//Start slot, starting point in list of vertex buffers
-			1,			//Number of buffers being passed
-			&buff,		//Actual list of buffers. Pointer to an array of D3D11 buffer pointers
-			&stride,	//List of strides. Represent the size of a single vertex in bytes
-			&offset			//Offset parameter to indicate where to start processing the data
-	);
-}
-
 //Define viewport of rectangular region of render target where final image is drawn
 void szas::DeviceContext::SetViewportSize(const Rect& size)
 {
@@ -111,3 +75,68 @@ void szas::DeviceContext::SetViewportSize(const Rect& size)
 	);
 }
 
+void szas::DeviceContext::SetVertexBuffer(const VertexBuffer& buffer)
+{
+	//Get list of buffers
+	auto buff = buffer.m_buffer.Get();
+	//Retrieve vertex size from vertex buffer class
+	auto stride = buffer.m_vertexSize;
+	//Initialize offset
+	auto offset = 0u;
+
+	//Defines one or more vertex buffers to the input assembler stage of the graphics pipeline
+	//How we tell where vertex data is stored and how to interpret it
+	m_context->IASetVertexBuffers
+	(
+		0,			//Start slot, starting point in list of vertex buffers
+		1,			//Number of buffers being passed
+		&buff,		//Actual list of buffers. Pointer to an array of D3D11 buffer pointers
+		&stride,	//List of strides. Represent the size of a single vertex in bytes
+		&offset		//Offset parameter to indicate where to start processing the data
+	);
+}
+
+void szas::DeviceContext::SetConstantBuffer(const ConstantBuffer& buffer)
+{
+	auto buff = buffer.m_buffer.Get();
+	//Bind the constant buffer to be used by the Vertex and Pixel Shaders
+		//Starting index, number of constant buffers, constant buffer pointers
+	m_context->VSSetConstantBuffers(0, 1, &buff);
+	m_context->PSSetConstantBuffers(0, 1, &buff);
+}
+
+
+void szas::DeviceContext::UpdateConstantBuffer(const ConstantBuffer& buffer, const void* data)
+{
+	if (!data) SZASLogThrowInvalidArgument("Null data pointer passed to UpdateConstantBuffer()");
+
+	auto buff = buffer.m_buffer.Get();
+	D3D11_MAPPED_SUBRESOURCE mapped{}; //Tells you how much data can be viewed
+
+	SZASGraphicsLogThrowOnFail(m_context->Map
+	(
+			buff,	//List of constant buffers
+			0,		//Start slot, starting point in list
+			D3D11_MAP_WRITE_DISCARD, //CPU read and write permissions
+			0,		//What CPU does if GPU is busy. Optional
+			&mapped //Pointer to structure for mapped subresources
+	), "ID3D11DeviceContext::Map failed.");
+
+	std::memcpy(mapped.pData, data, buffer.m_size);
+	m_context->Unmap(buff, 0);
+}
+
+void szas::DeviceContext::DrawTriangleList(ui32 vertexCount, ui32 startVertexLocation)
+{
+	//How it assembles data into geometric primitives
+	//Tells GPU how to connect the vertices
+	//Triangle list specifies how the GPU should treat vertex data, every 3 vertices is an independent triangle
+	m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	//Call Draw function
+	m_context->Draw
+	(
+		vertexCount,		//Vertex Count. Defines number of vertices to draw
+		startVertexLocation //Start vertex location. Allows us to specify the index of the first index in the vertex buffer to start drawing from
+	);
+}

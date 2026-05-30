@@ -85,6 +85,11 @@ szas::VertexShaderSignaturePtr szas::GraphicsDevice::CreateVertexShaderSignature
 	return std::make_shared<VertexShaderSignature>(descriptor, GetGraphicsResourceDescriptor());
 }
 
+//szas::ConstantBufferPtr szas::GraphicsDevice::CreateConstantBuffer(const ConstantBufferDescriptor& descriptor)
+//{
+//	return std::make_shared<ConstantBuffer>(descriptor, GetGraphicsResourceDescriptor());
+//}
+
 //This function retrieves command lists, then executes it
 void szas::GraphicsDevice::ExecuteCommandList(DeviceContext& context)
 {

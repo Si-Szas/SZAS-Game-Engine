@@ -12,12 +12,20 @@ namespace szas {
 		
 			//FUNCTION
 			void ClearAndSetBackBuffer(const SwapChain& swapChain, const Vec4& color);
-			void DrawTriangleList(ui32 vertexCount, ui32 startVertexLocation);
 
 			//SETTER
 			void SetGraphicsPipelineState(const GraphicsPipelineState& pipeline);
-			void SetVertexBuffer(const VertexBuffer& buffer);
 			void SetViewportSize(const Rect& size);
+
+			void SetVertexBuffer(const VertexBuffer& buffer);
+			void SetConstantBuffer(const ConstantBuffer& buffer);
+
+			//UPDATE 
+			void UpdateConstantBuffer(const ConstantBuffer& buffer, const void* data);
+			
+			//DRAW
+			void DrawTriangleList(ui32 vertexCount, ui32 startVertexLocation);
+
 
 		private:
 			Microsoft::WRL::ComPtr <ID3D11DeviceContext> m_context{};

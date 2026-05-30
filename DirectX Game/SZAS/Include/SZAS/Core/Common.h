@@ -80,6 +80,12 @@ namespace szas
 		ui32 vertexSize;			//Holds size in bytes of a single vertex
 	};
 
+	struct ConstantBufferDescriptor
+	{
+		const void* buffer{};		//Since we have yet to define what constants we want to pass, make a const void*
+		ui32 bufferSize{};			//Size of the buffer
+	};
+
 	struct GameDescriptor
 	{
 		Rect windowSize{ 1280, 720 };

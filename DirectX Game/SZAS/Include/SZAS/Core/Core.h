@@ -25,6 +25,8 @@ namespace szas {
 	class VertexBuffer;
 	//Vertex Shader Signature
 	class VertexShaderSignature;
+	//Constant Buffer
+	class ConstantBuffer;
 
 	//Type Aliases
 	using i32 = int;
@@ -43,4 +45,6 @@ namespace szas {
 	using VertexBufferPtr = std::shared_ptr<VertexBuffer>;
 	//Vertex Shader Signature Pointer
 	using VertexShaderSignaturePtr = std::shared_ptr<VertexShaderSignature>;
+	//Constant Buffer Pointer
+	using ConstantBufferPtr = std::shared_ptr<ConstantBuffer>;
 }

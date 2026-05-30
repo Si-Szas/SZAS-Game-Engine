@@ -3,6 +3,7 @@
 #include <SZAS/Core/Base.h>
 #include <SZAS/Math/Vec3.h>
 #include <SZAS/Math/Vec4.h>
+#include <SZAS/Math/Mat4x4.h>
 
 namespace szas
 {
@@ -13,7 +14,7 @@ namespace szas
 			//CONSTRUCTOR
 			explicit GraphicsEngine(const GraphicsEngineDescriptor& descriptor);
 
-			//FUNCTIONS
+			//GETTER
 				GraphicsDevice& GetGraphicsDevice() noexcept;
 			
 			//RENDER
@@ -29,12 +30,19 @@ namespace szas
 				Vec4 color;
 			};
 
+			//16 bytes for ConstantData, which is a user defined data type
+			struct alignas(16) ConstantData
+			{
+				Mat4x4 world{};
+			};
+
 		private:
 			//Define a smart pointer to a render system variable of class Render System
 			std::shared_ptr<GraphicsDevice> m_graphicsDevice{};
 			DeviceContextPtr m_deviceContext{};
 			GraphicsPipelineStatePtr m_pipeline{};
 			VertexBufferPtr m_vertexBuffer{};
+			ConstantBufferPtr m_constantBuffer{};
 	};
 }
 

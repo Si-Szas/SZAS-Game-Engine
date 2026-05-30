@@ -3,6 +3,7 @@
 #include <SZAS/Graphics/DeviceContext/DeviceContext.h>
 #include <SZAS/Graphics/SwapChain/SwapChain.h>
 #include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
+#include <SZAS/Graphics/ConstantBuffer/ConstantBuffer.h>
 #include <SZAS/Math/Vec3.h>
 #include <fstream>
 
@@ -88,6 +89,13 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		std::size(vertexList),		//Vertex List Size
 		sizeof(Vertex)				//Vertex Size
 	});
+
+	//Create constant buffer
+	//m_constantBuffer = device.CreateConstantBuffer
+	//({
+	//	{},
+	//	sizeof(ConstantData)
+	//});
 }
 
 szas::GraphicsDevice& szas::GraphicsEngine::GetGraphicsDevice() noexcept

@@ -31,23 +31,3 @@ namespace szas
 			Logger& m_logger;
 	};
 }
-
-//Macro to log error messages
-#define SZASLogInformation(message)\
-	SZASLog(GetLogger(), Logger::LogLevel::Information, message);
-
-#define SZASLogWarning(message)\
-	SZASLog(GetLogger(), Logger::LogLevel::Warning, message);
-
-#define SZASLogError(message)\
-	SZASLog(GetLogger(), Logger::LogLevel::Error, message);
-	//Place enumeration in () to avoid errors
-
-	//Create a macro using the defined preprocesser directive
-	//Tells compiler to replace all instances of a specific name of a value before compilation	
-#define SZASLogThrowError(message)\
-	SZASLogThrow(GetLogger(), std::runtime_error, Logger::LogLevel::Error, message)
-
-	//Throw an invalid argument exception (not run-time error)
-#define SZASLogThrowInvalidArgument(message)\
-	SZASLogThrow(GetLogger(), std::invalid_argument, Logger::LogLevel::Error, message)

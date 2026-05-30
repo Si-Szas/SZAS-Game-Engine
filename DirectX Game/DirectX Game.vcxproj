@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\Time\EngineTime.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsPipelineState\GraphicsPipelineState.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\ShaderBinary\ShaderBinary.cpp" />
@@ -157,6 +158,8 @@
     <ClCompile Include="SZAS\Source\SZAS\Graphics\VertexShaderSignature\VertexShaderSignature.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Source\SZAS\Time\EngineTime.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Math\Mat4x4.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Vec3.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsPipelineState\GraphicsPipelineState.h" />
