@@ -24,7 +24,5 @@ szas::Game::~Game()
 
 void szas::Game::OnInternalUpdate()
 {
-	//Delta time stuff is here...
-
 	m_graphicsEngine->Render(m_display->GetSwapChain());
 }
