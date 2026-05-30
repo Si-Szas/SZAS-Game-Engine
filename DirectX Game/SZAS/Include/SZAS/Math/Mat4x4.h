@@ -61,8 +61,6 @@ namespace szas
 				return matrix;
 			}
 
-			//rotatez
-			//matrix mult
 			Mat4x4 operator *(const Mat4x4& rightHandSide) const noexcept
 			{
 				Mat4x4 matrix;
