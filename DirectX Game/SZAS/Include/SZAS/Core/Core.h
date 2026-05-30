@@ -27,6 +27,8 @@ namespace szas {
 	class VertexShaderSignature;
 	//Constant Buffer
 	class ConstantBuffer;
+	//Engine Time
+	class EngineTime;
 
 	//Type Aliases
 	using i32 = int;

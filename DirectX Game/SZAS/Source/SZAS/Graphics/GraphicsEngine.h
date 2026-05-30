@@ -27,13 +27,16 @@ namespace szas
 			struct Vertex 
 			{
 				Vec3 position;
+				Vec3 position1;
 				Vec4 color;
+				Vec4 color1;
 			};
 
-			//16 bytes for ConstantData, which is a user defined data type
-			struct alignas(16) ConstantData
+			//prevent adding variables
+			__declspec(align(16))
+			struct ConstantData
 			{
-				Mat4x4 world{};
+				unsigned int m_time;
 			};
 
 		private:
@@ -43,6 +46,8 @@ namespace szas
 			GraphicsPipelineStatePtr m_pipeline{};
 			VertexBufferPtr m_vertexBuffer{};
 			ConstantBufferPtr m_constantBuffer{};
+
+
 	};
 }
 

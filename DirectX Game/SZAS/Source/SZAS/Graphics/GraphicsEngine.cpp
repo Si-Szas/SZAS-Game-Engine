@@ -2,6 +2,7 @@
 #include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
 #include <SZAS/Graphics/DeviceContext/DeviceContext.h>
 #include <SZAS/Graphics/SwapChain/SwapChain.h>
+#include <SZAS/Time/EngineTime.h>
 #include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
 #include <SZAS/Graphics/ConstantBuffer/ConstantBuffer.h>
 #include <SZAS/Math/Vec3.h>
@@ -56,30 +57,25 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 
 	const Vertex vertexList[] =
 	{
-		//// GREEN RECTANGLE ////
-		// Triangle 1 //
-			/* V0 */ { {-0.75f, 0.25f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
-			/* V1 */ { {-0.75f, 0.75f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
-			/* V2 */ { {-0.25f, 0.25f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
-		// Triangle 2 //				
-			/* V3 */ { {-0.75f, 0.75f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
-			/* V4 */ { {-0.25f, 0.75f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
-			/* V5 */ { {-0.25f, 0.25f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
-			
-		//// RAINBOW TRIANGLE ////
-			/* V6 */ { {-0.25f, -0.75f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f}},
-			/* V7 */ { {0.0f, 0.5f, 0.0f},    {0.0f, 1.0f, 1.0f, 1.0f} },
-			/* V8 */ { {0.25f, -0.75f, 0.0f}, {1.0f, 0.0f, 1.0f, 1.0f} },
-
-		//// RAINBOW RECTANGLE ////
-			// Triangle 1 //
-			/* V8 */  { {0.35f, -0.85f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f}},
-			/* V9 */  { {0.35f, 0.85f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f} },
-			/* V10 */ { {0.85f, -0.85f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}},
-			// Triangle 2
-			/* V11 */ { {0.35f, 0.85f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f} },
-			/* V12 */ { {0.85f, 0.85f, 0.0f}, {1.0f, 0.0f, 1.0f, 1.0f} },
-			/* V13 */ { {0.85f, -0.85f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}},
+		//ANIMATING TRIANGLE
+		/* V1 */ {
+			/* P0 */ {-0.5f, -0.5f, 0.0f},
+			/* P1 */ {-0.75f, -0.85f, 0.0f},
+			/* C0 */ {1.0f, 1.0f, 0.0f, 1.0f},
+			/* C1 */ {0.0f, 1.0f, 0.0f, 1.0f}
+				 },
+		/* V2 */ {
+			/* P0 */ {0.0f, 0.5f, 0.0f},
+			/* P1 */ {0.65f, 0.85f, 0.0f},
+			/* C0 */ {0.0f, 1.0f, 1.0f, 1.0f},
+			/* C1 */ {0.0f, 0.0f, 1.0f, 1.0f}
+				 },
+		/* V2 */ {
+			/* P0 */ {0.5f, -0.5f, 0.0f},
+			/* P1 */ {0.65f, -0.85f, 0.0f},
+			/* C0 */ {1.0f, 0.0f, 1.0f, 1.0f},
+			/* C1 */ {1.0f, 0.0f, 0.0f, 1.0f}
+				 }
 	};
 
 	//Create Vertex Buffer and store it
@@ -91,11 +87,11 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	});
 
 	//Create constant buffer
-	//m_constantBuffer = device.CreateConstantBuffer
-	//({
-	//	{},
-	//	sizeof(ConstantData)
-	//});
+	m_constantBuffer = device.CreateConstantBuffer
+	({
+		&m_constantBuffer,
+		sizeof(ConstantData)
+	});
 }
 
 szas::GraphicsDevice& szas::GraphicsEngine::GetGraphicsDevice() noexcept
@@ -106,7 +102,12 @@ szas::GraphicsDevice& szas::GraphicsEngine::GetGraphicsDevice() noexcept
 
 void szas::GraphicsEngine::Render(SwapChain& swapChain)
 {
+	auto& constantBuffer = *m_constantBuffer;
 	auto& context = *m_deviceContext;
+	d64 deltaTime = szas::EngineTime::GetDeltaTime();
+
+	//Update the constant buffer before everything
+	context.UpdateConstantBuffer(constantBuffer, &deltaTime);
 	//We want to first clear the buffer, then after rendering on a back buffer, we want to move that back to the front buffer
 	context.ClearAndSetBackBuffer(swapChain, {0.251f, 0.141f, 0.31f, 1.0f});
 	//Record render command that clears content of back buffer and binds it so we can render elements onto it
@@ -121,9 +122,11 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 	//Bind the vertex buffer to the graphics pipeline (input assembler stage)
 		//First retieve reference to vertex buffer
 		//Then call Set Vertex to bind buffer to pipeline
+	//Bind constant buffer as well
 	auto& vertexBuffer = *m_vertexBuffer;
 	context.SetVertexBuffer(vertexBuffer);
-	
+	context.SetConstantBuffer(constantBuffer);
+
 	//////////// DRAW TRIANGLES ////////////
 		//Can only be called once graphics pipeline is set up. Provides all shaders
 		//Set viewport size which defines area of render target (back buffer)

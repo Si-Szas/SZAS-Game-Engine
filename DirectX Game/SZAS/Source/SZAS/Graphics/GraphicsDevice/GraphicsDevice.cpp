@@ -5,6 +5,7 @@
 #include <SZAS/Graphics/ShaderBinary/ShaderBinary.h>
 #include <SZAS/Graphics/GraphicsPipelineState/GraphicsPipelineState.h>
 #include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
+#include <SZAS/Graphics/ConstantBuffer/ConstantBuffer.h>
 #include <SZAS/Graphics/VertexShaderSignature/VertexShaderSignature.h>
 
 szas::GraphicsDevice::GraphicsDevice(const GraphicsDeviceDescriptor& descriptor): Base(descriptor.base)
@@ -85,10 +86,10 @@ szas::VertexShaderSignaturePtr szas::GraphicsDevice::CreateVertexShaderSignature
 	return std::make_shared<VertexShaderSignature>(descriptor, GetGraphicsResourceDescriptor());
 }
 
-//szas::ConstantBufferPtr szas::GraphicsDevice::CreateConstantBuffer(const ConstantBufferDescriptor& descriptor)
-//{
-//	return std::make_shared<ConstantBuffer>(descriptor, GetGraphicsResourceDescriptor());
-//}
+szas::ConstantBufferPtr szas::GraphicsDevice::CreateConstantBuffer(const ConstantBufferDescriptor& descriptor)
+{
+	return std::make_shared<ConstantBuffer>(descriptor, GetGraphicsResourceDescriptor());
+}
 
 //This function retrieves command lists, then executes it
 void szas::GraphicsDevice::ExecuteCommandList(DeviceContext& context)
