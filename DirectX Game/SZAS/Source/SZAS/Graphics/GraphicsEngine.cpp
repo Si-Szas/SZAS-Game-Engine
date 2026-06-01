@@ -178,10 +178,8 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 	auto& context = *m_deviceContext;
 	d64 deltaTime = szas::EngineTime::GetDeltaTime();
 
-	//std::cout << m_position << std::endl;
-
-	m_position += deltaTime * 0.5f;
-	m_rotation += deltaTime * 0.5f;
+	m_position += deltaTime * 0.25f;
+	m_rotation += deltaTime * 2.0f;
 	m_scale = std::abs(std::sin(m_rotation));
 	
 	//SZASLogInformation("Pos: X:{} Y:{}", m_position, m_position);
@@ -189,8 +187,8 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 	//SZASLogInformation("Scale: {}", m_scale);
 
 	auto worldMatrix =
-		Mat4x4::scale({m_scale, m_scale, m_scale}) *
 		Mat4x4::rotateAlongZ(m_rotation) *
+		Mat4x4::scale({m_scale, m_scale, m_scale}) *
 		Mat4x4::translate({ m_position ,m_position ,0 });
 
 	ConstantData data
