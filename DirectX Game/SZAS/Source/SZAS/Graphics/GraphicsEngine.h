@@ -51,6 +51,8 @@ namespace szas
 			VertexBufferPtr m_vertexBuffer{};
 			ConstantBufferPtr m_constantBuffer{};
 
+			//
+
 			//Testing Matrix
 			f32 m_rotation{}, m_scale{}, m_position{-1.0f};
 	};
