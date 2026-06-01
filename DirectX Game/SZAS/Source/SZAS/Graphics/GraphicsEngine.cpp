@@ -18,10 +18,10 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 
 	//Define the Shader File Path
 		// Relative paths are relative to the root of project folder (DirectX Game Folder)
-	constexpr char vertexShaderFilePath[] = "SZAS/Assets/Shaders/VertexShader.hlsl";
+	constexpr char vertexShaderFilePath[] = "SZAS/Assets/Shaders/Wireframe/WireframeVertexShader.hlsl";
 	//Read the contents of the shader file
 	std::ifstream vertexShaderStream(vertexShaderFilePath);
-	if (!vertexShaderStream) SZASLogThrowError("Failed to open VertexShader.hlsl file.");
+	if (!vertexShaderStream) SZASLogThrowError("Failed to open WireframeVertexShader.hlsl file.");
 	//Retrieve file data. So calling Range would call the entire shader into a string
 	std::string vertexShaderFileData{
 		std::istreambuf_iterator<char>(vertexShaderStream),	//Beginning of the file
@@ -43,9 +43,9 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	});
 
 	//Define Shader File Path for Hull Shader
-	constexpr char hullShaderFilePath[] = "SZAS/Assets/Shaders/HullShader.hlsl";
+	constexpr char hullShaderFilePath[] = "SZAS/Assets/Shaders/Wireframe/WireframeHullShader.hlsl";
 	std::ifstream hullShaderStream(hullShaderFilePath);
-	if (!hullShaderStream) SZASLogThrowError("Failed to open HullShader.hlsl file.");
+	if (!hullShaderStream) SZASLogThrowError("Failed to open WireframeHullShader.hlsl file.");
 
 	std::string hullShaderFileData{
 		std::istreambuf_iterator<char>(hullShaderStream),	//Beginning of the file
@@ -65,9 +65,9 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		});
 
 	//Define Shader File Path for Domain Shader
-	constexpr char domainShaderFilePath[] = "SZAS/Assets/Shaders/DomainShader.hlsl";
+	constexpr char domainShaderFilePath[] = "SZAS/Assets/Shaders/Wireframe/WireframeDomainShader.hlsl";
 	std::ifstream domainShaderStream(domainShaderFilePath);
-	if (!domainShaderStream) SZASLogThrowError("Failed to open DomainShader.hlsl file.");
+	if (!domainShaderStream) SZASLogThrowError("Failed to open WireframeDomainShader.hlsl file.");
 
 	std::string domainShaderFileData{
 		std::istreambuf_iterator<char>(domainShaderStream),	//Beginning of the file
@@ -86,10 +86,10 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		ShaderType::DomainShader
 	});
 
-	constexpr char pixelShaderFilePath[] = "SZAS/Assets/Shaders/PixelShader.hlsl";
+	constexpr char pixelShaderFilePath[] = "SZAS/Assets/Shaders/Wireframe/WireframePixelShader.hlsl";
 	//Read the contents of the shader file
 	std::ifstream pixelShaderStream(pixelShaderFilePath);
-	if (!pixelShaderStream) SZASLogThrowError("Failed to open PixelShader.hlsl file.");
+	if (!pixelShaderStream) SZASLogThrowError("Failed to open WireframePixelShader.hlsl file.");
 	//Retrieve file data. So calling Range would call the entire shader into a string
 	std::string pixelShaderFileData{
 		std::istreambuf_iterator<char>(pixelShaderStream),	//Beginning of the file
@@ -115,17 +115,30 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	//Create Graphics Pipeline State
 	m_pipeline = device.CreateGraphicsPipelineState({*vertexShaderSignature, *ps, *hs, *ds});
 
+	//TESTING WIREFRAME SHADER
 	const Vertex vertexList[] =
 	{
 		//1ST TRIANGLE
-		/* V0 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} },
-		/* V1 */{ {-0.5f, 0.5f, 0.0f},	{0.0f,1.0f,1.0f,1.0f} },
-		/* V2 */{ {0.5f, 0.5f, 0.0f},	{1.0f,0.0f,1.0f,1.0f} },
-		//2ND TRIANGLE									 
-		/* V3 */{ {0.5f, 0.5f, 0.0f},{1.0f,0.0f,1.0f,1.0f} },
-		/* V4 */{ {0.5f, -0.5f, 0.0f},	{1.0f,1.0f,1.0f,1.0f} },
-		/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} }
+		/* V0 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,0.0f,0.0f,1.0f} },
+		/* V1 */{ {-0.5f, 0.5f, 0.0f},	{0.0f,1.0f,0.0f,1.0f} },
+		/* V2 */{ {0.5f, 0.5f, 0.0f},	{0.0f,0.0f,1.0f,1.0f} },
+
+		/* V3 */{ {0.5f, 0.5f, 0.0f},	{0.0f,0.0f,1.0f,1.0f} },
+		/* V4 */{ {0.5f, -0.5f, 0.0f},	{0.0f,1.0f,0.0f,1.0f} },
+		/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,0.0f,0.0f,1.0f} }
 	};
+
+	//const Vertex vertexList[] =
+	//{
+	//	//1ST TRIANGLE
+	//	/* V0 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} },
+	//	/* V1 */{ {-0.5f, 0.5f, 0.0f},	{0.0f,1.0f,1.0f,1.0f} },
+	//	/* V2 */{ {0.5f, 0.5f, 0.0f},	{1.0f,0.0f,1.0f,1.0f} },
+	//	//2ND TRIANGLE									 
+	//	/* V3 */{ {0.5f, 0.5f, 0.0f},{1.0f,0.0f,1.0f,1.0f} },
+	//	/* V4 */{ {0.5f, -0.5f, 0.0f},	{1.0f,1.0f,1.0f,1.0f} },
+	//	/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} }
+	//};
 
 	//const Vertex vertexList[] =
 	//{
@@ -196,8 +209,15 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 		worldMatrix
 	};
 
+	WireframeColorConstant wireframeColorData
+	{
+		/*Fill Color*/{0.0f, 0.0f, 0.0f, 0.0f},
+		/*Mesh Color*/{1.0f, 0.0f, 1.0f, 0.0f},
+		/*Line Thickness*/5.0f
+	};
+
 	//Update the constant buffer before everything
-	context.UpdateConstantBuffer(constantBuffer, &data);
+	context.UpdateConstantBuffer(constantBuffer, &wireframeColorData);
 	//We want to first clear the buffer, then after rendering on a back buffer, we want to move that back to the front buffer
 	context.ClearAndSetBackBuffer(swapChain, {0.251f, 0.141f, 0.31f, 1.0f});
 	//Record render command that clears content of back buffer and binds it so we can render elements onto it

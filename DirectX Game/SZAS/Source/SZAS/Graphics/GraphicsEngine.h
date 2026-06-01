@@ -43,6 +43,13 @@ namespace szas
 				Mat4x4 world{};
 			};
 
+			struct WireframeColorConstant
+			{
+				Vec4 meshColor;
+				Vec4 lineColor;
+				float lineThickness;
+			};
+
 		private:
 			//Define a smart pointer to a render system variable of class Render System
 			std::shared_ptr<GraphicsDevice> m_graphicsDevice{};
