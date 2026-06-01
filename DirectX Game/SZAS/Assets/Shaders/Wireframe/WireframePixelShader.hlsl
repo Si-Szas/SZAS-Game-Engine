@@ -6,8 +6,9 @@ struct DS_OUTPUT
 };
 // END OF FROM DOMAIN SHADER
 
-cbuffer WireframeColorConstant : register(b0)
+cbuffer ConstantData : register(b0)
 {
+    row_major float4x4 world;
     float4 fillColor;
     float4 meshColor;
     float lineThickness;

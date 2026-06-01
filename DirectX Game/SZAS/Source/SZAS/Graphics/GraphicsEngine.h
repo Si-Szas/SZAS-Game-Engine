@@ -41,10 +41,6 @@ namespace szas
 			struct alignas(16) ConstantData
 			{
 				Mat4x4 world{};
-			};
-
-			struct WireframeColorConstant
-			{
 				Vec4 meshColor;
 				Vec4 lineColor;
 				float lineThickness;

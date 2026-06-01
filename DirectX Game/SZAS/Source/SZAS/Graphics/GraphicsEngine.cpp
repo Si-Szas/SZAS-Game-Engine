@@ -128,41 +128,6 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,0.0f,0.0f,1.0f} }
 	};
 
-	//const Vertex vertexList[] =
-	//{
-	//	//1ST TRIANGLE
-	//	/* V0 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} },
-	//	/* V1 */{ {-0.5f, 0.5f, 0.0f},	{0.0f,1.0f,1.0f,1.0f} },
-	//	/* V2 */{ {0.5f, 0.5f, 0.0f},	{1.0f,0.0f,1.0f,1.0f} },
-	//	//2ND TRIANGLE									 
-	//	/* V3 */{ {0.5f, 0.5f, 0.0f},{1.0f,0.0f,1.0f,1.0f} },
-	//	/* V4 */{ {0.5f, -0.5f, 0.0f},	{1.0f,1.0f,1.0f,1.0f} },
-	//	/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} }
-	//};
-
-	//const Vertex vertexList[] =
-	//{
-	//	//ANIMATING TRIANGLE
-	//	/* V1 */ {
-	//		/* P0 */ {-0.5f, -0.5f, 0.0f},
-	//		/* P1 */ {-0.75f, -0.85f, 0.0f},
-	//		/* C0 */ {1.0f, 1.0f, 0.0f, 1.0f},
-	//		/* C1 */ {0.0f, 1.0f, 0.0f, 1.0f}
-	//			 },
-	//	/* V2 */ {
-	//		/* P0 */ {0.0f, 0.5f, 0.0f},
-	//		/* P1 */ {0.65f, 0.85f, 0.0f},
-	//		/* C0 */ {0.0f, 1.0f, 1.0f, 1.0f},
-	//		/* C1 */ {0.0f, 0.0f, 1.0f, 1.0f}
-	//			 },
-	//	/* V2 */ {
-	//		/* P0 */ {0.5f, -0.5f, 0.0f},
-	//		/* P1 */ {0.65f, -0.85f, 0.0f},
-	//		/* C0 */ {1.0f, 0.0f, 1.0f, 1.0f},
-	//		/* C1 */ {1.0f, 0.0f, 0.0f, 1.0f}
-	//			 }
-	//};
-
 	//Create Vertex Buffer and store it
 	m_vertexBuffer = device.CreateVertexBuffer
 	({
@@ -206,18 +171,14 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 
 	ConstantData data
 	{
-		worldMatrix
-	};
-
-	WireframeColorConstant wireframeColorData
-	{
-		/*Fill Color*/{0.0f, 0.0f, 0.0f, 0.0f},
-		/*Mesh Color*/{1.0f, 0.0f, 1.0f, 0.0f},
-		/*Line Thickness*/5.0f
+		/*World Matrix*/	worldMatrix,
+		/*Fill Color*/		{0.0f, 0.0f, 0.0f, 0.0f},
+		/*Mesh Color*/		{1.0f, 0.0f, 1.0f, 0.0f},
+		/*Line Thickness*/	5.0f
 	};
 
 	//Update the constant buffer before everything
-	context.UpdateConstantBuffer(constantBuffer, &wireframeColorData);
+	context.UpdateConstantBuffer(constantBuffer, &data);
 	//We want to first clear the buffer, then after rendering on a back buffer, we want to move that back to the front buffer
 	context.ClearAndSetBackBuffer(swapChain, {0.251f, 0.141f, 0.31f, 1.0f});
 	//Record render command that clears content of back buffer and binds it so we can render elements onto it
