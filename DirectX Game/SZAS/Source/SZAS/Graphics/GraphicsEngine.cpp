@@ -124,7 +124,11 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		//2ND TRIANGLE									 
 		/* V3 */{ {0.5f, 0.5f, 0.0f},{1.0f,0.0f,1.0f,1.0f} },
 		/* V4 */{ {0.5f, -0.5f, 0.0f},	{1.0f,1.0f,1.0f,1.0f} },
-		/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} }
+		/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} },
+
+		/* V6 */{ { -0.25f, -0.75f, 0.0f }, {1.0f, 0.0f, 0.0f, 1.0f} },
+		/* V7 */{ {0.0f, 0.5f, 0.0f},    {0.0f, 1.0f, 0.0f, 1.0f} },
+		/* V8 */{ {0.25f, -0.75f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f} },
 	};
 
 	//const Vertex vertexList[] =
