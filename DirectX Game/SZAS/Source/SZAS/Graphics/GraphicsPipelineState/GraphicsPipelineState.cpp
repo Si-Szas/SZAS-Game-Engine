@@ -13,6 +13,10 @@ szas::GraphicsPipelineState::GraphicsPipelineState(const GraphicsPipelineStateDe
 	auto vs = graphicsPipelineStateDescriptor.vertexShader.GetShaderBinaryData();
 	//Retrieve Pixel Shader Binary Data
 	auto ps = graphicsPipelineStateDescriptor.pixelShader.GetData();
+	//Retrieve Hull Shader Binary Data
+	auto hs = graphicsPipelineStateDescriptor.hullShader.GetData();
+	//Retrieve Domain Shader Binary Data
+	auto ds = graphicsPipelineStateDescriptor.domainShader.GetData();
 
 	auto vsInputElements = graphicsPipelineStateDescriptor.vertexShader.GetInputElementsData();
 
@@ -50,5 +54,27 @@ szas::GraphicsPipelineState::GraphicsPipelineState(const GraphicsPipelineStateDe
 			&m_pixelShader	//Output parameter where created D3D11 Shader object will be stored
 		),
 		"CreatePixelShader() failed."
+	);
+
+	SZASGraphicsLogThrowOnFail(
+		m_d3dDevice.CreateHullShader
+		(
+			hs.data,
+			hs.dataSize,
+			nullptr,
+			&m_hullShader
+		),
+		"CreateHullShader() failed."
+	);
+
+	SZASGraphicsLogThrowOnFail(
+		m_d3dDevice.CreateDomainShader
+		(
+			ds.data,
+			ds.dataSize,
+			nullptr,
+			&m_domainShader
+		),
+		"CreateDomainShader() failed."
 	);
 }

@@ -19,6 +19,8 @@ namespace szas
 				//Vertex/Pixel Shader, 5.0 is shader model version
 				case szas::ShaderType::VertexShader: return "vs_5_0"; break;
 				case szas::ShaderType::PixelShader:	return "ps_5_0";  break;
+				case szas::ShaderType::HullShader: return "hs_5_0"; break;
+				case szas::ShaderType::DomainShader: return "ds_5_0"; break;
 				default: return "";
 			}
 		}

@@ -18,65 +18,137 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 
 	//Define the Shader File Path
 		// Relative paths are relative to the root of project folder (DirectX Game Folder)
-	constexpr char shaderFilePath[] = "SZAS/Assets/Shaders/Basic.hlsl";
+	constexpr char vertexShaderFilePath[] = "SZAS/Assets/Shaders/VertexShader.hlsl";
 	//Read the contents of the shader file
-	std::ifstream shaderStream(shaderFilePath);
-	if (!shaderStream) SZASLogThrowError("Failed to open shader file.");
+	std::ifstream vertexShaderStream(vertexShaderFilePath);
+	if (!vertexShaderStream) SZASLogThrowError("Failed to open VertexShader.hlsl file.");
 	//Retrieve file data. So calling Range would call the entire shader into a string
-	std::string shaderFileData{
-		std::istreambuf_iterator<char>(shaderStream),	//Beginning of the file
+	std::string vertexShaderFileData{
+		std::istreambuf_iterator<char>(vertexShaderStream),	//Beginning of the file
 		std::istreambuf_iterator<char>()				//Beginning of the end
 	};
 
 	//Create a ShaderSourceCode using constexpr (evaluate value at compile time)
-	auto shaderSourceCode = shaderFileData.c_str();
-	auto shaderSourceCodeSize = shaderFileData.length();
+	auto vertexShaderSourceCode = vertexShaderFileData.c_str();
+	auto vertexShaderSourceCodeSize = vertexShaderFileData.length();
 
 	//Call our compile shader method, pass the shader we created
 		//VERTEX SHADER
 	auto vs = device.CompileShader({
-		shaderFilePath,
-		shaderSourceCode,
-		shaderSourceCodeSize,
-		"VSMain",
+		vertexShaderFilePath,
+		vertexShaderSourceCode,
+		vertexShaderSourceCodeSize,
+		"VS_Main",
 		ShaderType::VertexShader
 	});
+
+	//Define Shader File Path for Hull Shader
+	constexpr char hullShaderFilePath[] = "SZAS/Assets/Shaders/HullShader.hlsl";
+	std::ifstream hullShaderStream(hullShaderFilePath);
+	if (!hullShaderStream) SZASLogThrowError("Failed to open HullShader.hlsl file.");
+
+	std::string hullShaderFileData{
+		std::istreambuf_iterator<char>(hullShaderStream),	//Beginning of the file
+		std::istreambuf_iterator<char>()				//Beginning of the end
+	};
+	
+	auto hullShaderSourceCode = hullShaderFileData.c_str();
+	auto hullShaderSourceCodeSize = hullShaderFileData.length();
+
+	//Compile Hull Shader
+	auto hs = device.CompileShader({
+		hullShaderFilePath,
+		hullShaderSourceCode,
+		hullShaderSourceCodeSize,
+		"HS_Main",
+		ShaderType::HullShader
+		});
+
+	//Define Shader File Path for Domain Shader
+	constexpr char domainShaderFilePath[] = "SZAS/Assets/Shaders/DomainShader.hlsl";
+	std::ifstream domainShaderStream(domainShaderFilePath);
+	if (!domainShaderStream) SZASLogThrowError("Failed to open DomainShader.hlsl file.");
+
+	std::string domainShaderFileData{
+		std::istreambuf_iterator<char>(domainShaderStream),	//Beginning of the file
+		std::istreambuf_iterator<char>()				//Beginning of the end
+	};
+
+	auto domainShaderSourceCode = domainShaderFileData.c_str();
+	auto domainShaderSourceCodeSize = domainShaderFileData.length();
+
+	//Compile Domain Shader
+	auto ds = device.CompileShader({
+		domainShaderFilePath,
+		domainShaderSourceCode,
+		domainShaderSourceCodeSize,
+		"DS_Main",
+		ShaderType::DomainShader
+	});
+
+	constexpr char pixelShaderFilePath[] = "SZAS/Assets/Shaders/PixelShader.hlsl";
+	//Read the contents of the shader file
+	std::ifstream pixelShaderStream(pixelShaderFilePath);
+	if (!pixelShaderStream) SZASLogThrowError("Failed to open PixelShader.hlsl file.");
+	//Retrieve file data. So calling Range would call the entire shader into a string
+	std::string pixelShaderFileData{
+		std::istreambuf_iterator<char>(pixelShaderStream),	//Beginning of the file
+		std::istreambuf_iterator<char>()				//Beginning of the end
+	};
+
+	//Create a ShaderSourceCode using constexpr (evaluate value at compile time)
+	auto pixelShaderSourceCode = pixelShaderFileData.c_str();
+	auto pixelShaderSourceCodeSize = pixelShaderFileData.length();
+
 	//PIXEL SHADER
 	auto ps = device.CompileShader({
-		shaderFilePath,
-		shaderSourceCode,
-		shaderSourceCodeSize,
-		"PSMain",
+		pixelShaderFilePath,
+		pixelShaderSourceCode,
+		pixelShaderSourceCodeSize,
+		"PS_Main",
 		ShaderType::PixelShader
-	});
+		});
+
 
 	auto vertexShaderSignature = device.CreateVertexShaderSignature({vs});
 
 	//Create Graphics Pipeline State
-	m_pipeline = device.CreateGraphicsPipelineState({*vertexShaderSignature, *ps});
+	m_pipeline = device.CreateGraphicsPipelineState({*vertexShaderSignature, *ps, *hs, *ds});
 
 	const Vertex vertexList[] =
 	{
-		//ANIMATING TRIANGLE
-		/* V1 */ {
-			/* P0 */ {-0.5f, -0.5f, 0.0f},
-			/* P1 */ {-0.75f, -0.85f, 0.0f},
-			/* C0 */ {1.0f, 1.0f, 0.0f, 1.0f},
-			/* C1 */ {0.0f, 1.0f, 0.0f, 1.0f}
-				 },
-		/* V2 */ {
-			/* P0 */ {0.0f, 0.5f, 0.0f},
-			/* P1 */ {0.65f, 0.85f, 0.0f},
-			/* C0 */ {0.0f, 1.0f, 1.0f, 1.0f},
-			/* C1 */ {0.0f, 0.0f, 1.0f, 1.0f}
-				 },
-		/* V2 */ {
-			/* P0 */ {0.5f, -0.5f, 0.0f},
-			/* P1 */ {0.65f, -0.85f, 0.0f},
-			/* C0 */ {1.0f, 0.0f, 1.0f, 1.0f},
-			/* C1 */ {1.0f, 0.0f, 0.0f, 1.0f}
-				 }
+		//1ST TRIANGLE
+		/* V0 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} },
+		/* V1 */{ {-0.5f, 0.5f, 0.0f},	{0.0f,1.0f,1.0f,1.0f} },
+		/* V2 */{ {0.5f, 0.5f, 0.0f},	{1.0f,0.0f,1.0f,1.0f} },
+		//2ND TRIANGLE									 
+		/* V3 */{ {0.5f, 0.5f, 0.0f},{1.0f,0.0f,1.0f,1.0f} },
+		/* V4 */{ {0.5f, -0.5f, 0.0f},	{1.0f,1.0f,1.0f,1.0f} },
+		/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} }
 	};
+
+	//const Vertex vertexList[] =
+	//{
+	//	//ANIMATING TRIANGLE
+	//	/* V1 */ {
+	//		/* P0 */ {-0.5f, -0.5f, 0.0f},
+	//		/* P1 */ {-0.75f, -0.85f, 0.0f},
+	//		/* C0 */ {1.0f, 1.0f, 0.0f, 1.0f},
+	//		/* C1 */ {0.0f, 1.0f, 0.0f, 1.0f}
+	//			 },
+	//	/* V2 */ {
+	//		/* P0 */ {0.0f, 0.5f, 0.0f},
+	//		/* P1 */ {0.65f, 0.85f, 0.0f},
+	//		/* C0 */ {0.0f, 1.0f, 1.0f, 1.0f},
+	//		/* C1 */ {0.0f, 0.0f, 1.0f, 1.0f}
+	//			 },
+	//	/* V2 */ {
+	//		/* P0 */ {0.5f, -0.5f, 0.0f},
+	//		/* P1 */ {0.65f, -0.85f, 0.0f},
+	//		/* C0 */ {1.0f, 0.0f, 1.0f, 1.0f},
+	//		/* C1 */ {1.0f, 0.0f, 0.0f, 1.0f}
+	//			 }
+	//};
 
 	//Create Vertex Buffer and store it
 	m_vertexBuffer = device.CreateVertexBuffer
@@ -106,8 +178,28 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 	auto& context = *m_deviceContext;
 	d64 deltaTime = szas::EngineTime::GetDeltaTime();
 
+	//std::cout << m_position << std::endl;
+
+	m_position += deltaTime * 0.5f;
+	m_rotation += deltaTime * 0.5f;
+	m_scale = std::abs(std::sin(m_rotation));
+	
+	//SZASLogInformation("Pos: X:{} Y:{}", m_position, m_position);
+	//SZASLogInformation("Rot: Z:{}", m_rotation);
+	//SZASLogInformation("Scale: {}", m_scale);
+
+	auto worldMatrix =
+		Mat4x4::scale({m_scale, m_scale, m_scale}) *
+		Mat4x4::rotateAlongZ(m_rotation) *
+		Mat4x4::translate({ m_position ,m_position ,0 });
+
+	ConstantData data
+	{
+		worldMatrix
+	};
+
 	//Update the constant buffer before everything
-	context.UpdateConstantBuffer(constantBuffer, &deltaTime);
+	context.UpdateConstantBuffer(constantBuffer, &data);
 	//We want to first clear the buffer, then after rendering on a back buffer, we want to move that back to the front buffer
 	context.ClearAndSetBackBuffer(swapChain, {0.251f, 0.141f, 0.31f, 1.0f});
 	//Record render command that clears content of back buffer and binds it so we can render elements onto it
@@ -131,7 +223,7 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 		//Can only be called once graphics pipeline is set up. Provides all shaders
 		//Set viewport size which defines area of render target (back buffer)
 		//Bind vertex buffer to graphics pipeline, which provides vertices from which geometric shapes and raster image will be generated
-	context.DrawTriangleList(
+	context.DrawTriangleListWithTessellation(
 		vertexBuffer.GetVertexListSize(),		//Vertex List size
 		0u										//Index we want to start drawing at
 	);

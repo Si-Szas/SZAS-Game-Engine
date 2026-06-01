@@ -50,6 +50,20 @@ void szas::DeviceContext::SetGraphicsPipelineState(const GraphicsPipelineState& 
 		0								//Related to dynamic shader linkage
 	);
 
+	//Set up Hull Shader
+	m_context->HSSetShader(
+		pipeline.m_hullShader.Get(),
+		nullptr,
+		0
+	);
+
+	//Set up Domain Shader
+	m_context->DSSetShader(
+		pipeline.m_domainShader.Get(),
+		nullptr,
+		0
+	);
+
 	//Do the same but for pixel shader
 	m_context->PSSetShader(
 		pipeline.m_pixelShader.Get(),	//Get Pixel Shader in Pipeline
@@ -131,7 +145,35 @@ void szas::DeviceContext::DrawTriangleList(ui32 vertexCount, ui32 startVertexLoc
 	//How it assembles data into geometric primitives
 	//Tells GPU how to connect the vertices
 	//Triangle list specifies how the GPU should treat vertex data, every 3 vertices is an independent triangle
+
+	//For tessellation
 	m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	//Call Draw function
+	m_context->Draw
+	(
+		vertexCount,		//Vertex Count. Defines number of vertices to draw
+		startVertexLocation //Start vertex location. Allows us to specify the index of the first index in the vertex buffer to start drawing from
+	);
+}
+
+void szas::DeviceContext::DrawTriangleListWithTessellation(ui32 vertexCount, ui32 startVertexLocation)
+{
+	//For tessellation
+	m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST);
+
+	//Call Draw function
+	m_context->Draw
+	(
+		vertexCount,		//Vertex Count. Defines number of vertices to draw
+		startVertexLocation //Start vertex location. Allows us to specify the index of the first index in the vertex buffer to start drawing from
+	);
+}
+
+void szas::DeviceContext::DrawTriangleStrip(ui32 vertexCount, ui32 startVertexLocation)
+{
+	//For tessellation
+	m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	//Call Draw function
 	m_context->Draw

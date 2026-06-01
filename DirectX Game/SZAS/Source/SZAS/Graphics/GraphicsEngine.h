@@ -27,16 +27,20 @@ namespace szas
 			struct Vertex 
 			{
 				Vec3 position;
-				Vec3 position1;
+				//Vec3 position1;
 				Vec4 color;
-				Vec4 color1;
+				//Vec4 color1;
 			};
 
 			//prevent adding variables
-			__declspec(align(16))
-			struct ConstantData
+			//struct alignas(16) ConstantData
+			//{
+			//	unsigned int m_time;
+			//};
+
+			struct alignas(16) ConstantData
 			{
-				unsigned int m_time;
+				Mat4x4 world{};
 			};
 
 		private:
@@ -47,7 +51,8 @@ namespace szas
 			VertexBufferPtr m_vertexBuffer{};
 			ConstantBufferPtr m_constantBuffer{};
 
-
+			//Testing Matrix
+			f32 m_rotation{}, m_scale{}, m_position{-1.0f};
 	};
 }
 

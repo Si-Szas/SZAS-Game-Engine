@@ -25,7 +25,8 @@ namespace szas {
 			
 			//DRAW
 			void DrawTriangleList(ui32 vertexCount, ui32 startVertexLocation);
-
+			void DrawTriangleListWithTessellation(ui32 vertexCount, ui32 startVertexLocation);
+			void DrawTriangleStrip(ui32 vertexCount, ui32 startVertexLocation);
 
 		private:
 			Microsoft::WRL::ComPtr <ID3D11DeviceContext> m_context{};

@@ -42,7 +42,9 @@ namespace szas
 	enum class ShaderType 
 	{
 		VertexShader = 0,
-		PixelShader
+		PixelShader,
+		HullShader,
+		DomainShader
 	};
 
 	struct ShaderCompileDescriptor
@@ -65,6 +67,8 @@ namespace szas
 	{
 		const VertexShaderSignature& vertexShader;
 		const ShaderBinary& pixelShader;
+		const ShaderBinary& hullShader;
+		const ShaderBinary& domainShader;
 	};
 
 	struct BinaryData

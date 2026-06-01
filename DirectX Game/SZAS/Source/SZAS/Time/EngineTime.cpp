@@ -28,7 +28,7 @@ void szas::EngineTime::LogFrameEnd()
 
 	sharedInstance->deltaTime = elapsedSeconds.count();
 
-	std::cout << "Frame update finished in: " << sharedInstance->deltaTime << " seconds\n";
+	//std::cout << "Frame update finished in: " << sharedInstance->deltaTime << " seconds\n";
 }
 
 szas::d64 szas::EngineTime::GetDeltaTime()
