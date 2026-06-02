@@ -158,6 +158,7 @@
     <ClCompile Include="SZAS\Source\SZAS\Graphics\VertexShaderSignature\VertexShaderSignature.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Include\SZAS\Math\Vector3D.h" />
     <ClInclude Include="SZAS\Source\SZAS\Time\EngineTime.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Mat4x4.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.h" />

@@ -19,8 +19,9 @@ VS_OUTPUT VS_Main(VS_INPUT input)
 {
     VS_OUTPUT output;
     
-    float4 localPosition = float4(input.position, 1.0f);
-    output.position = mul(localPosition, world);
+    //float4 localPosition = float4(input.position, 1.0f);
+    //output.position = mul(localPosition, world);
+    output.position = input.position;
     
     output.color = input.color;
     

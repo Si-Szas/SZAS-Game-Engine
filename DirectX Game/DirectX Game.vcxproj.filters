@@ -143,5 +143,8 @@
     <ClInclude Include="SZAS\Include\SZAS\Math\Mat4x4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\Math\Vector3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
