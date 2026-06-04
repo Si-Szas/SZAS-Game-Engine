@@ -2,6 +2,13 @@
 #include <stdexcept>
 #include <memory>
 
+#define szas_disable_copy_and_move(Class)\
+protected:\
+	Class(const Class&) = delete;\
+	Class& operator=(const Class&) = delete;\
+	Class(Class&&) = delete;\
+	Class& operator=(Class&&) = delete;
+
 namespace szas {
 	//Window
 	class Base;
@@ -35,18 +42,7 @@ namespace szas {
 	using ui32 = unsigned int;
 	using f32 = float;
 	using d64 = double;
-	//All resources shared by render system, and they can have multiple owners, so we can use shared pointer
-	using SwapChainPtr = std::shared_ptr<SwapChain>;
-	//Alias to device context pointer
-	using DeviceContextPtr = std::shared_ptr<DeviceContext>;
-	//Alias so ShaderPtr
-	using ShaderBinaryPtr = std::shared_ptr<ShaderBinary>;
-	//Graphics Pipeline State
-	using GraphicsPipelineStatePtr = std::shared_ptr<GraphicsPipelineState>;
-	//Vertex Buffer Pointer
-	using VertexBufferPtr = std::shared_ptr<VertexBuffer>;
-	//Vertex Shader Signature Pointer
-	using VertexShaderSignaturePtr = std::shared_ptr<VertexShaderSignature>;
-	//Constant Buffer Pointer
-	using ConstantBufferPtr = std::shared_ptr<ConstantBuffer>;
+	
+	template <typename T> using RefPtr = std::shared_ptr<T>;
+	template <typename T> using UniquePtr = std::unique_ptr<T>;
 }

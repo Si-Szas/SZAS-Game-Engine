@@ -8,7 +8,9 @@
 #include <SZAS/Graphics/ConstantBuffer/ConstantBuffer.h>
 #include <SZAS/Graphics/VertexShaderSignature/VertexShaderSignature.h>
 
-szas::GraphicsDevice::GraphicsDevice(const GraphicsDeviceDescriptor& descriptor): Base(descriptor.base)
+using namespace szas;
+
+GraphicsDevice::GraphicsDevice(const GraphicsDeviceDescriptor& descriptor): Base(descriptor.base)
 {
 	D3D_FEATURE_LEVEL featureLevel{};
 	UINT createDeviceFlags{};
@@ -51,48 +53,48 @@ szas::GraphicsDevice::GraphicsDevice(const GraphicsDeviceDescriptor& descriptor)
 	);
 }
 
-szas::GraphicsDevice::~GraphicsDevice()
+GraphicsDevice::~GraphicsDevice()
 {
 }
 
-szas::SwapChainPtr szas::GraphicsDevice::CreateSwapChain(const SwapChainDescriptor& descriptor)
+RefPtr<SwapChain> GraphicsDevice::CreateSwapChain(const SwapChainDescriptor& descriptor)
 {
 	//You can use using namespace szas but it should only be in cpp files and only if necessary
 	return std::make_shared<SwapChain>(descriptor, GetGraphicsResourceDescriptor());
 }
 
-szas::DeviceContextPtr szas::GraphicsDevice::CreateDeviceContext()
+RefPtr<DeviceContext> GraphicsDevice::CreateDeviceContext()
 {
 	return std::make_shared<DeviceContext>(GetGraphicsResourceDescriptor());
 }
 
-szas::ShaderBinaryPtr szas::GraphicsDevice::CompileShader(const ShaderCompileDescriptor& descriptor)
+RefPtr<ShaderBinary> GraphicsDevice::CompileShader(const ShaderCompileDescriptor& descriptor)
 {
 	return std::make_shared<ShaderBinary>(descriptor, GetGraphicsResourceDescriptor());
 }
 
-szas::GraphicsPipelineStatePtr szas::GraphicsDevice::CreateGraphicsPipelineState(const GraphicsPipelineStateDescriptor& descriptor)
+RefPtr<GraphicsPipelineState> GraphicsDevice::CreateGraphicsPipelineState(const GraphicsPipelineStateDescriptor& descriptor)
 {
 	return std::make_shared<GraphicsPipelineState>(descriptor, GetGraphicsResourceDescriptor());
 }
 
-szas::VertexBufferPtr szas::GraphicsDevice::CreateVertexBuffer(const VertexBufferDescriptor& descriptor)
+RefPtr<VertexBuffer> GraphicsDevice::CreateVertexBuffer(const VertexBufferDescriptor& descriptor)
 {
 	return std::make_shared<VertexBuffer>(descriptor, GetGraphicsResourceDescriptor());
 }
 
-szas::VertexShaderSignaturePtr szas::GraphicsDevice::CreateVertexShaderSignature(const VertexShaderSignatureDescriptor& descriptor)
+RefPtr<VertexShaderSignature> GraphicsDevice::CreateVertexShaderSignature(const VertexShaderSignatureDescriptor& descriptor)
 {
 	return std::make_shared<VertexShaderSignature>(descriptor, GetGraphicsResourceDescriptor());
 }
 
-szas::ConstantBufferPtr szas::GraphicsDevice::CreateConstantBuffer(const ConstantBufferDescriptor& descriptor)
+RefPtr<ConstantBuffer> GraphicsDevice::CreateConstantBuffer(const ConstantBufferDescriptor& descriptor)
 {
 	return std::make_shared<ConstantBuffer>(descriptor, GetGraphicsResourceDescriptor());
 }
 
 //This function retrieves command lists, then executes it
-void szas::GraphicsDevice::ExecuteCommandList(DeviceContext& context)
+void GraphicsDevice::ExecuteCommandList(DeviceContext& context)
 {
 	Microsoft::WRL::ComPtr<ID3D11CommandList> commandList{};
 
@@ -112,7 +114,7 @@ void szas::GraphicsDevice::ExecuteCommandList(DeviceContext& context)
 	);
 }
 
-szas::GraphicsResourceDescriptor szas::GraphicsDevice::GetGraphicsResourceDescriptor() const noexcept
+GraphicsResourceDescriptor szas::GraphicsDevice::GetGraphicsResourceDescriptor() const noexcept
 {
 	return { {m_logger}, shared_from_this(), *m_d3dDevice.Get(), *m_dxgiFactory.Get()};
 

@@ -15,13 +15,13 @@ namespace szas
 			explicit GraphicsDevice(const GraphicsDeviceDescriptor& descriptor);
 			
 			//FUNCTIONS
-			SwapChainPtr CreateSwapChain(const SwapChainDescriptor& descriptor);
-			DeviceContextPtr CreateDeviceContext();
-			ShaderBinaryPtr CompileShader(const ShaderCompileDescriptor& descriptor);
-			GraphicsPipelineStatePtr CreateGraphicsPipelineState(const GraphicsPipelineStateDescriptor& descriptor);
-			VertexBufferPtr CreateVertexBuffer(const VertexBufferDescriptor& descriptor);
-			VertexShaderSignaturePtr CreateVertexShaderSignature(const VertexShaderSignatureDescriptor& descriptor);
-			ConstantBufferPtr CreateConstantBuffer(const ConstantBufferDescriptor& descriptor);
+			RefPtr<SwapChain> CreateSwapChain(const SwapChainDescriptor& descriptor);
+			RefPtr<DeviceContext> CreateDeviceContext();
+			RefPtr<ShaderBinary> CompileShader(const ShaderCompileDescriptor& descriptor);
+			RefPtr<GraphicsPipelineState> CreateGraphicsPipelineState(const GraphicsPipelineStateDescriptor& descriptor);
+			RefPtr<VertexBuffer> CreateVertexBuffer(const VertexBufferDescriptor& descriptor);
+			RefPtr<VertexShaderSignature> CreateVertexShaderSignature(const VertexShaderSignatureDescriptor& descriptor);
+			RefPtr<ConstantBuffer> CreateConstantBuffer(const ConstantBufferDescriptor& descriptor);
 
 
 			void ExecuteCommandList(DeviceContext& context);

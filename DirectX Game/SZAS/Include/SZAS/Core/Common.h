@@ -60,7 +60,7 @@ namespace szas
 
 	struct VertexShaderSignatureDescriptor
 	{
-		const ShaderBinaryPtr& vertexShaderBinary;
+		const RefPtr<ShaderBinary>& vertexShaderBinary;
 	};
 
 	struct GraphicsPipelineStateDescriptor

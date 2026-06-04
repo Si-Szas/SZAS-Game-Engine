@@ -13,6 +13,6 @@ namespace szas
 			SwapChain& GetSwapChain() noexcept;
 
 		private:
-			SwapChainPtr m_swapChain{};
+			RefPtr<SwapChain> m_swapChain{};
 	};
 }

@@ -49,10 +49,10 @@ namespace szas
 		private:
 			//Define a smart pointer to a render system variable of class Render System
 			std::shared_ptr<GraphicsDevice> m_graphicsDevice{};
-			DeviceContextPtr m_deviceContext{};
-			GraphicsPipelineStatePtr m_pipeline{};
-			VertexBufferPtr m_vertexBuffer{};
-			ConstantBufferPtr m_constantBuffer{};
+			RefPtr<DeviceContext> m_deviceContext{};
+			RefPtr<GraphicsPipelineState> m_pipeline{};
+			RefPtr<VertexBuffer> m_vertexBuffer{};
+			RefPtr<ConstantBuffer> m_constantBuffer{};
 
 			//Testing Matrix Transformation
 			f32 m_rotation{}, m_scale{}, m_position{-1.0f};

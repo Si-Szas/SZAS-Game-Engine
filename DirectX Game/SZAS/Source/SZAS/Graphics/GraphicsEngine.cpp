@@ -119,13 +119,13 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	const Vertex vertexList[] =
 	{
 		//1ST TRIANGLE
-		/* V0 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,0.0f,0.0f,1.0f} },
-		/* V1 */{ {-0.5f, 0.5f, 0.0f},	{0.0f,1.0f,0.0f,1.0f} },
-		/* V2 */{ {0.5f, 0.5f, 0.0f},	{0.0f,0.0f,1.0f,1.0f} },
-
-		/* V3 */{ {0.5f, 0.5f, 0.0f},	{0.0f,0.0f,1.0f,1.0f} },
-		/* V4 */{ {0.5f, -0.5f, 0.0f},	{0.0f,1.0f,0.0f,1.0f} },
-		/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,0.0f,0.0f,1.0f} },
+		/* V0 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} },
+		/* V1 */{ {-0.5f, 0.5f, 0.0f},	{0.0f,1.0f,1.0f,1.0f} },
+		/* V2 */{ {0.5f, 0.5f, 0.0f},	{1.0f,0.0f,1.0f,1.0f} },
+		//2ND TRIANGLE									 
+		/* V3 */{ {0.5f, 0.5f, 0.0f},	{1.0f,0.0f,1.0f,1.0f} },
+		/* V4 */{ {0.5f, -0.5f, 0.0f},	{1.0f,1.0f,1.0f,1.0f} },
+		/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} }
 	};
 
 	//Create Vertex Buffer and store it
