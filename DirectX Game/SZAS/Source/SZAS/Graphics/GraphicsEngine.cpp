@@ -18,10 +18,10 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 
 	//Define the Shader File Path
 		// Relative paths are relative to the root of project folder (DirectX Game Folder)
-	constexpr char vertexShaderFilePath[] = "SZAS/Assets/Shaders/Wireframe/WireframeVertexShader.hlsl";
+	constexpr char vertexShaderFilePath[] = "SZAS/Assets/Shaders/VertexShader.hlsl";
 	//Read the contents of the shader file
 	std::ifstream vertexShaderStream(vertexShaderFilePath);
-	if (!vertexShaderStream) SZASLogThrowError("Failed to open WireframeVertexShader.hlsl file.");
+	if (!vertexShaderStream) SZASLogThrowError("Failed to open VertexShader.hlsl file.");
 	//Retrieve file data. So calling Range would call the entire shader into a string
 	std::string vertexShaderFileData{
 		std::istreambuf_iterator<char>(vertexShaderStream),	//Beginning of the file
@@ -43,7 +43,7 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	});
 
 	//Define Shader File Path for Hull Shader
-	constexpr char hullShaderFilePath[] = "SZAS/Assets/Shaders/Wireframe/WireframeHullShader.hlsl";
+	constexpr char hullShaderFilePath[] = "SZAS/Assets/Shaders/HullShader.hlsl";
 	std::ifstream hullShaderStream(hullShaderFilePath);
 	if (!hullShaderStream) SZASLogThrowError("Failed to open WireframeHullShader.hlsl file.");
 
@@ -65,7 +65,7 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		});
 
 	//Define Shader File Path for Domain Shader
-	constexpr char domainShaderFilePath[] = "SZAS/Assets/Shaders/Wireframe/WireframeDomainShader.hlsl";
+	constexpr char domainShaderFilePath[] = "SZAS/Assets/Shaders/DomainShader.hlsl";
 	std::ifstream domainShaderStream(domainShaderFilePath);
 	if (!domainShaderStream) SZASLogThrowError("Failed to open WireframeDomainShader.hlsl file.");
 
@@ -86,10 +86,10 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		ShaderType::DomainShader
 	});
 
-	constexpr char pixelShaderFilePath[] = "SZAS/Assets/Shaders/Wireframe/WireframePixelShader.hlsl";
+	constexpr char pixelShaderFilePath[] = "SZAS/Assets/Shaders/PixelShader.hlsl";
 	//Read the contents of the shader file
 	std::ifstream pixelShaderStream(pixelShaderFilePath);
-	if (!pixelShaderStream) SZASLogThrowError("Failed to open WireframePixelShader.hlsl file.");
+	if (!pixelShaderStream) SZASLogThrowError("Failed to open PixelShader.hlsl file.");
 	//Retrieve file data. So calling Range would call the entire shader into a string
 	std::string pixelShaderFileData{
 		std::istreambuf_iterator<char>(pixelShaderStream),	//Beginning of the file
@@ -168,7 +168,7 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 		Mat4x4::rotateAlongZ(m_rotation) *
 		Mat4x4::scale({m_scale, m_scale, m_scale}) *
 		Mat4x4::translate({ m_position ,m_position ,0 });
-
+	
 	ConstantData data
 	{
 		/*World Matrix*/	worldMatrix,
