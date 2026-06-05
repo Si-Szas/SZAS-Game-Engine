@@ -22,8 +22,8 @@ szas::ConstantBuffer::ConstantBuffer(const ConstantBufferDescriptor& constantBuf
 	SZASGraphicsLogThrowOnFail(
 		m_d3dDevice.CreateBuffer
 		(
-			&bufferDescriptor,	//Pointer to a buffer descriptor. A structure that describes how the GPU buffer should be created
-			&initialData,		//D3D11 Subresource data. Provides a way to supply initial CPU side data to the GPU resource during creation 
-			&m_buffer			//Output parameter. Hold the final buffer object
+			&bufferDescriptor,									//Pointer to a buffer descriptor. A structure that describes how the GPU buffer should be created
+			(constantBufferDescriptor.buffer) ? &initialData:nullptr,	//D3D11 Subresource data. Provides a way to supply initial CPU side data to the GPU resource during creation 
+			&m_buffer											//Output parameter. Hold the final buffer object
 		), "CreateBuffer() failed.");
 }

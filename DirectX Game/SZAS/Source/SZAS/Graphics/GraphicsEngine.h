@@ -4,6 +4,7 @@
 #include <SZAS/Math/Vec3.h>
 #include <SZAS/Math/Vec4.h>
 #include <SZAS/Math/Mat4x4.h>
+#include <SZAS/Graphics/AGameObject/AGameObject.h>
 
 namespace szas
 {
@@ -15,7 +16,7 @@ namespace szas
 			explicit GraphicsEngine(const GraphicsEngineDescriptor& descriptor);
 
 			//GETTER
-				GraphicsDevice& GetGraphicsDevice() noexcept;
+			GraphicsDevice& GetGraphicsDevice() noexcept;
 			
 			//RENDER
 			void Render(SwapChain& swapChain); //Important for rendering objects to the screen (app window)
@@ -24,12 +25,10 @@ namespace szas
 			virtual ~GraphicsEngine() override;
 
 		private:
-			struct Vertex 
+			struct Vertex
 			{
 				Vec3 position;
-				//Vec3 position1;
 				Vec4 color;
-				//Vec4 color1;
 			};
 
 			//prevent adding variables
@@ -48,14 +47,17 @@ namespace szas
 
 		private:
 			//Define a smart pointer to a render system variable of class Render System
-			std::shared_ptr<GraphicsDevice> m_graphicsDevice{};
+			RefPtr<GraphicsDevice> m_graphicsDevice{};
 			RefPtr<DeviceContext> m_deviceContext{};
 			RefPtr<GraphicsPipelineState> m_pipeline{};
 			RefPtr<VertexBuffer> m_vertexBuffer{};
 			RefPtr<ConstantBuffer> m_constantBuffer{};
+			RefPtr<AGameObject> m_AGameObject{};
 
 			//Testing Matrix Transformation
 			f32 m_rotation{}, m_scale{}, m_position{-1.0f};
+
+			//AGameObject m_quadTest;
 	};
 }
 

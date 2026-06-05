@@ -16,26 +16,25 @@ namespace szas
 			auto errorMsg = errorBlob ? static_cast<const char*>(errorBlob->GetBufferPointer()) : nullptr;
 
 			if (FAILED(hr))
-				SZASLogThrow(logger, std::runtime_error, Logger::LogLevel::Error, errorMsg ? errorMsg : "Shader Compilation failed.");
-			
-			//If the function succeeded but there are still messages, then there are warnings
-			if(errorMsg) 
-				SZASLog(logger, Logger::LogLevel::Warning, errorMsg);
+				SZASLogThrow(logger, std::runtime_error, Logger::LogLevel::Error, "Shader compilation failed.\nDetails:\n{}",
+					errorMsg ? errorMsg : "");
+			if (errorMsg)
+				SZASLog(logger, Logger::LogLevel::Warning, "Shader compiled with warnings.\nDetails:\n{}", errorMsg);
 
 		}
 	}
 }
 
-#define SZASGraphicsLogThrowOnFail(hr, message)\
+#define SZASGraphicsLogThrowOnFail(hr,message,...)\
 	{\
 		auto res = (hr);\
-		if(FAILED(res))\
-			SZASLogThrowError(message);\
+		if (FAILED(res))\
+			SZASLogThrowError(message, __VA_ARGS__);\
 	}
 
-//Make calling this function easier, lets define macro below
+
 #define SZASGraphicsCheckShaderCompile(hr, errorBlob)\
-	{\
-		auto res = (hr);\
-		szas::GraphicsLogUtility::CheckShaderCompile(GetLogger(), res, errorBlob);\
-	}
+{\
+	auto res = (hr);\
+	szas::GraphicsLogUtility::CheckShaderCompile(GetLogger(), res, errorBlob);\
+}

@@ -4,8 +4,9 @@
 
 namespace szas
 {
-	class Game : public Base
+	class Game
 	{
+		szas_disable_copy_and_move(Game)
 		public:
 			//CONSTRUCTOR
 			explicit Game(const GameDescriptor& descriptor);
@@ -13,19 +14,20 @@ namespace szas
 			//FUNCTIONS
 				//final is used to indicate that run cannot be further overwritten or inherited
 			virtual void Run() final;
+			virtual Logger& GetLogger() noexcept final;
 
 			//DESTRUCTOR
-			virtual ~Game() override;
+			virtual ~Game();
 
 		private:
 			void OnInternalUpdate(); //Act as a callback where we can place all the code that we need to execute each frame
 
 		private:
-			std::unique_ptr<Logger> m_loggerPtr{};
+			UniquePtr<Logger> m_logger{};
 			//Last defined attirbute is first to be allocated, so we want our window to be first
-			std::unique_ptr<GraphicsEngine> m_graphicsEngine{};
+			UniquePtr<GraphicsEngine> m_graphicsEngine{};
 			//Using smart pointers avoid memory leaks in case a pointer is not deleted
-			std::unique_ptr <Display> m_display{};
+			UniquePtr<Display> m_display{};
 			//Game loop is running
 			bool m_isRunning{ true };
 	};

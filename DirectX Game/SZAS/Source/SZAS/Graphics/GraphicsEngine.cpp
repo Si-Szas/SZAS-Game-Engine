@@ -127,6 +127,18 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		/* V4 */{ {0.5f, -0.5f, 0.0f},	{1.0f,1.0f,1.0f,1.0f} },
 		/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} }
 	};
+	
+	//		Vertex vertexList{};
+	//GraphicsPipelineStateDescriptor& shaders;
+
+	//AGameObject quadTest({{&vertexList}, {&m_pipeline}});
+
+	//AGameObject	quadTest({{}, []}
+	//	{&vertexList, &m_pipeline}
+	//);
+
+	auto& gameObject = *m_AGameObject;
+
 
 	//Create Vertex Buffer and store it
 	m_vertexBuffer = device.CreateVertexBuffer

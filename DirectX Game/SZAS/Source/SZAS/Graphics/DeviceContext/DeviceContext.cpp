@@ -170,7 +170,7 @@ void szas::DeviceContext::DrawTriangleListWithTessellation(ui32 vertexCount, ui3
 	);
 }
 
-void szas::DeviceContext::DrawTriangleStrip(ui32 vertexCount, ui32 startVertexLocation)
+void szas::DeviceContext::DrawQuadList(ui32 vertexCount, ui32 startVertexLocation)
 {
 	//For tessellation
 	m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

@@ -38,7 +38,7 @@ szas::ShaderBinary::ShaderBinary(const ShaderCompileDescriptor& shaderCompileDes
 		0,												//Flags 2: Effects-specific classes for shader effect files (FX files)
 		&m_blob,										//D3DBlob allows us to retrieve compiled shader through this data type (used to store compiled data)
 		&errorBlob										//Retrieve any error messages during compilation
-	), errorBlob.Get(), "D3DCompile() failed.");
+	), errorBlob.Get());
 
 }
 

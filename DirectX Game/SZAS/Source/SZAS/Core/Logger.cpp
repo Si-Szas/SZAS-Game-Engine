@@ -5,7 +5,7 @@ szas::Logger::Logger(LogLevel logLevel): m_logLevel(logLevel)
 {
 }
 
-void szas::Logger::Log(LogLevel level, const char* message)
+void szas::Logger::_Log(LogLevel level, const char* message)
 {
 	//Lambda function to convert log level to string
 	auto logLevelToString = [](LogLevel level) {

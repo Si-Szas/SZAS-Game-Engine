@@ -114,6 +114,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <UseStandardPreprocessor>true</UseStandardPreprocessor>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +132,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <UseStandardPreprocessor>true</UseStandardPreprocessor>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\AGameObject\Quad\Quad.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\AGameObject\AGameObject.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Time\EngineTime.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsPipelineState\GraphicsPipelineState.cpp" />
@@ -158,6 +162,8 @@
     <ClCompile Include="SZAS\Source\SZAS\Graphics\VertexShaderSignature\VertexShaderSignature.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\AGameObject\Quad\Quad.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\AGameObject\AGameObject.h" />
     <ClInclude Include="SZAS\Source\SZAS\Time\EngineTime.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Mat4x4.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.h" />

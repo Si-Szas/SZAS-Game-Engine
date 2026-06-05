@@ -1,8 +1,12 @@
 #pragma once
 
+#include <SZAS/Core/Core.h>
+#include <format>
+
 namespace szas{
 	class Logger final
 	{
+		szas_disable_copy_and_move(Logger)
 		public:
 			//ENUMS
 			enum class LogLevel {
@@ -17,50 +21,50 @@ namespace szas{
 
 			//Log Method
 			//const tells function that the function doesn't alter state of the class
-			void Log(LogLevel level, const char* message);
+			template<typename... Args>
+			void Log(LogLevel level, std::format_string<Args...> fmt, Args&&... args)
+			{
+				auto str = std::format(fmt, std::forward<Args>(args)...);
+				_Log(level, str.c_str());
+			}
 
 			//DESTRUCTOR
 			~Logger();
 
-		protected:
-			//Never be possible to replace a log instance with a new one
-			Logger(const Logger&) = delete;
-			Logger(Logger&&) = delete;
-			Logger& operator = (const Logger&) = delete;
-			Logger& operator = (Logger&&) = delete;
+		private:
+			void _Log(LogLevel level, const char* message);
 
 		private:
 			LogLevel m_logLevel = LogLevel::Error;
 	
-		
 	};
 }
 
-#define SZASLog(logger, type, message)\
-	logger.Log((type), message)
+#define SZASLog(logger, type, message, ...)\
+	logger.Log((type), {message} __VA_OPT__(,) __VA_ARGS__);
 
-#define SZASLogThrow(logger, exception, type, message)\
+#define SZASLogThrow(logger, exception, type, message, ...)\
 	{\
-		SZASLog(logger, type, message);\
+		SZASLog(logger,type,message, __VA_ARGS__);\
 		throw exception(message);\
 	}
 
 //Macro to log error messages
-#define SZASLogInformation(message)\
-	SZASLog(GetLogger(), Logger::LogLevel::Information, message);
+#define SZASLogInformation(message, ...)\
+	SZASLog(GetLogger(), Logger::LogLevel::Information, message, __VA_ARGS__)
 
-#define SZASLogWarning(message)\
-	SZASLog(GetLogger(), Logger::LogLevel::Warning, message);
+#define SZASLogWarning(message, ...)\
+	SZASLog(GetLogger(), Logger::LogLevel::Warning, message, __VA_ARGS__)
 
-#define SZASLogError(message)\
-	SZASLog(GetLogger(), Logger::LogLevel::Error, message);
-	//Place enumeration in () to avoid errors
+//Place enumeration in () to avoid errors
+#define SZASLogError(message, ...)\
+	SZASLog(GetLogger(), Logger::LogLevel::Error, message, __VA_ARGS__)
 
-	//Create a macro using the defined preprocesser directive
-	//Tells compiler to replace all instances of a specific name of a value before compilation	
-#define SZASLogThrowError(message)\
-	SZASLogThrow(GetLogger(), std::runtime_error, Logger::LogLevel::Error, message)
+//Create a macro using the defined preprocesser directive
+//Tells compiler to replace all instances of a specific name of a value before compilation	
+#define SZASLogThrowError(message, ...)\
+	SZASLogThrow(GetLogger(), std::runtime_error, Logger::LogLevel::Error, message, __VA_ARGS__)
 
-	//Throw an invalid argument exception (not run-time error)
-#define SZASLogThrowInvalidArgument(message)\
-	SZASLogThrow(GetLogger(), std::invalid_argument, Logger::LogLevel::Error, message)
+//Throw an invalid argument exception (not run-time error)
+#define SZASLogThrowInvalidArgument(message, ...)\
+	SZASLogThrow(GetLogger(), std::invalid_argument, Logger::LogLevel::Error, message, __VA_ARGS__)

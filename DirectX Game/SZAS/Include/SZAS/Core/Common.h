@@ -2,6 +2,8 @@
 #include <SZAS/Core/Core.h>
 #include <SZAS/Core/Logger.h>
 #include <SZAS/Math/Rect.h>
+#include <SZAS/Math/Vec3.h>
+#include <SZAS/Math/Vec4.h>
 
 namespace szas 
 {
@@ -88,6 +90,19 @@ namespace szas
 	{
 		const void* buffer{};		//Since we have yet to define what constants we want to pass, make a const void*
 		ui32 bufferSize{};			//Size of the buffer
+	};
+
+	//POINTS
+	struct Vertex
+	{
+		Vec3 position;
+		Vec4 color;
+	};
+
+	struct AGameObjectDescriptor
+	{
+		Vertex vertexList{};
+		GraphicsPipelineStateDescriptor& shaders;
 	};
 
 	struct GameDescriptor
