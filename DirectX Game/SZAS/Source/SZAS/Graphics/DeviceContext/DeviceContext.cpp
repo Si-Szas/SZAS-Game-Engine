@@ -119,6 +119,11 @@ void szas::DeviceContext::SetConstantBuffer(const ConstantBuffer& buffer)
 	m_context->PSSetConstantBuffers(0, 1, &buff);
 }
 
+Microsoft::WRL::ComPtr<ID3D11DeviceContext> szas::DeviceContext::GetD3D11DeviceContext()
+{
+	return m_context;
+}
+
 
 void szas::DeviceContext::UpdateConstantBuffer(const ConstantBuffer& buffer, const void* data)
 {

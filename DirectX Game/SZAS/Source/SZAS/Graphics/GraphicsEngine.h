@@ -5,6 +5,8 @@
 #include <SZAS/Math/Vec4.h>
 #include <SZAS/Math/Mat4x4.h>
 #include <SZAS/Graphics/AGameObject/AGameObject.h>
+#include <SZAS/Graphics/AGameObject/Quad/Quad.h>
+#include <vector>
 
 namespace szas
 {
@@ -31,19 +33,13 @@ namespace szas
 				Vec4 color;
 			};
 
-			//prevent adding variables
 			//struct alignas(16) ConstantData
 			//{
-			//	unsigned int m_time;
+			//	Mat4x4 world{};
+			//	Vec4 meshColor;
+			//	Vec4 lineColor;
+			//	float lineThickness;
 			//};
-
-			struct alignas(16) ConstantData
-			{
-				Mat4x4 world{};
-				Vec4 meshColor;
-				Vec4 lineColor;
-				float lineThickness;
-			};
 
 		private:
 			//Define a smart pointer to a render system variable of class Render System
@@ -53,11 +49,12 @@ namespace szas
 			RefPtr<VertexBuffer> m_vertexBuffer{};
 			RefPtr<ConstantBuffer> m_constantBuffer{};
 			RefPtr<AGameObject> m_AGameObject{};
+			
+			//List of Quads
+			std::vector<Quad*> m_quadList{};
 
 			//Testing Matrix Transformation
-			f32 m_rotation{}, m_scale{}, m_position{-1.0f};
-
-			//AGameObject m_quadTest;
+			//f32 m_rotation{}, m_scale{}, m_position{-1.0f};
 	};
 }
 

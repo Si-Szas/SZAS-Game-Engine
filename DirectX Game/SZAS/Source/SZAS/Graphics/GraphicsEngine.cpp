@@ -45,7 +45,7 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	//Define Shader File Path for Hull Shader
 	constexpr char hullShaderFilePath[] = "SZAS/Assets/Shaders/HullShader.hlsl";
 	std::ifstream hullShaderStream(hullShaderFilePath);
-	if (!hullShaderStream) SZASLogThrowError("Failed to open WireframeHullShader.hlsl file.");
+	if (!hullShaderStream) SZASLogThrowError("Failed to open HullShader.hlsl file.");
 
 	std::string hullShaderFileData{
 		std::istreambuf_iterator<char>(hullShaderStream),	//Beginning of the file
@@ -67,7 +67,7 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	//Define Shader File Path for Domain Shader
 	constexpr char domainShaderFilePath[] = "SZAS/Assets/Shaders/DomainShader.hlsl";
 	std::ifstream domainShaderStream(domainShaderFilePath);
-	if (!domainShaderStream) SZASLogThrowError("Failed to open WireframeDomainShader.hlsl file.");
+	if (!domainShaderStream) SZASLogThrowError("Failed to open DomainShader.hlsl file.");
 
 	std::string domainShaderFileData{
 		std::istreambuf_iterator<char>(domainShaderStream),	//Beginning of the file
@@ -115,40 +115,63 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	//Create Graphics Pipeline State
 	m_pipeline = device.CreateGraphicsPipelineState({*vertexShaderSignature, *ps, *hs, *ds});
 
-	const Vertex vertexList[] =
+	////////////// CREATING QUADS //////////////
+	m_quadList.push_back(new Quad(vertexShaderSignature, ps, hs, ds));
+
+	//Gets the vertex data of all of the quads created
+	std::vector<Vertex> allQuadVertices;
+	for (size_t i = 0; i < m_quadList.size(); i++)
 	{
-		/* V0 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} },
-		/* V1 */{ {-0.5f, 0.5f, 0.0f},	{0.0f,1.0f,1.0f,1.0f} },
-		/* V2 */{ {0.5f, -0.5f, 0.0f},	{1.0f,1.0f,1.0f,1.0f} },
-		/* V3 */{ { 0.5f, 0.5f, 0.0f },	{1.0f,0.0f,1.0f,1.0f} }
-	};
-	
-	//		Vertex vertexList{};
-	//GraphicsPipelineStateDescriptor& shaders;
+		const void* rawVertexData = m_quadList[i]->GetVertexList();
+		const Vertex* vertexArray = static_cast<const Vertex*>(rawVertexData);
 
-	//AGameObject quadTest({{&vertexList}, {&m_pipeline}});
+		for (size_t k = 0; k < m_quadList.size(); k++)
+		{
+			allQuadVertices.push_back(vertexArray[i]);
+		}
+	}
+	UINT totalVertexCount = static_cast<UINT>(allQuadVertices.size());
 
-	//AGameObject	quadTest({{}, []}
-	//	{&vertexList, &m_pipeline}
-	//);
-
-	auto& gameObject = *m_AGameObject;
-
-
-	//Create Vertex Buffer and store it
+	//Passes quads' vertices to vertex buffer
 	m_vertexBuffer = device.CreateVertexBuffer
 	({
-		vertexList,					//Vertex List
-		std::size(vertexList),		//Vertex List Size
+		allQuadVertices.data(),
+		totalVertexCount,  
+		sizeof(Vertex)
+	});
+
+
+	//m_vertexBuffer = device.CreateVertexBuffer
+	//({
+	//	m_quadList[0]->GetVertexList()
+	//	
+	//	,					//Vertex List
+	//	4u,		//Vertex List Size
+	//	sizeof(Vertex)				//Vertex Size
+	//	});
+
+
+	m_vertexBuffer = device.CreateVertexBuffer
+	({
+		m_quadList[0]->GetVertexList(),					//Vertex List
+		4u,		//Vertex List Size
 		sizeof(Vertex)				//Vertex Size
 	});
 
+	//Create Vertex Buffer and store it
+	//m_vertexBuffer = device.CreateVertexBuffer
+	//({
+	//	vertexList,					//Vertex List
+	//	std::size(vertexList),		//Vertex List Size
+	//	sizeof(Vertex)				//Vertex Size
+	//});
+
 	//Create constant buffer
-	m_constantBuffer = device.CreateConstantBuffer
-	({
-		&m_constantBuffer,
-		sizeof(ConstantData)
-	});
+	//m_constantBuffer = device.CreateConstantBuffer
+	//({
+	//	&m_constantBuffer,
+	//	sizeof(ConstantData)
+	//});
 }
 
 szas::GraphicsDevice& szas::GraphicsEngine::GetGraphicsDevice() noexcept
@@ -159,33 +182,33 @@ szas::GraphicsDevice& szas::GraphicsEngine::GetGraphicsDevice() noexcept
 
 void szas::GraphicsEngine::Render(SwapChain& swapChain)
 {
-	auto& constantBuffer = *m_constantBuffer;
+	//auto& constantBuffer = *m_constantBuffer;
 	auto& context = *m_deviceContext;
-	d64 deltaTime = szas::EngineTime::GetDeltaTime();
+	//d64 deltaTime = szas::EngineTime::GetDeltaTime();
+	//m_position += deltaTime * 0.25f;
+	//m_rotation += deltaTime * 2.0f;
+	//m_scale = std::abs(std::sin(m_rotation));
+	//
+	////SZASLogInformation("Pos: X:{} Y:{}", m_position, m_position);
+	////SZASLogInformation("Rot: Z:{}", m_rotation);
+	////SZASLogInformation("Scale: {}", m_scale);
+	//
+	//auto worldMatrix =
+	//	Mat4x4::rotateAlongZ(m_rotation) *
+	//	Mat4x4::scale({m_scale, m_scale, m_scale}) *
+	//	Mat4x4::translate({ m_position ,m_position ,0 });
+	//
+	//ConstantData data
+	//{
+	//	/*World Matrix*/	worldMatrix,
+	//	/*Fill Color*/		{0.0f, 0.0f, 0.0f, 0.0f},
+	//	/*Mesh Color*/		{1.0f, 0.0f, 1.0f, 0.0f},
+	//	/*Line Thickness*/	5.0f
+	//};
 
-	m_position += deltaTime * 0.25f;
-	m_rotation += deltaTime * 2.0f;
-	m_scale = std::abs(std::sin(m_rotation));
-	
-	//SZASLogInformation("Pos: X:{} Y:{}", m_position, m_position);
-	//SZASLogInformation("Rot: Z:{}", m_rotation);
-	//SZASLogInformation("Scale: {}", m_scale);
-
-	auto worldMatrix =
-		Mat4x4::rotateAlongZ(m_rotation) *
-		Mat4x4::scale({m_scale, m_scale, m_scale}) *
-		Mat4x4::translate({ m_position ,m_position ,0 });
-	
-	ConstantData data
-	{
-		/*World Matrix*/	worldMatrix,
-		/*Fill Color*/		{0.0f, 0.0f, 0.0f, 0.0f},
-		/*Mesh Color*/		{1.0f, 0.0f, 1.0f, 0.0f},
-		/*Line Thickness*/	5.0f
-	};
 
 	//Update the constant buffer before everything
-	context.UpdateConstantBuffer(constantBuffer, &data);
+	//context.UpdateConstantBuffer(constantBuffer, &data);
 	//We want to first clear the buffer, then after rendering on a back buffer, we want to move that back to the front buffer
 	context.ClearAndSetBackBuffer(swapChain, {0.251f, 0.141f, 0.31f, 1.0f});
 	//Record render command that clears content of back buffer and binds it so we can render elements onto it
@@ -203,16 +226,24 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 	//Bind constant buffer as well
 	auto& vertexBuffer = *m_vertexBuffer;
 	context.SetVertexBuffer(vertexBuffer);
-	context.SetConstantBuffer(constantBuffer);
+	//context.SetConstantBuffer(constantBuffer);
 
 	//////////// DRAW TRIANGLES ////////////
 		//Can only be called once graphics pipeline is set up. Provides all shaders
 		//Set viewport size which defines area of render target (back buffer)
 		//Bind vertex buffer to graphics pipeline, which provides vertices from which geometric shapes and raster image will be generated
-	context.DrawQuadList(
-		vertexBuffer.GetVertexListSize(),		//Vertex List size
-		0u										//Index we want to start drawing at
-	);
+
+	// Draws all quads using its own draw function
+	for (size_t i = 0; i < m_quadList.size(); ++i) {
+		m_quadList[i]->Draw(m_vertexBuffer, context.GetD3D11DeviceContext());
+	}
+	
+	//m_quadList[0]->Draw(m_vertexBuffer, context.GetD3D11DeviceContext());
+
+	//context.DrawQuadList(
+	//	vertexBuffer.GetVertexListSize(),		//Vertex List size
+	//	0u										//Index we want to start drawing at
+	//);
 
 	//Allow the GPU to execute the list of commands recorded by the device context in order to finally render something to the back buffer
 	auto& device = *m_graphicsDevice;

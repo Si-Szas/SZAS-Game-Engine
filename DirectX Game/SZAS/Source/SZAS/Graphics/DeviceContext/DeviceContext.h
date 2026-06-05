@@ -20,6 +20,9 @@ namespace szas {
 			void SetVertexBuffer(const VertexBuffer& buffer);
 			void SetConstantBuffer(const ConstantBuffer& buffer);
 
+			//GETTER
+			Microsoft::WRL::ComPtr<ID3D11DeviceContext> GetD3D11DeviceContext();
+
 			//UPDATE 
 			void UpdateConstantBuffer(const ConstantBuffer& buffer, const void* data);
 			
