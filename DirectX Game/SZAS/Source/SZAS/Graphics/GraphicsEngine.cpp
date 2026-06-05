@@ -115,17 +115,12 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	//Create Graphics Pipeline State
 	m_pipeline = device.CreateGraphicsPipelineState({*vertexShaderSignature, *ps, *hs, *ds});
 
-	//TESTING WIREFRAME SHADER
 	const Vertex vertexList[] =
 	{
-		//1ST TRIANGLE
 		/* V0 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} },
 		/* V1 */{ {-0.5f, 0.5f, 0.0f},	{0.0f,1.0f,1.0f,1.0f} },
-		/* V2 */{ {0.5f, 0.5f, 0.0f},	{1.0f,0.0f,1.0f,1.0f} },
-		//2ND TRIANGLE									 
-		/* V3 */{ {0.5f, 0.5f, 0.0f},	{1.0f,0.0f,1.0f,1.0f} },
-		/* V4 */{ {0.5f, -0.5f, 0.0f},	{1.0f,1.0f,1.0f,1.0f} },
-		/* V5 */{ {-0.5f, -0.5f, 0.0f}, {1.0f,1.0f,0.0f,1.0f} }
+		/* V2 */{ {0.5f, -0.5f, 0.0f},	{1.0f,1.0f,1.0f,1.0f} },
+		/* V3 */{ { 0.5f, 0.5f, 0.0f },	{1.0f,0.0f,1.0f,1.0f} }
 	};
 	
 	//		Vertex vertexList{};
@@ -214,7 +209,7 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 		//Can only be called once graphics pipeline is set up. Provides all shaders
 		//Set viewport size which defines area of render target (back buffer)
 		//Bind vertex buffer to graphics pipeline, which provides vertices from which geometric shapes and raster image will be generated
-	context.DrawTriangleListWithTessellation(
+	context.DrawQuadList(
 		vertexBuffer.GetVertexListSize(),		//Vertex List size
 		0u										//Index we want to start drawing at
 	);

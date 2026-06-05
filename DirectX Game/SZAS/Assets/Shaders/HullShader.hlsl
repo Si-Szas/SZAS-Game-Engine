@@ -1,4 +1,4 @@
-#define NUMBER_CONTROL_POINTS 3
+#define NUMBER_CONTROL_POINTS 4
 
 struct HS_INPUT
 {
@@ -8,8 +8,8 @@ struct HS_INPUT
 
 struct HS_CONSTANT_DATA_OUTPUT
 {
-    float edgeTessFactor[3] : SV_TessFactor;
-    float insideTessFactor : SV_InsideTessFactor;
+    float edgeTessFactor[4] : SV_TessFactor;
+    float insideTessFactor[2] : SV_InsideTessFactor;
 };
 
 struct HS_OUTPUT
@@ -26,16 +26,18 @@ HS_CONSTANT_DATA_OUTPUT CalcHSPatchConstants(
 
     output.edgeTessFactor[0] =
     output.edgeTessFactor[1] =
-    output.edgeTessFactor[2] = 5.0f;
-    output.insideTessFactor = 5.0f;
+    output.edgeTessFactor[2] =
+    output.edgeTessFactor[3] =
+    output.insideTessFactor[0] =
+    output.insideTessFactor[1] = 5.0f;
     
     return output;
 }
 
-[domain("tri")]
-[partitioning("fractional_odd")]
+[domain("quad")]
+[partitioning("integer")]
 [outputtopology("triangle_cw")]
-[outputcontrolpoints(3)]
+[outputcontrolpoints(4)]
 [patchconstantfunc("CalcHSPatchConstants")]
 HS_OUTPUT HS_Main(
 	InputPatch<HS_INPUT, NUMBER_CONTROL_POINTS> ip,
