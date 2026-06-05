@@ -72,6 +72,12 @@
     <ClCompile Include="SZAS\Source\SZAS\Graphics\AGameObject\Quad\Quad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\AGameObject\AGameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\AGameObject\AGameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SZAS\Include\SZAS\Core\Base.h">
@@ -153,6 +159,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Source\SZAS\Graphics\AGameObject\Quad\Quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\AGameObject\AGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\AGameObject\AGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

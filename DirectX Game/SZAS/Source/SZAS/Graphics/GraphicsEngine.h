@@ -4,7 +4,7 @@
 #include <SZAS/Math/Vec3.h>
 #include <SZAS/Math/Vec4.h>
 #include <SZAS/Math/Mat4x4.h>
-#include <SZAS/Graphics/AGameObject/AGameObject.h>
+//#include <SZAS/Graphics/AGameObject/AGameObject.h>
 #include <SZAS/Graphics/AGameObject/Quad/Quad.h>
 #include <vector>
 
@@ -48,7 +48,7 @@ namespace szas
 			RefPtr<GraphicsPipelineState> m_pipeline{};
 			RefPtr<VertexBuffer> m_vertexBuffer{};
 			RefPtr<ConstantBuffer> m_constantBuffer{};
-			RefPtr<AGameObject> m_AGameObject{};
+			//RefPtr<AGameObject> m_AGameObject{};
 			
 			//List of Quads
 			std::vector<Quad*> m_quadList{};
