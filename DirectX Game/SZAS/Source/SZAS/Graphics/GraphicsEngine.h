@@ -26,13 +26,13 @@ namespace szas
 			//DESTRUCTOR
 			virtual ~GraphicsEngine() override;
 
-		private:
-			struct Vertex
-			{
-				Vec3 position;
-				Vec4 color;
-			};
-
+		//private:
+		//	struct Vertex
+		//	{
+		//		Vec3 position;
+		//		Vec4 color;
+		//	};
+		//
 			//struct alignas(16) ConstantData
 			//{
 			//	Mat4x4 world{};

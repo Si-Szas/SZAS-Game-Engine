@@ -12,14 +12,16 @@ namespace szas
 		public:
 			Quad();
 			Quad(RefPtr<VertexShaderSignature> vs, RefPtr<ShaderBinary> ps, RefPtr<ShaderBinary> hs, RefPtr<ShaderBinary> ds);
+			Quad(const Vertex* vertices, RefPtr<VertexShaderSignature> vs, RefPtr<ShaderBinary> ps, RefPtr<ShaderBinary> hs, RefPtr<ShaderBinary> ds);
 			~Quad();
 
+			void CreateVertices(const Vertex* vertices);
 			void Draw(RefPtr<VertexBuffer> vertexBuffer, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context);
 
 			const void* GetVertexList() const;
 
 		private:
-			const Vertex m_vertexList[4];
+			Vertex m_vertexList[4];
 			const void* m_vertexData;
 
 			RefPtr<VertexShaderSignature> m_vertexShader{};

@@ -109,14 +109,39 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		ShaderType::PixelShader
 		});
 
-
 	auto vertexShaderSignature = device.CreateVertexShaderSignature({vs});
 
 	//Create Graphics Pipeline State
 	m_pipeline = device.CreateGraphicsPipelineState({*vertexShaderSignature, *ps, *hs, *ds});
 
 	////////////// CREATING QUADS //////////////
-	m_quadList.push_back(new Quad(vertexShaderSignature, ps, hs, ds));
+	const Vertex quad1Vertices[] =
+	{
+		/* BL */ { {-0.95f, 0.15f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f} },
+		/* TL */ { {-0.95f, 0.85f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
+		/* BR */ { {-0.40f, 0.15f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f} },
+		/* TP */ { {-0.40f, 0.85f, 0.0f}, {1.0f, 0.0f, 1.0f, 1.0f} }
+	};
+
+	const Vertex quad2Vertices[] =
+	{
+		/* BL */ { {-0.35f, -0.25f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f} },
+		/* TL */ { {-0.35f,  0.25f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
+		/* BR */ { { 0.35f, -0.25f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f} },
+		/* TR */ { { 0.35f,  0.25f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f} }
+	};
+
+	const Vertex quad3Vertices[] =
+	{
+		/* BL */ { {0.95f, -0.15f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f} },
+		/* TL */ { {0.95f, -0.85f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
+		/* BR */ { {0.40f, -0.15f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
+		/* TR */ { {0.40f, -0.85f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f} }
+	};
+
+	m_quadList.push_back(new Quad(quad1Vertices, vertexShaderSignature, ps, hs, ds));
+	m_quadList.push_back(new Quad(quad2Vertices, vertexShaderSignature, ps, hs, ds));
+	m_quadList.push_back(new Quad(quad3Vertices, vertexShaderSignature, ps, hs, ds));
 
 	//Gets the vertex data of all of the quads created
 	std::vector<Vertex> allQuadVertices;
@@ -125,11 +150,12 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		const void* rawVertexData = m_quadList[i]->GetVertexList();
 		const Vertex* vertexArray = static_cast<const Vertex*>(rawVertexData);
 
-		for (size_t k = 0; k < m_quadList.size(); k++)
+		for (size_t k = 0; k < 4; k++)
 		{
-			allQuadVertices.push_back(vertexArray[i]);
+			allQuadVertices.push_back(vertexArray[k]);
 		}
 	}
+	//Total vertex count of the quads
 	UINT totalVertexCount = static_cast<UINT>(allQuadVertices.size());
 
 	//Passes quads' vertices to vertex buffer
@@ -140,23 +166,12 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 		sizeof(Vertex)
 	});
 
-
 	//m_vertexBuffer = device.CreateVertexBuffer
 	//({
-	//	m_quadList[0]->GetVertexList()
-	//	
-	//	,					//Vertex List
+	//	m_quadList[0]->GetVertexList(),					//Vertex List
 	//	4u,		//Vertex List Size
 	//	sizeof(Vertex)				//Vertex Size
-	//	});
-
-
-	m_vertexBuffer = device.CreateVertexBuffer
-	({
-		m_quadList[0]->GetVertexList(),					//Vertex List
-		4u,		//Vertex List Size
-		sizeof(Vertex)				//Vertex Size
-	});
+	//});
 
 	//Create Vertex Buffer and store it
 	//m_vertexBuffer = device.CreateVertexBuffer
@@ -235,7 +250,7 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 
 	// Draws all quads using its own draw function
 	for (size_t i = 0; i < m_quadList.size(); ++i) {
-		m_quadList[i]->Draw(m_vertexBuffer, context.GetD3D11DeviceContext());
+		m_quadList[i]->Draw(m_vertexBuffer, context.GetD3D11DeviceContext()); 
 	}
 	
 	//m_quadList[0]->Draw(m_vertexBuffer, context.GetD3D11DeviceContext());

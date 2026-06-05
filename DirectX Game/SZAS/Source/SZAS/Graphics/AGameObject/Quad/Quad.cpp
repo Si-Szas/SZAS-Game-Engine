@@ -1,12 +1,21 @@
 #include <SZAS/Graphics/AGameObject/Quad/Quad.h>
 
-szas::Quad::Quad(RefPtr<VertexShaderSignature> vs, RefPtr<ShaderBinary> ps, RefPtr<ShaderBinary> hs, RefPtr<ShaderBinary> ds) : m_vertexList{
-	/* V0 */ { {-0.5f, -0.5f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f} },
-	/* V1 */ { {-0.5f,  0.5f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
-	/* V2 */ { { 0.5f, -0.5f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f} },
-	/* V3 */ { { 0.5f,  0.5f, 0.0f}, {1.0f, 0.0f, 1.0f, 1.0f} }
-}
+szas::Quad::Quad(RefPtr<VertexShaderSignature> vs, RefPtr<ShaderBinary> ps, RefPtr<ShaderBinary> hs, RefPtr<ShaderBinary> ds)
 {
+	m_vertexData = m_vertexList;
+
+	m_vertexShader = vs;
+	m_hullShader = hs;
+	m_domainShader = ds;
+	m_pixelShader = ps;
+}
+
+szas::Quad::Quad(const Vertex* vertices, RefPtr<VertexShaderSignature> vs, RefPtr<ShaderBinary> ps, RefPtr<ShaderBinary> hs, RefPtr<ShaderBinary> ds)
+{
+	for (size_t i = 0; i < 4; ++i) {
+		m_vertexList[i] = vertices[i];
+	}
+
 	m_vertexData = m_vertexList;
 
 	m_vertexShader = vs;
@@ -17,6 +26,13 @@ szas::Quad::Quad(RefPtr<VertexShaderSignature> vs, RefPtr<ShaderBinary> ps, RefP
 
 szas::Quad::~Quad()
 {
+}
+
+void szas::Quad::CreateVertices(const Vertex* vertices)
+{
+	for (size_t i = 0; i < 4; ++i) {
+		m_vertexList[i] = vertices[i];
+	}
 }
 
 void szas::Quad::Draw(RefPtr<VertexBuffer> vertexBuffer, Microsoft::WRL::ComPtr<ID3D11DeviceContext> context)
