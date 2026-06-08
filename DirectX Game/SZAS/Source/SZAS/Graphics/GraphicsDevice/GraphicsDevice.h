@@ -22,6 +22,7 @@ namespace szas
 			RefPtr<VertexBuffer> CreateVertexBuffer(const VertexBufferDescriptor& descriptor);
 			RefPtr<VertexShaderSignature> CreateVertexShaderSignature(const VertexShaderSignatureDescriptor& descriptor);
 			RefPtr<ConstantBuffer> CreateConstantBuffer(const ConstantBufferDescriptor& descriptor);
+			RefPtr<IndexBuffer> CreateIndexBuffer(const IndexBufferDescriptor& descriptor);
 
 
 			void ExecuteCommandList(DeviceContext& context);

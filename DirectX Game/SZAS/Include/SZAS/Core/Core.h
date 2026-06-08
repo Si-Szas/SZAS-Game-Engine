@@ -34,6 +34,8 @@ namespace szas {
 	class VertexShaderSignature;
 	//Constant Buffer
 	class ConstantBuffer;
+	//Index Buffer
+	class IndexBuffer;
 	//Engine Time
 	class EngineTime;
 

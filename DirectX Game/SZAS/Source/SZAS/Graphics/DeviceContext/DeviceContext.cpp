@@ -3,6 +3,7 @@
 #include <SZAS/Graphics/GraphicsPipelineState/GraphicsPipelineState.h>
 #include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
 #include <SZAS/Graphics/ConstantBuffer/ConstantBuffer.h>
+#include <SZAS/Graphics/IndexBuffer/IndexBuffer.h>
 
 szas::DeviceContext::DeviceContext(const GraphicsResourceDescriptor& descriptor) :
 	GraphicsResource(descriptor)
@@ -110,13 +111,31 @@ void szas::DeviceContext::SetVertexBuffer(const VertexBuffer& buffer)
 	);
 }
 
-void szas::DeviceContext::SetConstantBuffer(const ConstantBuffer& buffer)
+void szas::DeviceContext::SetConstantBuffer(const ConstantBuffer& vsConstantBuffer, const ConstantBuffer& psConstantBuffer)
+{
+	//Checkers to ensure that the constant buffer for the vertex and pixel shader exist
+	if (&vsConstantBuffer)
+	{
+		auto vsBuff = vsConstantBuffer.m_buffer.Get();
+		m_context->VSSetConstantBuffers(0, 1, &vsBuff);
+	}
+
+	if (&psConstantBuffer)
+	{
+		auto psBuff = psConstantBuffer.m_buffer.Get();
+		m_context->PSSetConstantBuffers(0, 1, &psBuff);
+	}
+}
+
+void szas::DeviceContext::SetIndexBuffer(const IndexBuffer& buffer)
 {
 	auto buff = buffer.m_buffer.Get();
-	//Bind the constant buffer to be used by the Vertex and Pixel Shaders
-		//Starting index, number of constant buffers, constant buffer pointers
-	m_context->VSSetConstantBuffers(0, 1, &buff);
-	m_context->PSSetConstantBuffers(0, 1, &buff);
+
+	m_context->IASetIndexBuffer(
+		buff,					//Pointer to Buffer
+		DXGI_FORMAT_R32_UINT,	//Format of the buffer
+		0						//Offset
+	);
 }
 
 Microsoft::WRL::ComPtr<ID3D11DeviceContext> szas::DeviceContext::GetD3D11DeviceContext()
@@ -185,5 +204,19 @@ void szas::DeviceContext::DrawQuadList(ui32 vertexCount, ui32 startVertexLocatio
 	(
 		vertexCount,		//Vertex Count. Defines number of vertices to draw
 		startVertexLocation //Start vertex location. Allows us to specify the index of the first index in the vertex buffer to start drawing from
+	);
+}
+
+void szas::DeviceContext::DrawIndexedTriangleList(ui32 indexCount, ui32 startVertexIndex, ui32 startIndexLocation)
+{
+	//For tessellation
+	m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST);
+
+	//Call Draw function
+	m_context->DrawIndexed
+	(
+		indexCount,			//Current index count
+		startVertexIndex,	//Starting vertex index
+		startIndexLocation	//Starting index
 	);
 }

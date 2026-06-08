@@ -6,6 +6,7 @@
 #include <SZAS/Graphics/GraphicsPipelineState/GraphicsPipelineState.h>
 #include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
 #include <SZAS/Graphics/ConstantBuffer/ConstantBuffer.h>
+#include <SZAS/Graphics/IndexBuffer/IndexBuffer.h>
 #include <SZAS/Graphics/VertexShaderSignature/VertexShaderSignature.h>
 
 using namespace szas;
@@ -91,6 +92,11 @@ RefPtr<VertexShaderSignature> GraphicsDevice::CreateVertexShaderSignature(const 
 RefPtr<ConstantBuffer> GraphicsDevice::CreateConstantBuffer(const ConstantBufferDescriptor& descriptor)
 {
 	return std::make_shared<ConstantBuffer>(descriptor, GetGraphicsResourceDescriptor());
+}
+
+RefPtr<IndexBuffer> szas::GraphicsDevice::CreateIndexBuffer(const IndexBufferDescriptor& descriptor)
+{
+	return std::make_shared<IndexBuffer>(descriptor, GetGraphicsResourceDescriptor());
 }
 
 //This function retrieves command lists, then executes it

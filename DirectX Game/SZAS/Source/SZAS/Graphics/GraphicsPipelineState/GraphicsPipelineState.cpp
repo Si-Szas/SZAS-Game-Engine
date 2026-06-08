@@ -15,7 +15,7 @@ szas::GraphicsPipelineState::GraphicsPipelineState(const GraphicsPipelineStateDe
 	auto ps = graphicsPipelineStateDescriptor.pixelShader.GetData();
 	//Retrieve Hull Shader Binary Data
 	auto hs = graphicsPipelineStateDescriptor.hullShader.GetData();
-	//Retrieve Domain Shader Binary Data
+	////Retrieve Domain Shader Binary Data
 	auto ds = graphicsPipelineStateDescriptor.domainShader.GetData();
 
 	auto vsInputElements = graphicsPipelineStateDescriptor.vertexShader.GetInputElementsData();

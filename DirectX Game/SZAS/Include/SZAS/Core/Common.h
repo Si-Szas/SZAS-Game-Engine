@@ -92,6 +92,12 @@ namespace szas
 		ui32 bufferSize{};			//Size of the buffer
 	};
 
+	struct IndexBufferDescriptor
+	{
+		const ui32* indexList{};	//Since the index buffer just contains the indices of objects, it is not a void*
+		ui32 indexListSize{};		//Size of the buffer
+	};
+
 	//POINTS
 	struct Vertex
 	{

@@ -18,7 +18,8 @@ namespace szas {
 			void SetViewportSize(const Rect& size);
 
 			void SetVertexBuffer(const VertexBuffer& buffer);
-			void SetConstantBuffer(const ConstantBuffer& buffer);
+			void SetConstantBuffer(const ConstantBuffer& vsConstantBuffer, const ConstantBuffer& psConstantBuffer);
+			void SetIndexBuffer(const IndexBuffer& buffer);
 
 			//GETTER
 			Microsoft::WRL::ComPtr<ID3D11DeviceContext> GetD3D11DeviceContext();
@@ -30,6 +31,7 @@ namespace szas {
 			void DrawTriangleList(ui32 vertexCount, ui32 startVertexLocation);
 			void DrawTriangleListWithTessellation(ui32 vertexCount, ui32 startVertexLocation);
 			void DrawQuadList(ui32 vertexCount, ui32 startVertexLocation);
+			void DrawIndexedTriangleList(ui32 indexCount, ui32 startVertexIndex, ui32 startIndexLocation);
 
 		private:
 			Microsoft::WRL::ComPtr <ID3D11DeviceContext> m_context{};

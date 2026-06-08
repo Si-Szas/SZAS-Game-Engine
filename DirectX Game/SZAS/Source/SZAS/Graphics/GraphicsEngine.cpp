@@ -5,6 +5,7 @@
 #include <SZAS/Time/EngineTime.h>
 #include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
 #include <SZAS/Graphics/ConstantBuffer/ConstantBuffer.h>
+#include <SZAS/Graphics/IndexBuffer/IndexBuffer.h>
 #include <SZAS/Math/Vec3.h>
 #include <fstream>
 
@@ -115,78 +116,116 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	m_pipeline = device.CreateGraphicsPipelineState({*vertexShaderSignature, *ps, *hs, *ds});
 
 	////////////// CREATING QUADS //////////////
-	const Vertex quad1Vertices[] =
+	//const Vertex quad1Vertices[] =
+	//{
+	//	/* BL */ { {-0.95f, 0.15f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f} },
+	//	/* TL */ { {-0.95f, 0.85f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
+	//	/* BR */ { {-0.40f, 0.15f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f} },
+	//	/* TP */ { {-0.40f, 0.85f, 0.0f}, {1.0f, 0.0f, 1.0f, 1.0f} }
+	//};
+
+	/// CREATING A 3D OBJECT //
+
+	const Vertex cubeVertices[] =
 	{
-		/* BL */ { {-0.95f, 0.15f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f} },
-		/* TL */ { {-0.95f, 0.85f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
-		/* BR */ { {-0.40f, 0.15f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f} },
-		/* TP */ { {-0.40f, 0.85f, 0.0f}, {1.0f, 0.0f, 1.0f, 1.0f} }
+		{{-0.5f,-0.5f,-0.5f}, {1,0,0,1}},
+		{{-0.5f,0.5f,-0.5f}, {0,1,0,1} },
+		{{0.5f,0.5f,-0.5f},  {0,0,1,1}},
+		{{0.5f,-0.5f,-0.5f}, {1,0,1,1}},
+
+		{{0.5f,-0.5f,0.5f}, {1,0,1,1}},
+		{{0.5f,0.5f,0.5f}, {0,0,1,1}},
+		{{-0.5f,0.5f,0.5f}, {0,1,0,1}},
+		{{-0.5f,-0.5f,0.5f}, {1,0,0,1}}
 	};
 
-	const Vertex quad2Vertices[] =
+	const ui32 indexList[] =
 	{
-		/* BL */ { {-0.35f, -0.25f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f} },
-		/* TL */ { {-0.35f,  0.25f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
-		/* BR */ { { 0.35f, -0.25f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f} },
-		/* TR */ { { 0.35f,  0.25f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f} }
+		//Front Face
+		0, 1, 2,
+		2, 3, 0,
+		//Right Face
+		3, 2, 5,
+		5, 4, 3,
+		//Left Face
+		6, 1, 0,
+		0, 7, 6,
+		//Back Face
+		7, 6, 5,
+		5, 4, 7,
+		//Top Face
+		6, 5, 2, 
+		2, 1, 6,
+		//Bottom Face
+		7, 0, 3,
+		3, 4, 7
 	};
 
-	const Vertex quad3Vertices[] =
-	{
-		/* BL */ { {0.95f, -0.15f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f} },
-		/* TL */ { {0.95f, -0.85f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
-		/* BR */ { {0.40f, -0.15f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
-		/* TR */ { {0.40f, -0.85f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f} }
-	};
-
-	m_quadList.push_back(new Quad(quad1Vertices, vertexShaderSignature, ps, hs, ds));
-	m_quadList.push_back(new Quad(quad2Vertices, vertexShaderSignature, ps, hs, ds));
-	m_quadList.push_back(new Quad(quad3Vertices, vertexShaderSignature, ps, hs, ds));
+	//const Vertex quad2Vertices[] =
+	//{
+	//	/* BL */ { {-0.35f, -0.25f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f} },
+	//	/* TL */ { {-0.35f,  0.25f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
+	//	/* BR */ { { 0.35f, -0.25f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f} },
+	//	/* TR */ { { 0.35f,  0.25f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f} }
+	//};
+	//
+	//const Vertex quad3Vertices[] =
+	//{
+	//	/* BL */ { {0.95f, -0.15f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f} },
+	//	/* TL */ { {0.95f, -0.85f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
+	//	/* BR */ { {0.40f, -0.15f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
+	//	/* TR */ { {0.40f, -0.85f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f} }
+	//};
+	//
+	//m_quadList.push_back(new Quad(quad1Vertices, vertexShaderSignature, ps, hs, ds));
+	//m_quadList.push_back(new Quad(quad2Vertices, vertexShaderSignature, ps, hs, ds));
+	//m_quadList.push_back(new Quad(quad3Vertices, vertexShaderSignature, ps, hs, ds));
 
 	//Gets the vertex data of all of the quads created
-	std::vector<Vertex> allQuadVertices;
-	for (size_t i = 0; i < m_quadList.size(); i++)
-	{
-		const void* rawVertexData = m_quadList[i]->GetVertexList();
-		const Vertex* vertexArray = static_cast<const Vertex*>(rawVertexData);
-
-		for (size_t k = 0; k < 4; k++)
-		{
-			allQuadVertices.push_back(vertexArray[k]);
-		}
-	}
-	//Total vertex count of the quads
-	UINT totalVertexCount = static_cast<UINT>(allQuadVertices.size());
+	//std::vector<Vertex> allQuadVertices;
+	//for (size_t i = 0; i < m_quadList.size(); i++)
+	//{
+	//	const void* rawVertexData = m_quadList[i]->GetVertexList();
+	//	const Vertex* vertexArray = static_cast<const Vertex*>(rawVertexData);
+	//
+	//	for (size_t k = 0; k < 4; k++)
+	//	{
+	//		allQuadVertices.push_back(vertexArray[k]);
+	//	}
+	//}
+	////Total vertex count of the quads
+	//UINT totalVertexCount = static_cast<UINT>(allQuadVertices.size());
 
 	//Passes quads' vertices to vertex buffer
+	//m_vertexBuffer = device.CreateVertexBuffer
+	//({
+	//	allQuadVertices.data(),
+	//	totalVertexCount,  
+	//	sizeof(Vertex)
+	//});
+
 	m_vertexBuffer = device.CreateVertexBuffer
 	({
-		allQuadVertices.data(),
-		totalVertexCount,  
-		sizeof(Vertex)
+		cubeVertices,					//Vertex List
+		std::size(cubeVertices),		//Vertex List Size
+		sizeof(Vertex)				//Vertex Size
 	});
 
-	//m_vertexBuffer = device.CreateVertexBuffer
-	//({
-	//	m_quadList[0]->GetVertexList(),					//Vertex List
-	//	4u,		//Vertex List Size
-	//	sizeof(Vertex)				//Vertex Size
-	//});
-
-	//Create Vertex Buffer and store it
-	//m_vertexBuffer = device.CreateVertexBuffer
-	//({
-	//	vertexList,					//Vertex List
-	//	std::size(vertexList),		//Vertex List Size
-	//	sizeof(Vertex)				//Vertex Size
-	//});
-
 	//Create constant buffer
-	//m_constantBuffer = device.CreateConstantBuffer
-	//({
-	//	&m_constantBuffer,
-	//	sizeof(ConstantData)
-	//});
+	m_vsConstantBuffer = device.CreateConstantBuffer
+	({
+		&m_vsConstantBuffer,
+		sizeof(ConstantData)
+	});
+
+	//We don't have any constant data to pass to the pixel shader
+	m_psConstantBuffer = nullptr;
+
+	m_indexBuffer = device.CreateIndexBuffer
+	({
+		indexList,//Index List
+		std::size(indexList)//Index List Size
+	});
 }
 
 szas::GraphicsDevice& szas::GraphicsEngine::GetGraphicsDevice() noexcept
@@ -197,33 +236,39 @@ szas::GraphicsDevice& szas::GraphicsEngine::GetGraphicsDevice() noexcept
 
 void szas::GraphicsEngine::Render(SwapChain& swapChain)
 {
-	//auto& constantBuffer = *m_constantBuffer;
 	auto& context = *m_deviceContext;
-	//d64 deltaTime = szas::EngineTime::GetDeltaTime();
-	//m_position += deltaTime * 0.25f;
-	//m_rotation += deltaTime * 2.0f;
-	//m_scale = std::abs(std::sin(m_rotation));
-	//
-	////SZASLogInformation("Pos: X:{} Y:{}", m_position, m_position);
-	////SZASLogInformation("Rot: Z:{}", m_rotation);
-	////SZASLogInformation("Scale: {}", m_scale);
-	//
-	//auto worldMatrix =
-	//	Mat4x4::rotateAlongZ(m_rotation) *
-	//	Mat4x4::scale({m_scale, m_scale, m_scale}) *
-	//	Mat4x4::translate({ m_position ,m_position ,0 });
-	//
-	//ConstantData data
-	//{
-	//	/*World Matrix*/	worldMatrix,
-	//	/*Fill Color*/		{0.0f, 0.0f, 0.0f, 0.0f},
-	//	/*Mesh Color*/		{1.0f, 0.0f, 1.0f, 0.0f},
-	//	/*Line Thickness*/	5.0f
-	//};
 
+	auto& vsConstantBuffer = *m_vsConstantBuffer;
+	auto& psConstantBuffer = *m_psConstantBuffer;
+	
+	d64 deltaTime = szas::EngineTime::GetDeltaTime();
+	//m_position += deltaTime * 0.25f;
+	m_rotation += deltaTime * 2.0f;
+	//m_scale = std::abs(std::sin(m_rotation));
+	
+	auto worldMatrix =
+		Matrix4x4::scale({ m_scale, m_scale, m_scale }) *
+		Matrix4x4::rotateAlongX(m_rotation) *
+		Matrix4x4::rotateAlongY(m_rotation) *
+		Matrix4x4::rotateAlongZ(m_rotation) *
+		Matrix4x4::translate({ m_position ,m_position ,0 });
+	
+	//Orthographic Camera Set Up
+	auto size = swapChain.GetSize();
+	auto aspect = static_cast<f32>(size.width) / size.height;
+	auto unitsPerScreenHeight = 2.0f;
+	auto viewHeight = unitsPerScreenHeight;
+	auto viewWidth = unitsPerScreenHeight * aspect;
+
+	ConstantData data
+	{
+		worldMatrix,
+		//viewMatrix,
+		Matrix4x4::orthoLH(viewWidth, viewHeight, -10.0f, 10.0f)
+	};
 
 	//Update the constant buffer before everything
-	//context.UpdateConstantBuffer(constantBuffer, &data);
+	context.UpdateConstantBuffer(vsConstantBuffer, &data);
 	//We want to first clear the buffer, then after rendering on a back buffer, we want to move that back to the front buffer
 	context.ClearAndSetBackBuffer(swapChain, {0.251f, 0.141f, 0.31f, 1.0f});
 	//Record render command that clears content of back buffer and binds it so we can render elements onto it
@@ -240,8 +285,18 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 		//Then call Set Vertex to bind buffer to pipeline
 	//Bind constant buffer as well
 	auto& vertexBuffer = *m_vertexBuffer;
+	auto& indexBuffer = *m_indexBuffer;
+
 	context.SetVertexBuffer(vertexBuffer);
-	//context.SetConstantBuffer(constantBuffer);
+	context.SetConstantBuffer(vsConstantBuffer, psConstantBuffer);
+	context.SetIndexBuffer(indexBuffer);
+
+	context.DrawIndexedTriangleList
+	(
+		indexBuffer.GetIndexListSize(),
+		0u,
+		0u
+	);
 
 	//////////// DRAW TRIANGLES ////////////
 		//Can only be called once graphics pipeline is set up. Provides all shaders
@@ -249,9 +304,9 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 		//Bind vertex buffer to graphics pipeline, which provides vertices from which geometric shapes and raster image will be generated
 
 	// Draws all quads using its own draw function
-	for (size_t i = 0; i < m_quadList.size(); ++i) {
-		m_quadList[i]->Draw(m_vertexBuffer, context.GetD3D11DeviceContext()); 
-	}
+	//for (size_t i = 0; i < m_quadList.size(); ++i) {
+	//	m_quadList[i]->Draw(m_vertexBuffer, context.GetD3D11DeviceContext()); 
+	//}
 	
 	//m_quadList[0]->Draw(m_vertexBuffer, context.GetD3D11DeviceContext());
 
