@@ -207,10 +207,24 @@ void szas::DeviceContext::DrawQuadList(ui32 vertexCount, ui32 startVertexLocatio
 	);
 }
 
-void szas::DeviceContext::DrawIndexedTriangleList(ui32 indexCount, ui32 startVertexIndex, ui32 startIndexLocation)
+void szas::DeviceContext::Draw3PatchIndexedTriangleList(ui32 indexCount, ui32 startVertexIndex, ui32 startIndexLocation)
 {
 	//For tessellation
 	m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST);
+
+	//Call Draw function
+	m_context->DrawIndexed
+	(
+		indexCount,			//Current index count
+		startVertexIndex,	//Starting vertex index
+		startIndexLocation	//Starting index
+	);
+}
+
+void szas::DeviceContext::Draw4PatchIndexedTriangleList(ui32 indexCount, ui32 startVertexIndex, ui32 startIndexLocation)
+{
+	//For tessellation
+	m_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
 
 	//Call Draw function
 	m_context->DrawIndexed

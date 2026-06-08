@@ -128,37 +128,54 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 
 	const Vertex cubeVertices[] =
 	{
-		{{-0.5f,-0.5f,-0.5f}, {1,0,0,1}},
-		{{-0.5f,0.5f,-0.5f}, {0,1,0,1} },
-		{{0.5f,0.5f,-0.5f},  {0,0,1,1}},
-		{{0.5f,-0.5f,-0.5f}, {1,0,1,1}},
-
-		{{0.5f,-0.5f,0.5f}, {1,0,1,1}},
-		{{0.5f,0.5f,0.5f}, {0,0,1,1}},
-		{{-0.5f,0.5f,0.5f}, {0,1,0,1}},
-		{{-0.5f,-0.5f,0.5f}, {1,0,0,1}}
+		{ {-0.5f,-0.5f,-0.5f},	{1,0,0,1}},
+		{ {-0.5f,0.5f,-0.5f},	{0,1,0,1}},
+		{ {0.5f,0.5f,-0.5f},	{0,0,1,1}},
+		{ {0.5f,-0.5f,-0.5f},	{1,1,1,1}},
+		  
+		{ {0.5f,-0.5f,0.5f},	{0,0,0,1}},
+		{ {0.5f,0.5f,0.5f},		{1,0,1,1}},
+		{ {-0.5f,0.5f,0.5f},	{0,1,1,1}},
+		{ {-0.5f,-0.5f,0.5f},	{1,1,0,1}}
 	};
 
+	//const ui32 indexList[] =
+	//{
+	//	//Front Face
+	//	0, 1, 2,
+	//	2, 3, 0,
+	//	//Right Face
+	//	3, 2, 5,
+	//	5, 4, 3,
+	//	//Left Face
+	//	6, 1, 0,
+	//	0, 7, 6,
+	//	//Back Face
+	//	7, 6, 5,
+	//	5, 4, 7,
+	//	//Top Face
+	//	6, 5, 2, 
+	//	2, 1, 6,
+	//	//Bottom Face
+	//	7, 0, 3,
+	//	3, 4, 7
+	//};
+
+	//We are drawing in 4 control point patches
 	const ui32 indexList[] =
 	{
 		//Front Face
-		0, 1, 2,
-		2, 3, 0,
-		//Right Face
-		3, 2, 5,
-		5, 4, 3,
-		//Left Face
-		6, 1, 0,
-		0, 7, 6,
+		0, 1, 3, 2,
 		//Back Face
-		7, 6, 5,
-		5, 4, 7,
+		4, 5, 7, 6,
 		//Top Face
-		6, 5, 2, 
-		2, 1, 6,
+		5, 2, 6, 1,
 		//Bottom Face
-		7, 0, 3,
-		3, 4, 7
+		7, 0, 4, 3,
+		//Right Face
+		3, 2, 4, 5,
+		//Left Face
+		7, 6, 0, 1
 	};
 
 	//const Vertex quad2Vertices[] =
@@ -291,7 +308,7 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 	context.SetConstantBuffer(vsConstantBuffer, psConstantBuffer);
 	context.SetIndexBuffer(indexBuffer);
 
-	context.DrawIndexedTriangleList
+	context.Draw4PatchIndexedTriangleList
 	(
 		indexBuffer.GetIndexListSize(),
 		0u,

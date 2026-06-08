@@ -31,7 +31,8 @@ namespace szas {
 			void DrawTriangleList(ui32 vertexCount, ui32 startVertexLocation);
 			void DrawTriangleListWithTessellation(ui32 vertexCount, ui32 startVertexLocation);
 			void DrawQuadList(ui32 vertexCount, ui32 startVertexLocation);
-			void DrawIndexedTriangleList(ui32 indexCount, ui32 startVertexIndex, ui32 startIndexLocation);
+			void Draw3PatchIndexedTriangleList(ui32 indexCount, ui32 startVertexIndex, ui32 startIndexLocation);
+			void Draw4PatchIndexedTriangleList(ui32 indexCount, ui32 startVertexIndex, ui32 startIndexLocation);
 
 		private:
 			Microsoft::WRL::ComPtr <ID3D11DeviceContext> m_context{};
