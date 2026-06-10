@@ -78,6 +78,9 @@
     <ClCompile Include="SZAS\Source\SZAS\Game\World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Game\MainGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SZAS\Include\SZAS\Core\Base.h">
@@ -149,13 +152,13 @@
     <ClInclude Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Include\SZAS\Time\EngineTime.h">
+    <ClInclude Include="SZAS\Source\SZAS\Time\EngineTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\Math\Matrix4x4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Include\SZAS\AGameObject\AGameObject.h">
+    <ClInclude Include="SZAS\Source\SZAS\AGameObject\AGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Source\SZAS\AGameObject\Quad\Quad.h">
@@ -171,6 +174,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\Game\World.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\MainGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

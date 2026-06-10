@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\MainGame.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Game\World.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\IndexBuffer\IndexBuffer.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AGameObject\AGameObject.cpp" />
@@ -164,13 +165,14 @@
     <ClCompile Include="SZAS\Source\SZAS\Graphics\VertexShaderSignature\VertexShaderSignature.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\MainGame.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Identifier.h" />
     <ClInclude Include="SZAS\Include\SZAS\Game\World.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Vector3D.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\IndexBuffer\IndexBuffer.h" />
-    <ClInclude Include="SZAS\Include\SZAS\AGameObject\AGameObject.h" />
+    <ClInclude Include="SZAS\Source\SZAS\AGameObject\AGameObject.h" />
     <ClInclude Include="SZAS\Source\SZAS\AGameObject\Quad\Quad.h" />
-    <ClInclude Include="SZAS\Include\SZAS\Time\EngineTime.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Time\EngineTime.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Matrix4x4.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Vec3.h" />

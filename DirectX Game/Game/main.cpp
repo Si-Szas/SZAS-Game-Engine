@@ -1,10 +1,11 @@
 #include <SZAS/All.h>
+#include "MainGame.h"
 
 int main()
 {
 	try
 	{
-		szas::Game game({{1280,720}, szas::Logger::LogLevel::Information });
+		MainGame game({{1280,720}, szas::Logger::LogLevel::Information });
 		game.Run();
 	} //Catch runtime errors
 	catch(const std::runtime_error&)
