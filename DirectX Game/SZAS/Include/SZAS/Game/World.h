@@ -15,23 +15,23 @@ namespace szas
 			explicit World(const WorldDescriptor& worldDescriptor);
 
 			template <typename T>
-			T* CreateGameObject()
+			T* CreateAGameObject()
 			{
-				static_assert(std::is_base_of<GameObject, T>::value, "T must inherit from szas::AGameObject.");
+				static_assert(std::is_base_of<AGameObject, T>::value, "T must inherit from szas::AGameObject.");
 				static_assert(HasTypeID<T>, "T needs a unique TypeID. Make sure you have added szas_typeid and applied it to the correct class.");
 
-				UniquePtr<GameObject> gameObjEvent = std::make_unique<T>(GameObjectDescriptor
+				UniquePtr<AGameObject> gameObjEvent = std::make_unique<T>(AGameObjectDescriptor
 					{
 						{m_logger},
 						*this
 					});
 
-				return static_cast<T*>(CreateGameObjectInternal(gameObjEvent));
+				return static_cast<T*>(CreateAGameObjectInternal(gameObjEvent));
 			}
 
 			void Update(f32 deltaTime);
 
-			GameObject* CreateGameObjectInternal(UniquePtr<GameObject>& object);
+			AGameObject* CreateAGameObjectInternal(UniquePtr<AGameObject>& object);
 
 		private:
 			enum class EventType
@@ -39,18 +39,18 @@ namespace szas
 				Create = 0
 			};
 
-			struct GameObjectEvent
+			struct AGameObjectEvent
 			{
-				GameObject* object{};
+				AGameObject* object{};
 				EventType eventType{};
 			};
 
-			std::unordered_map<size_t, std::vector<UniquePtr<GameObject>>> m_objects;
+			std::unordered_map<size_t, std::vector<UniquePtr<AGameObject>>> m_objects;
 			
-			std::vector<UniquePtr<GameObject>> m_pendingObjects;
-			std::vector<UniquePtr<GameObject>> m_pendingObjectsSwapBuffer;
+			std::vector<UniquePtr<AGameObject>> m_pendingObjects;
+			std::vector<UniquePtr<AGameObject>> m_pendingObjectsSwapBuffer;
 
-			std::vector<GameObjectEvent> m_events{};
-			std::vector<GameObjectEvent> m_eventsSwapBuffer{};
+			std::vector<AGameObjectEvent> m_events{};
+			std::vector<AGameObjectEvent> m_eventsSwapBuffer{};
 	};
 }

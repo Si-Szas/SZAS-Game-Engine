@@ -1,4 +1,4 @@
-#include <SZAS/Graphics/AGameObject/Quad/Quad.h>
+#include <SZAS/AGameObject/Quad/Quad.h>
 
 szas::Quad::Quad(RefPtr<VertexShaderSignature> vs, RefPtr<ShaderBinary> ps, RefPtr<ShaderBinary> hs, RefPtr<ShaderBinary> ds)
 {

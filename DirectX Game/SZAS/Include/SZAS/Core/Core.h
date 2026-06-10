@@ -35,7 +35,7 @@ namespace szas {
 	//World
 	class World;
 	//Game Object
-	class GameObject;
+	class AGameObject;
 	
 	/////////// GAME LOOP - ENGINE TIME ///////////
 	class EngineTime;

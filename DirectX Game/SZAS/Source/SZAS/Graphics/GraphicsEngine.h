@@ -5,7 +5,7 @@
 #include <SZAS/Math/Vec4.h>
 #include <SZAS/Math/Matrix4x4.h>
 //#include <SZAS/Graphics/AGameObject/AGameObject.h>
-#include <SZAS/Graphics/AGameObject/Quad/Quad.h>
+#include <SZAS/AGameObject/Quad/Quad.h>
 #include <vector>
 
 namespace szas

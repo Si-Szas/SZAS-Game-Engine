@@ -1,5 +1,5 @@
 #include <SZAS/Game/World.h>
-#include <SZAS/Game/GameObject.h>
+#include <SZAS/AGameObject/AGameObject.h>	
 
 szas::World::World(const WorldDescriptor& descriptor) : Base(descriptor.base)
 {
@@ -46,7 +46,7 @@ void szas::World::Update(f32 deltaTime)
 
 }
 
-szas::GameObject* szas::World::CreateGameObjectInternal(UniquePtr<szas::GameObject>& object)
+szas::AGameObject* szas::World::CreateAGameObjectInternal(UniquePtr<szas::AGameObject>& object)
 {
 	if (!object) return {};
 

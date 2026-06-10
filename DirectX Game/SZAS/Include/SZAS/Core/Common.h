@@ -109,7 +109,7 @@ namespace szas
 		BaseDescriptor base;
 	};
 
-	struct GameObjectDescriptor
+	struct AGameObjectDescriptor
 	{
 		BaseDescriptor base;
 		World& world;

@@ -4,13 +4,14 @@
 
 namespace szas
 {
-	class GameObject : public Identifier
+	class AGameObject : public Identifier
 	{
-		szas_typeid(GameObject)
+		szas_typeid(AGameObject)
 
 		//CONSTRUCTOR
 		public:
-			explicit GameObject(const GameObjectDescriptor& descriptor);
+			explicit AGameObject(const AGameObjectDescriptor& descriptor);
+			virtual ~AGameObject();
 
 		protected:
 			virtual void OnCreate() 

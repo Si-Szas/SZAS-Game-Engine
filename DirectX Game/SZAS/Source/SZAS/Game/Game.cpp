@@ -4,7 +4,7 @@
 #include <SZAS/Core/Logger.h>
 #include <SZAS/Game/Display.h>
 #include <SZAS/Game/World.h>
-#include <SZAS/Game/GameObject.h>
+#include <SZAS/AGameObject/AGameObject.h>
 
 szas::Game::Game(const GameDescriptor& descriptor)
 {

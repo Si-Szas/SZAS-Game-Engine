@@ -66,13 +66,10 @@
     <ClCompile Include="SZAS\Source\SZAS\Time\EngineTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Game\GameObject.cpp">
+    <ClCompile Include="SZAS\Source\SZAS\AGameObject\AGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\AGameObject\Quad\Quad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\AGameObject\AGameObject.cpp">
+    <ClCompile Include="SZAS\Source\SZAS\AGameObject\Quad\Quad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SZAS\Source\SZAS\Graphics\IndexBuffer\IndexBuffer.cpp">
@@ -158,13 +155,10 @@
     <ClInclude Include="SZAS\Include\SZAS\Math\Matrix4x4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Include\SZAS\Game\GameObject.h">
+    <ClInclude Include="SZAS\Include\SZAS\AGameObject\AGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\AGameObject\Quad\Quad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\AGameObject\AGameObject.h">
+    <ClInclude Include="SZAS\Source\SZAS\AGameObject\Quad\Quad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Source\SZAS\Graphics\IndexBuffer\IndexBuffer.h">
