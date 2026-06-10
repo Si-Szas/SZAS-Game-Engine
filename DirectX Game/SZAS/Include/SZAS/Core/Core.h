@@ -32,11 +32,18 @@ namespace szas {
 	class VertexBuffer;
 	class ConstantBuffer;
 	class IndexBuffer;
+	
+	///////////// WORLD /////////////
 	//World
 	class World;
 	//Game Object
 	class AGameObject;
+	//Components
+	class AComponent;
+		//Transform Component
+	class TransformComponent;
 	
+
 	/////////// GAME LOOP - ENGINE TIME ///////////
 	class EngineTime;
 
@@ -46,6 +53,6 @@ namespace szas {
 	using f32 = float;
 	using d64 = double;
 	
-	template <typename T> using RefPtr = std::shared_ptr<T>;
-	template <typename T> using UniquePtr = std::unique_ptr<T>;
+	template <typename Type> using RefPtr = std::shared_ptr<Type>;
+	template <typename Type> using UniquePtr = std::unique_ptr<Type>;
 }

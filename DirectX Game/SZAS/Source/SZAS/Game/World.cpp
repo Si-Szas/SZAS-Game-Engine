@@ -1,5 +1,7 @@
 #include <SZAS/Game/World.h>
-#include <SZAS/AGameObject/AGameObject.h>	
+#include <SZAS/AGameObject/AGameObject.h>
+#include <SZAS/AComponent/AComponent.h>
+#include <SZAS/AComponent/TransformComponent.h>
 
 szas::World::World(const WorldDescriptor& descriptor) : Base(descriptor.base)
 {
@@ -16,15 +18,12 @@ void szas::World::Update(f32 deltaTime)
 		for (auto& gameObjEvent : m_eventsSwapBuffer)
 		{
 			auto objectTypeID = gameObjEvent.object->GetTypeID();
-			auto pendingObjectIndex = gameObjEvent.object->GetWorldIndex();
+			auto pendingObjectIndex = gameObjEvent.pendingObjectIndex;
 
 			if (gameObjEvent.eventType == EventType::Create)
 			{
 				auto& obj = m_pendingObjectsSwapBuffer[pendingObjectIndex];
 				auto ptr = obj.get();
-
-				auto index = m_objects[objectTypeID].size();
-				ptr->SetWorldIndex(index);
 
 				m_objects[objectTypeID].push_back(std::move(obj));
 
@@ -44,19 +43,44 @@ void szas::World::Update(f32 deltaTime)
 		}
 	}
 
+	//Update the transform components if they were marked as "dirty"
+	for (auto& component : m_dirtyTransforms)
+	{
+		component->UpdateWorldMatrix();
+	}
+
+	//Clear the list of dirty component to ensure that they don't get included in next update
+	m_dirtyTransforms.clear();
+
 }
 
 szas::AGameObject* szas::World::CreateAGameObjectInternal(UniquePtr<szas::AGameObject>& object)
 {
-	if (!object) return {};
+	if (object) 
+	{
 
-	auto pointer = object.get();
+		auto pointer = object.get();
 
-	auto index = m_pendingObjects.size();
-	pointer->SetWorldIndex(index);
+		auto index = m_pendingObjects.size();
 
-	m_pendingObjects.push_back(std::move(object));
-	m_events.push_back({ pointer, EventType::Create });
+		m_pendingObjects.push_back(std::move(object));
+		m_events.push_back({ pointer, index, EventType::Create });
 
-	return pointer;
+		return pointer;
+	}
+
+	return {};
 }
+
+void szas::World::AddComponentInternal(AComponent& component)
+{
+	//Add a component via ID
+	auto typeID = component.GetTypeID();
+	m_components[typeID].push_back(&component);
+}
+
+void szas::World::AddDirtyTransformInternal(TransformComponent& transformComponent)
+{
+	m_dirtyTransforms.push_back(&transformComponent);
+}
+

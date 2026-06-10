@@ -264,11 +264,11 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 	//m_scale = std::abs(std::sin(m_rotation));
 	
 	auto worldMatrix =
-		Matrix4x4::scale({ m_scale, m_scale, m_scale }) *
-		Matrix4x4::rotateAlongX(m_rotation) *
-		Matrix4x4::rotateAlongY(m_rotation) *
-		Matrix4x4::rotateAlongZ(m_rotation) *
-		Matrix4x4::translate({ m_position ,m_position ,0 });
+		Matrix4x4::Scale({ m_scale, m_scale, m_scale }) *
+		Matrix4x4::RotateAlongX(m_rotation) *
+		Matrix4x4::RotateAlongY(m_rotation) *
+		Matrix4x4::RotateAlongZ(m_rotation) *
+		Matrix4x4::Translate({ m_position ,m_position ,0 });
 	
 	//Orthographic Camera Set Up
 	auto size = swapChain.GetSize();
@@ -281,7 +281,7 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 	{
 		worldMatrix,
 		//viewMatrix,
-		Matrix4x4::orthoLH(viewWidth, viewHeight, -10.0f, 10.0f)
+		Matrix4x4::OrthoLH(viewWidth, viewHeight, -10.0f, 10.0f)
 	};
 
 	//Update the constant buffer before everything

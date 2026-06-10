@@ -25,7 +25,7 @@ namespace szas
 
 			}
 
-			static Matrix4x4 translate(const Vec3& translation) noexcept
+			static Matrix4x4 Translate(const Vec3& translation) noexcept
 			{
 				auto matrix = Matrix4x4::Identity();
 
@@ -36,7 +36,7 @@ namespace szas
 				return matrix;
 			}
 
-			static Matrix4x4 scale(const Vec3& scale) noexcept
+			static Matrix4x4 Scale(const Vec3& scale) noexcept
 			{
 				Matrix4x4 matrix{};
 
@@ -48,7 +48,7 @@ namespace szas
 				return matrix;
 			}
 
-			static Matrix4x4 rotateAlongX(f32 xRotation) noexcept
+			static Matrix4x4 RotateAlongX(f32 xRotation) noexcept
 			{
 				Matrix4x4 matrix{};
 
@@ -62,7 +62,7 @@ namespace szas
 				return matrix;
 			}
 
-			static Matrix4x4 rotateAlongY(f32 yRotation) noexcept
+			static Matrix4x4 RotateAlongY(f32 yRotation) noexcept
 			{
 				Matrix4x4 matrix{};
 
@@ -76,7 +76,7 @@ namespace szas
 				return matrix;
 			}
 
-			static Matrix4x4 rotateAlongZ(f32 zRotation) noexcept
+			static Matrix4x4 RotateAlongZ(f32 zRotation) noexcept
 			{
 				Matrix4x4 matrix{};
 
@@ -90,7 +90,7 @@ namespace szas
 				return matrix;
 			}
 
-			static Matrix4x4 orthoLH(f32 width, f32 height, f32 zNear, f32 zFar) noexcept
+			static Matrix4x4 OrthoLH(f32 width, f32 height, f32 zNear, f32 zFar) noexcept
 			{
 				assert(width != 0.0f && "OrthoLH: width must not be zero");
 				assert(height != 0.0f && "OrthoLH: height must not be zero");

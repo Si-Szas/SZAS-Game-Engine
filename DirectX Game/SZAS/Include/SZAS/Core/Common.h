@@ -115,6 +115,13 @@ namespace szas
 		World& world;
 	};
 
+	struct AComponentDescriptor
+	{
+		BaseDescriptor base;
+		AGameObject& object;
+		World& world;
+	};
+
 	struct GameDescriptor
 	{
 		Rect windowSize{ 1280, 720 };

@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\AComponent\AComponent.cpp" />
     <ClCompile Include="Game\MainGame.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Game\World.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\IndexBuffer\IndexBuffer.cpp" />
@@ -163,14 +164,16 @@
     <ClCompile Include="SZAS\Source\SZAS\Window\Win32\Win32Window.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\VertexBuffer\VertexBuffer.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\VertexShaderSignature\VertexShaderSignature.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\AComponent\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Include\SZAS\AComponent\AComponent.h" />
     <ClInclude Include="Game\MainGame.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Identifier.h" />
     <ClInclude Include="SZAS\Include\SZAS\Game\World.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Vector3D.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\IndexBuffer\IndexBuffer.h" />
-    <ClInclude Include="SZAS\Source\SZAS\AGameObject\AGameObject.h" />
+    <ClInclude Include="SZAS\Include\SZAS\AGameObject\AGameObject.h" />
     <ClInclude Include="SZAS\Source\SZAS\AGameObject\Quad\Quad.h" />
     <ClInclude Include="SZAS\Source\SZAS\Time\EngineTime.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Matrix4x4.h" />
@@ -197,6 +200,7 @@
     <ClInclude Include="SZAS\Include\SZAS\Math\Vec4.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\VertexBuffer\VertexBuffer.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\VertexShaderSignature\VertexShaderSignature.h" />
+    <ClInclude Include="SZAS\Include\SZAS\AComponent\TransformComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
