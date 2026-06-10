@@ -105,10 +105,14 @@ namespace szas
 		Vec4 color;
 	};
 
-	struct AGameObjectDescriptor
+	struct WorldDescriptor {
+		BaseDescriptor base;
+	};
+
+	struct GameObjectDescriptor
 	{
-		Vertex vertexList{};
-		GraphicsPipelineStateDescriptor& shaders;
+		BaseDescriptor base;
+		World& world;
 	};
 
 	struct GameDescriptor

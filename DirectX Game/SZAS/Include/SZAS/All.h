@@ -3,3 +3,5 @@
 #pragma once
 
 #include <SZAS/Game/Game.h>
+#include <SZAS/Game/World.h>
+#include <SZAS/Game/GameObject.h>

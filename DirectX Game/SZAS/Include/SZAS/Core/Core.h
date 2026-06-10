@@ -10,33 +10,34 @@ protected:\
 	Class& operator=(Class&&) = delete;
 
 namespace szas {
-	//Window
+	///////////// WINDOW /////////////
 	class Base;
 	class Window;
 	class Display;
 	class Game;
+	//Logger
+	class Logger;
+
+	///////////// RENDERER /////////////
 	//Graphics Engine
 	class GraphicsEngine;
 	class GraphicsDevice;
-	//Logger
-	class Logger;
-	//Swap Chain
 	class SwapChain;
-	//Device Context
 	class DeviceContext;
-	//Shader Binary
-	class ShaderBinary;
-	//Graphics Pipeline State
 	class GraphicsPipelineState;
-	//Vertex Buffer
-	class VertexBuffer;
-	//Vertex Shader Signature
+		//Shaders
+	class ShaderBinary;
 	class VertexShaderSignature;
-	//Constant Buffer
+		//Buffers
+	class VertexBuffer;
 	class ConstantBuffer;
-	//Index Buffer
 	class IndexBuffer;
-	//Engine Time
+	//World
+	class World;
+	//Game Object
+	class GameObject;
+	
+	/////////// GAME LOOP - ENGINE TIME ///////////
 	class EngineTime;
 
 	//Type Aliases
