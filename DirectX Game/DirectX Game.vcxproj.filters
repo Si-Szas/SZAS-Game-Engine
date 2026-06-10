@@ -149,7 +149,7 @@
     <ClInclude Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Time\EngineTime.h">
+    <ClInclude Include="SZAS\Include\SZAS\Time\EngineTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\Math\Matrix4x4.h">

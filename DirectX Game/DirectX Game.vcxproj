@@ -170,7 +170,7 @@
     <ClInclude Include="SZAS\Source\SZAS\Graphics\IndexBuffer\IndexBuffer.h" />
     <ClInclude Include="SZAS\Include\SZAS\AGameObject\AGameObject.h" />
     <ClInclude Include="SZAS\Source\SZAS\AGameObject\Quad\Quad.h" />
-    <ClInclude Include="SZAS\Source\SZAS\Time\EngineTime.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Time\EngineTime.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Matrix4x4.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Vec3.h" />
