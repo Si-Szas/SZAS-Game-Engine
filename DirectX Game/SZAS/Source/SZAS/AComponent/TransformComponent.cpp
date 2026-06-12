@@ -64,6 +64,12 @@ void szas::TransformComponent::UpdateWorldMatrix() noexcept
 	}
 }
 
+Matrix4x4 szas::TransformComponent::GetWorldMatrix()
+{
+	UpdateWorldMatrix();
+	return m_worldMatrix;
+}
+
 void szas::TransformComponent::MarkAsDirty()
 {
 	//If its already marked as dirty, then return

@@ -30,7 +30,7 @@
     <ClCompile Include="SZAS\Source\SZAS\Game\Win32\Win32Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.cpp">
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\WorldRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsDevice\GraphicsDevice.cpp">
@@ -81,6 +81,18 @@
     <ClCompile Include="Game\MainGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\AComponent\AComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\AComponent\TransformComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\AComponent\CubeComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\AGameObject\Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SZAS\Include\SZAS\Core\Base.h">
@@ -98,7 +110,7 @@
     <ClInclude Include="SZAS\Include\SZAS\All.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.h">
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\WorldRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsDevice\GraphicsDevice.h">
@@ -158,9 +170,6 @@
     <ClInclude Include="SZAS\Include\SZAS\Math\Matrix4x4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Source\SZAS\AGameObject\AGameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SZAS\Source\SZAS\AGameObject\Quad\Quad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -177,6 +186,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game\MainGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\AComponent\AComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\AGameObject\AGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\AComponent\TransformComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\AComponent\CubeComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\AGameObject\Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

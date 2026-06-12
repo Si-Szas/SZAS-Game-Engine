@@ -25,9 +25,10 @@ namespace szas
 		GraphicsDevice& graphicsDevice;
 	};
 
-	struct GraphicsEngineDescriptor 
+	struct WorldRendererDescriptor 
 	{
 		BaseDescriptor base;
+		GraphicsDevice& graphicsEngine;
 	};
 
 	struct GraphicsDeviceDescriptor

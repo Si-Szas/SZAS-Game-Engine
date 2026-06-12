@@ -30,8 +30,15 @@ namespace szas
 				return static_cast<Type*>(CreateAGameObjectInternal(gameObjEvent));
 			}
 
+			template <typename Type>
+			Type* const* GetAComponents(ui32& numberOfComponents) const noexcept
+			{
+				return reinterpret_cast<Type* const*>(CreateAComponentsInternal(Type::getTypeId(), &numberOfComponents));
+			}
+
 			AGameObject* CreateAGameObjectInternal(UniquePtr<AGameObject>& object);
-			
+			AComponent* const* CreateAComponentsInternal(size_t typeID, ui32* numberOfComponents) const noexcept;
+
 			void AddComponentInternal(AComponent& component);
 			void AddDirtyTransformInternal(TransformComponent& transformComponent);
 

@@ -7,7 +7,7 @@ szas::AGameObject::AGameObject(const AGameObjectDescriptor& descriptor) :
 	Identifier(descriptor.base),
 	m_world(descriptor.world)
 {
-	CreateOrGetComponent<TransformComponent>();
+	m_transform = CreateOrGetComponent<TransformComponent>();
 }
 
 szas::AGameObject::~AGameObject()
@@ -25,6 +25,8 @@ szas::AComponent* szas::AGameObject::CreateComponentInternal(UniquePtr<AComponen
 		
 		m_components.emplace(typeID, std::move(component));
 		m_world.AddComponentInternal(*pointer);
+
+		return pointer;
 	}
 
 	return {};
@@ -37,6 +39,11 @@ szas::AComponent* szas::AGameObject::GetComponentInternal(size_t ID)
 	if (it != m_components.end()) return it->second.get();
 	
 	return {};
+}
+
+szas::TransformComponent& szas::AGameObject::GetTransform() noexcept
+{
+	return *m_transform;
 }
 
 //size_t szas::AGameObject::GetWorldIndex() const noexcept

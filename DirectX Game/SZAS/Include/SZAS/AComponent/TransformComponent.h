@@ -25,6 +25,7 @@ namespace szas
 			Vec3 GetRotation() const noexcept;
 
 			void UpdateWorldMatrix() noexcept;
+			Matrix4x4 GetWorldMatrix();
 
 		private:
 			//We mark components as "dirty" when it needs to be updated

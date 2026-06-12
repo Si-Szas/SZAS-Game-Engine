@@ -11,5 +11,10 @@ class MainGame : public szas::Game
 	protected:
 		virtual void OnCreate();
 		virtual void OnUpdate(szas::f32 deltaTime);
+
+	private:
+		//LIST OF GAME OBJECTS
+		szas::AGameObject* m_objects[9]{};
+		szas::f32 m_rotation, m_scale{};
 };
 

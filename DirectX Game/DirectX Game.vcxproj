@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\AGameObject\Cube.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\AComponent\CubeComponent.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AComponent\AComponent.cpp" />
     <ClCompile Include="Game\MainGame.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Game\World.cpp" />
@@ -156,7 +158,7 @@
     <ClCompile Include="SZAS\Source\SZAS\Graphics\SwapChain\SwapChain.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Core\Logger.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsDevice\GraphicsDevice.cpp" />
-    <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\WorldRenderer.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Core\Base.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Game\Game.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Game\Win32\Win32Game.cpp" />
@@ -167,6 +169,8 @@
     <ClCompile Include="SZAS\Source\SZAS\AComponent\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Include\SZAS\AGameObject\Cube.h" />
+    <ClInclude Include="SZAS\Include\SZAS\AComponent\CubeComponent.h" />
     <ClInclude Include="SZAS\Include\SZAS\AComponent\AComponent.h" />
     <ClInclude Include="Game\MainGame.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Identifier.h" />
@@ -191,7 +195,7 @@
     <ClInclude Include="SZAS\Include\SZAS\Core\Logger.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsUtility\GraphicsLogUtility.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsDevice\GraphicsDevice.h" />
-    <ClInclude Include="SZAS\Source\SZAS\Graphics\GraphicsEngine.h" />
+    <ClInclude Include="SZAS\Source\SZAS\Graphics\WorldRenderer.h" />
     <ClInclude Include="SZAS\Include\SZAS\All.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Base.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Core.h" />

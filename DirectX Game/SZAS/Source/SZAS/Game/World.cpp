@@ -72,6 +72,20 @@ szas::AGameObject* szas::World::CreateAGameObjectInternal(UniquePtr<szas::AGameO
 	return {};
 }
 
+szas::AComponent* const* szas::World::CreateAComponentsInternal(size_t typeID, ui32* numberOfComponents) const noexcept
+{
+	auto it = m_components.find(typeID);
+
+	if (it != m_components.end())
+	{
+		*numberOfComponents = static_cast<ui32>(it->second.size());
+		return it->second.data();
+	}
+
+	*numberOfComponents = 0u;
+	return {};
+}
+
 void szas::World::AddComponentInternal(AComponent& component)
 {
 	//Add a component via ID

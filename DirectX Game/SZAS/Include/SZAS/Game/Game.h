@@ -37,11 +37,13 @@ namespace szas
 		private:
 			UniquePtr<Logger> m_logger{};
 			//Last defined attirbute is first to be allocated, so we want our window to be first
-			UniquePtr<GraphicsEngine> m_graphicsEngine{};
+			RefPtr<GraphicsDevice> m_graphicsDevice{};
 			//Using smart pointers avoid memory leaks in case a pointer is not deleted
 			UniquePtr<Display> m_display{};
 			//Unique pointer to the world
 			UniquePtr<World> m_world{};
+			//World Renderer
+			UniquePtr<WorldRenderer> m_worldRenderer{};
 			//Game loop is running
 			bool m_isRunning{ true };
 	};

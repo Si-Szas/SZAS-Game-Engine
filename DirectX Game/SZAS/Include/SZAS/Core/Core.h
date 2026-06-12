@@ -36,6 +36,7 @@ namespace szas {
 	///////////// WORLD /////////////
 	//World
 	class World;
+	class WorldRenderer;
 	//Game Object
 	class AGameObject;
 	//Components

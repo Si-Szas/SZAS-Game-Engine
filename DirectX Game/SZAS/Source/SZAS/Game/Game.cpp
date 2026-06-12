@@ -1,9 +1,10 @@
 #include <SZAS/Game/Game.h>
 #include <SZAS/Window/Window.h>
-#include <SZAS/Graphics/GraphicsEngine.h>
+#include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
 #include <SZAS/Core/Logger.h>
 #include <SZAS/Game/Display.h>
 #include <SZAS/Game/World.h>
+#include <SZAS/Graphics/WorldRenderer.h>
 #include <SZAS/AGameObject/AGameObject.h>
 
 szas::Game::Game(const GameDescriptor& descriptor)
@@ -13,9 +14,10 @@ szas::Game::Game(const GameDescriptor& descriptor)
 	SZASLogInformation("| Szas | DirectX C++ Game Engine |");
 	SZASLogInformation("|--------------------------------|\n");
 
-	m_graphicsEngine = std::make_unique<GraphicsEngine>(GraphicsEngineDescriptor{ *m_logger });
-	m_display = std::make_unique<Display>(DisplayDescriptor{ {*m_logger, descriptor.windowSize}, m_graphicsEngine->GetGraphicsDevice()});
+	m_graphicsDevice = std::make_unique<GraphicsDevice>(GraphicsDeviceDescriptor{ *m_logger });
+	m_display = std::make_unique<Display>(DisplayDescriptor{ {*m_logger, descriptor.windowSize}, *m_graphicsDevice});
 	m_world = std::make_unique<World>(WorldDescriptor{ {*m_logger} });
+	m_worldRenderer = std::make_unique<WorldRenderer>(WorldRendererDescriptor{ {*m_logger}, *m_graphicsDevice });
 
 	SZASLogInformation("Game successfully initialized.");
 }
@@ -29,7 +31,7 @@ void szas::Game::OnInternalUpdate(f32 deltaTime)
 {
 	OnUpdate(deltaTime);
 	m_world->Update(deltaTime);
-	m_graphicsEngine->Render(m_display->GetSwapChain());
+	m_worldRenderer->Render(*m_world, m_display->GetSwapChain(), deltaTime);
 }
 
 szas::Logger& szas::Game::GetLogger() noexcept

@@ -1,4 +1,4 @@
-#include <SZAS/Graphics/GraphicsEngine.h>
+#include <SZAS/Graphics/WorldRenderer.h>
 #include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
 #include <SZAS/Graphics/DeviceContext/DeviceContext.h>
 #include <SZAS/Graphics/SwapChain/SwapChain.h>
@@ -6,15 +6,25 @@
 #include <SZAS/Graphics/VertexBuffer/VertexBuffer.h>
 #include <SZAS/Graphics/ConstantBuffer/ConstantBuffer.h>
 #include <SZAS/Graphics/IndexBuffer/IndexBuffer.h>
+//GAME AND WORLD HEADER//
+#include <SZAS/Game/World.h>
+//GAME OBJECTS//
+#include <SZAS/AGameObject/AGameObject.h>
+//COMPONENTS//
+#include <SZAS/AComponent/AComponent.h>
+#include <SZAS/AComponent/TransformComponent.h>
+#include <SZAS/AComponent/CubeComponent.h>
+
 #include <SZAS/Math/Vec3.h>
 #include <fstream>
+#include <ranges>
 
-szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor) : Base(descriptor.base)
+szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
+	Base(descriptor.base),
+	m_graphicsDevice(descriptor.graphicsEngine)
 {
-	m_graphicsDevice = std::make_shared<GraphicsDevice>(GraphicsDeviceDescriptor{ m_logger });
-
 	//Creates the deferred device context
-	auto& device = *m_graphicsDevice;
+	auto& device = m_graphicsDevice;
 	m_deviceContext = device.CreateDeviceContext();
 
 	//Define the Shader File Path
@@ -245,75 +255,75 @@ szas::GraphicsEngine::GraphicsEngine(const GraphicsEngineDescriptor& descriptor)
 	});
 }
 
-szas::GraphicsDevice& szas::GraphicsEngine::GetGraphicsDevice() noexcept
-{
-	//Using * on a unique pointer gives us a non null reference
-	return *m_graphicsDevice;
-}
-
-void szas::GraphicsEngine::Render(SwapChain& swapChain)
-{
-	auto& context = *m_deviceContext;
-
-	auto& vsConstantBuffer = *m_vsConstantBuffer;
-	auto& psConstantBuffer = *m_psConstantBuffer;
-	
-	d64 deltaTime = szas::EngineTime::GetDeltaTime();
-	//m_position += deltaTime * 0.25f;
-	m_rotation += deltaTime * 2.0f;
-	//m_scale = std::abs(std::sin(m_rotation));
-	
-	auto worldMatrix =
-		Matrix4x4::Scale({ m_scale, m_scale, m_scale }) *
-		Matrix4x4::RotateAlongX(m_rotation) *
-		Matrix4x4::RotateAlongY(m_rotation) *
-		Matrix4x4::RotateAlongZ(m_rotation) *
-		Matrix4x4::Translate({ m_position ,m_position ,0 });
-	
-	//Orthographic Camera Set Up
+void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 deltaTime)
+{	
+	////////// ORTHOGRAPHIC CAMERA SET-UP //////////
 	auto size = swapChain.GetSize();
 	auto aspect = static_cast<f32>(size.width) / size.height;
-	auto unitsPerScreenHeight = 2.0f;
+	auto unitsPerScreenHeight = 5.0f;
 	auto viewHeight = unitsPerScreenHeight;
 	auto viewWidth = unitsPerScreenHeight * aspect;
 
-	ConstantData data
-	{
-		worldMatrix,
-		//viewMatrix,
-		Matrix4x4::OrthoLH(viewWidth, viewHeight, -10.0f, 10.0f)
-	};
-
-	//Update the constant buffer before everything
-	context.UpdateConstantBuffer(vsConstantBuffer, &data);
-	//We want to first clear the buffer, then after rendering on a back buffer, we want to move that back to the front buffer
+	////////// DEVICE CONTEXT //////////
+	// - Update the constant buffer before everything
+	// - context.UpdateConstantBuffer(vsConstantBuffer, &data);
+	// - We want to first clear the buffer, then after rendering on a back buffer, we want to move that back to the front buffer
+	// - Record render command that clears content of back buffer and binds it so we can render elements onto it
+	// - Use Pipeline
+	//	- Bind all objects inside graphics pipeline state (shaders) to actual GPU pipeline
+	auto& context = *m_deviceContext;
 	context.ClearAndSetBackBuffer(swapChain, {0.251f, 0.141f, 0.31f, 1.0f});
-	//Record render command that clears content of back buffer and binds it so we can render elements onto it
-	
-	//Use Pipeline
-		//Bind all objects inside graphics pipeline state (shaders) to actual GPU pipeline
 	context.SetGraphicsPipelineState(*m_pipeline);
+	context.SetViewportSize(size);
 
-	//Call set viewport size method and retrieve size from swap chain
-	context.SetViewportSize(swapChain.GetSize());
+	////////// ACOMPONENTS //////////
+	auto numberOfComponents = 0u;
+	auto componentList = world.GetAComponents<CubeComponent>(numberOfComponents);
+
+	////////// CONSTANT BUFFER DATA //////////
+	ConstantData data{};
+
+	for (auto i : std::views::iota(0u, numberOfComponents))
+	{
+		auto component = componentList[i];
+		auto& transform = component->GetGameObject().GetTransform();
+
+		data =
+			ConstantData
+			{
+				transform.GetWorldMatrix(),
+				Matrix4x4::OrthoLH(viewWidth, viewHeight, -10.0f, 10.0f)
+			};
+
+		auto& vsConstantBuffer = *m_vsConstantBuffer;
+		auto& psConstantBuffer = *m_psConstantBuffer;
+		context.UpdateConstantBuffer(vsConstantBuffer, &data);
+		//context.UpdateConstantBuffer(psConstantBuffer, &data);
+
+		auto& vb = *m_vertexBuffer;
+		auto& ib = *m_indexBuffer;
+		context.SetVertexBuffer(vb);
+		context.SetConstantBuffer(vsConstantBuffer, psConstantBuffer);
+		context.SetIndexBuffer(ib);
+		context.Draw4PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
+	}
+
+	//Pass device context where we will extract the commands from
+	m_graphicsDevice.ExecuteCommandList(context);
+
+	//Present our back buffer with its rendered content on the window
+	swapChain.Present();
 
 	//Bind the vertex buffer to the graphics pipeline (input assembler stage)
 		//First retieve reference to vertex buffer
 		//Then call Set Vertex to bind buffer to pipeline
 	//Bind constant buffer as well
-	auto& vertexBuffer = *m_vertexBuffer;
-	auto& indexBuffer = *m_indexBuffer;
-
-	context.SetVertexBuffer(vertexBuffer);
-	context.SetConstantBuffer(vsConstantBuffer, psConstantBuffer);
-	context.SetIndexBuffer(indexBuffer);
-
-	context.Draw4PatchIndexedTriangleList
-	(
-		indexBuffer.GetIndexListSize(),
-		0u,
-		0u
-	);
+	//auto& vertexBuffer = *m_vertexBuffer;
+	//auto& indexBuffer = *m_indexBuffer;
+	//
+	//context.SetVertexBuffer(vertexBuffer);
+	//context.SetConstantBuffer(vsConstantBuffer, psConstantBuffer);
+	//context.SetIndexBuffer(indexBuffer);
 
 	//////////// DRAW TRIANGLES ////////////
 		//Can only be called once graphics pipeline is set up. Provides all shaders
@@ -331,16 +341,8 @@ void szas::GraphicsEngine::Render(SwapChain& swapChain)
 	//	vertexBuffer.GetVertexListSize(),		//Vertex List size
 	//	0u										//Index we want to start drawing at
 	//);
-
-	//Allow the GPU to execute the list of commands recorded by the device context in order to finally render something to the back buffer
-	auto& device = *m_graphicsDevice;
-	//Pass device context where we will extract the commands from
-	device.ExecuteCommandList(context);
-
-	//Present our back buffer with its rendered content on the window
-	swapChain.Present();
 }
 
-szas::GraphicsEngine::~GraphicsEngine()
+szas::WorldRenderer::~WorldRenderer()
 {
 }

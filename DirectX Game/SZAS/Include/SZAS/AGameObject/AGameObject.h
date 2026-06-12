@@ -19,13 +19,11 @@ namespace szas
 			{
 				auto comp = GetComponent<Type>();
 				if (comp) return comp;
-
 				UniquePtr<AComponent> component = std::make_unique<Type>(AComponentDescriptor{
 					{m_logger},
 					*this,
 					m_world
 				});
-
 				return static_cast<Type*>(CreateComponentInternal(component));
 			}
 
@@ -34,6 +32,9 @@ namespace szas
 			{
 				return static_cast<Type*>(GetComponentInternal(Type::getTypeId()));
 			}
+
+			//Get the transform component
+			TransformComponent& GetTransform() noexcept;
 
 			//DESTRUCTOR
 			virtual ~AGameObject();
@@ -52,6 +53,10 @@ namespace szas
 
 		private:
 			std::unordered_map<size_t, UniquePtr<AComponent>> m_components{};
+			
+			// COMPONENTS SHARED BY ALL GAME OBJECTS
+			TransformComponent* m_transform{};
+			
 			World& m_world;
 
 		friend class World;
