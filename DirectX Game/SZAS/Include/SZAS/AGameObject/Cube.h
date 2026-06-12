@@ -1,6 +1,7 @@
 #pragma once
 #include <SZAS/Core/Common.h>
 #include <SZAS/AGameObject/AGameObject.h>
+#include <SZAS/AComponent/CubeComponent.h>
 
 namespace szas 
 {
@@ -16,6 +17,9 @@ namespace szas
 
 			//DESTRUCTOR
 			~Cube();
+
+		private:
+			CubeComponent* m_cube{};
 	};
 }
 

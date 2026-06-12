@@ -17,12 +17,10 @@ void MainGame::OnCreate()
 	{
 		for (auto y = 0; y < 3; y++)
 		{
-			auto object = world.CreateAGameObject<szas::AGameObject>();
-
-			object->CreateOrGetComponent<szas::CubeComponent>();
-			object->GetTransform().SetPosition({ (szas::f32) + x, (szas::f32) + y, 0});
+			auto cube = world.CreateAGameObject<szas::Cube>();
+			cube->GetTransform().SetPosition({ (szas::f32) + x, (szas::f32) + y, 0});
 			
-			m_objects[y * 3 + x] = object;
+			m_objects[y * 3 + x] = cube;
 		}
 	}
 }

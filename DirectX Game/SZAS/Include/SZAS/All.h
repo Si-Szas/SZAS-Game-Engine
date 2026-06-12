@@ -6,6 +6,7 @@
 #include <SZAS/Game/World.h>
 //GAME OBJECTS HEADER//
 #include <SZAS/AGameObject/AGameObject.h>
+#include <SZAS/AGameObject/Cube.h>
 //COMPONENTS HEADER//
 #include <SZAS/AComponent/AComponent.h>
 #include <SZAS/AComponent/TransformComponent.h>
