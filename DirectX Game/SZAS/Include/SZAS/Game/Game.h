@@ -18,6 +18,7 @@ namespace szas
 			//GETTER
 			virtual World& GetWorld() noexcept final;
 			virtual Logger& GetLogger() noexcept final;
+			virtual InputSystem& GetInputSystem() noexcept final;
 
 			//DESTRUCTOR
 			virtual ~Game();
@@ -36,6 +37,7 @@ namespace szas
 
 		private:
 			UniquePtr<Logger> m_logger{};
+			UniquePtr<InputSystem> m_inputSystem{};
 			//Last defined attirbute is first to be allocated, so we want our window to be first
 			RefPtr<GraphicsDevice> m_graphicsDevice{};
 			//Using smart pointers avoid memory leaks in case a pointer is not deleted

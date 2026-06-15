@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\InputSystem.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AGameObject\Cube.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AComponent\CubeComponent.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AComponent\AComponent.cpp" />
@@ -169,13 +170,14 @@
     <ClCompile Include="SZAS\Source\SZAS\AComponent\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\InputSystem.h" />
     <ClInclude Include="SZAS\Include\SZAS\AGameObject\Cube.h" />
     <ClInclude Include="SZAS\Include\SZAS\AComponent\CubeComponent.h" />
     <ClInclude Include="SZAS\Include\SZAS\AComponent\AComponent.h" />
     <ClInclude Include="Game\MainGame.h" />
     <ClInclude Include="SZAS\Include\SZAS\Core\Identifier.h" />
     <ClInclude Include="SZAS\Include\SZAS\Game\World.h" />
-    <ClInclude Include="SZAS\Include\SZAS\Math\Vector3D.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Math\Vec2.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\IndexBuffer\IndexBuffer.h" />
     <ClInclude Include="SZAS\Include\SZAS\AGameObject\AGameObject.h" />
     <ClInclude Include="SZAS\Source\SZAS\AGameObject\Quad\Quad.h" />

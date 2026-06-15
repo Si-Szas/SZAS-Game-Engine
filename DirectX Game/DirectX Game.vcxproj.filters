@@ -93,6 +93,9 @@
     <ClCompile Include="SZAS\Source\SZAS\AGameObject\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\InputSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SZAS\Include\SZAS\Core\Base.h">
@@ -176,7 +179,7 @@
     <ClInclude Include="SZAS\Source\SZAS\Graphics\IndexBuffer\IndexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SZAS\Include\SZAS\Math\Vector3D.h">
+    <ClInclude Include="SZAS\Include\SZAS\Math\Vec2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\Core\Identifier.h">
@@ -201,6 +204,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\AGameObject\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\InputSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

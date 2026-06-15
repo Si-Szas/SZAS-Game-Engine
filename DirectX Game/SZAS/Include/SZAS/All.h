@@ -11,3 +11,5 @@
 #include <SZAS/AComponent/AComponent.h>
 #include <SZAS/AComponent/TransformComponent.h>
 #include <SZAS/AComponent/CubeComponent.h>
+//INPUT SYSTEM HEADER//
+#include <SZAS/InputSystem/InputSystem.h>

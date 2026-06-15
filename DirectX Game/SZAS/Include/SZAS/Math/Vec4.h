@@ -8,6 +8,9 @@ namespace szas
 		public:
 			//CONSTRUCTOR
 			Vec4() = default;
+			Vec4(f32 all) : x(all), y(all), z(all), w(all)
+			{
+			}
 			Vec4(f32 _x, f32 _y, f32 _z, f32 _w) : x(_x), y(_y), z(_z), w(_w)
 			{
 			}

@@ -44,6 +44,8 @@ namespace szas {
 		//Transform Component
 	class TransformComponent;
 	
+	///////////// INPUT SYSTEM /////////////
+	class InputSystem;
 
 	/////////// GAME LOOP - ENGINE TIME ///////////
 	class EngineTime;

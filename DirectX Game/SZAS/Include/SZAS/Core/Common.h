@@ -123,6 +123,41 @@ namespace szas
 		World& world;
 	};
 
+	//INPUT SYSTEM
+	struct InputSystemDescriptor
+	{
+		BaseDescriptor base;
+	};
+
+	enum class KeyCode
+	{
+		Unknown = 0,
+
+		A, B, C, D, E, F, 
+		G, H, I, J, K, L, 
+		M, N, O, P, Q, R, 
+		S, T, U, V, W, X, 
+		Y, Z,
+
+		Num0, Num1, Num2,
+		Num3, Num4, Num5, 
+		Num6, Num7, Num8, 
+		Num9,
+
+		Escape, Shift, Space, Enter,
+
+		Up, Down, Left, Right,
+
+		Count
+	};
+
+	enum class MouseInput
+	{
+		MouseLeft = 0,
+		MouseRight,
+		MouseMiddle
+	};
+
 	struct GameDescriptor
 	{
 		Rect windowSize{ 1280, 720 };

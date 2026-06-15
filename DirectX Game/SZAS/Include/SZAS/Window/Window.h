@@ -10,6 +10,10 @@ namespace szas
 		public:
 			//CONSTRUCTOR
 			explicit Window(const WindowDescriptor& descriptor);
+
+			//FUNCTIONS
+			szas::Rect GetClientAreaInScreenSpace();
+
 			//DESTRUCTOR
 			virtual ~Window() override;
 
