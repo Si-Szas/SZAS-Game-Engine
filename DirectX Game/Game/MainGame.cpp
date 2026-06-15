@@ -13,16 +13,16 @@ void MainGame::OnCreate()
 	auto& world = GetWorld();
 
 	//// DEFINE GAME OBJECTS //// 
-	//for (auto x = 0; x < 3;x++)
-	//{
-	//	for (auto y = 0; y < 3; y++)
-	//	{
-	//		auto cube = world.CreateAGameObject<szas::Cube>();
-	//		cube->GetTransform().SetPosition({ (szas::f32) + x, (szas::f32) + y, 0});
-	//		
-	//		m_objects[y * 3 + x] = cube;
-	//	}
-	//}
+	for (auto x = 0; x < 3;x++)
+	{
+		for (auto y = 0; y < 3; y++)
+		{
+			auto cubes = world.CreateAGameObject<szas::Cube>();
+			cubes->GetTransform().SetPosition({ (szas::f32) + x, (szas::f32) + y, 0});
+			
+			m_objects[y * 3 + x] = cubes;
+		}
+	}
 
 	//// DEFINE CUBE AS PLAYER ////
 	auto cube = world.CreateAGameObject<szas::Cube>();
@@ -55,10 +55,13 @@ void MainGame::OnUpdate(f32 deltaTime)
 	pos = pos + direction * speed * deltaTime;
 	m_player->GetTransform().SetPosition(pos);
 
-	//m_scale = std::abs(std::sin(m_rotation));
-	//for (auto i = 0; i < 9; i++)
-	//{
-	//	m_objects[i]->GetTransform().SetRotation({ m_rotation * i, m_rotation, m_rotation * i });
-	//	m_objects[i]->GetTransform().SetScale({ m_scale,m_scale,m_scale });
-	//}
+	m_rotation += deltaTime * 0.707f;
+	m_scale = std::abs(std::sin(m_rotation));
+
+	for (auto i = 0; i < 9; i++)
+	{
+		m_objects[i]->GetTransform().SetRotation({ m_rotation * i, m_rotation, m_rotation * i });
+		m_objects[i]->GetTransform().SetScale({ m_scale,m_scale,m_scale });
+	}
+
 }
