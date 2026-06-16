@@ -24,19 +24,25 @@ namespace szas
 			void SetRotation(const Vec3& rotation);
 			Vec3 GetRotation() const noexcept;
 
+			Vec3 Forward();
+			Vec3 Right();
+			Vec3 Up();
+
 			void UpdateWorldMatrix() noexcept;
-			Matrix4x4 GetWorldMatrix();
+			Matrix4x4 GetAffineWorldMatrix() noexcept;
+			Matrix4x4 GetRigidWorldMatrix() noexcept;
 
 		private:
 			//We mark components as "dirty" when it needs to be updated
 			void MarkAsDirty();
 
 		private:
-			Vec3 m_position{ 0.0f, 0.0f, 0.0f };
-			Vec3 m_scale{ 1.0f, 1.0f, 1.0f };
-			Vec3 m_rotation{ 0.0f, 0.0f, 0.0f };
+			Vec3 m_position{0.0f};
+			Vec3 m_scale{1.0f};
+			Vec3 m_rotation{0.0f};
 
-			Matrix4x4 m_worldMatrix{};
+			Matrix4x4 m_affineWorldMatrix{};
+			Matrix4x4 m_rigidWorldMatrix{};
 
 			bool m_isDirty{};
 	};

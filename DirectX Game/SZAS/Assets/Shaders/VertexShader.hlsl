@@ -13,7 +13,7 @@ struct VS_OUTPUT
 cbuffer ConstantData : register(b0)
 {
     row_major float4x4 world;
-    //row_major float4x4 view;
+    row_major float4x4 view;
     row_major float4x4 projection;
    
 }
@@ -25,7 +25,7 @@ VS_OUTPUT VS_Main(VS_INPUT input)
     //Using float4 localPosition prevents warnings of implicit truncation
     float4 localPosition = float4(input.position, 1.0f);
     localPosition = mul(localPosition, world);
-    //output.position = mul(output.position, view);
+    //localPosition = mul(localPosition, view);
     localPosition = mul(localPosition, projection);
     
     output.position = localPosition.xyz;

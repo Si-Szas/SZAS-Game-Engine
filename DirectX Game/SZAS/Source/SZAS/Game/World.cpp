@@ -3,7 +3,8 @@
 #include <SZAS/AComponent/AComponent.h>
 #include <SZAS/AComponent/TransformComponent.h>
 
-szas::World::World(const WorldDescriptor& descriptor) : Base(descriptor.base)
+szas::World::World(const WorldDescriptor& descriptor) : Base(descriptor.base),
+	m_gameContext(descriptor.gameContext)
 {
 
 }

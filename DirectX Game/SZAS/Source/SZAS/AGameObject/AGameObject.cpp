@@ -5,6 +5,7 @@
 
 szas::AGameObject::AGameObject(const AGameObjectDescriptor& descriptor) :
 	Identifier(descriptor.base),
+	m_gameContext(descriptor.gameContext),
 	m_world(descriptor.world)
 {
 	m_transform = CreateOrGetComponent<TransformComponent>();
@@ -44,6 +45,16 @@ szas::AComponent* szas::AGameObject::GetComponentInternal(size_t ID)
 szas::TransformComponent& szas::AGameObject::GetTransform() noexcept
 {
 	return *m_transform;
+}
+
+szas::World& szas::AGameObject::GetWorld() noexcept
+{
+	return m_world;
+}
+
+szas::InputSystem& szas::AGameObject::GetInputSystem() noexcept
+{
+	return m_gameContext.inputSystem;
 }
 
 //size_t szas::AGameObject::GetWorldIndex() const noexcept

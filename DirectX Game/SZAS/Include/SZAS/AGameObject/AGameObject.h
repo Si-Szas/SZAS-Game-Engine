@@ -35,6 +35,8 @@ namespace szas
 
 			//Get the transform component
 			TransformComponent& GetTransform() noexcept;
+			World& GetWorld() noexcept;
+			InputSystem& GetInputSystem() noexcept;
 
 			//DESTRUCTOR
 			virtual ~AGameObject();
@@ -56,7 +58,7 @@ namespace szas
 			
 			// COMPONENTS SHARED BY ALL GAME OBJECTS
 			TransformComponent* m_transform{};
-			
+			GameContext m_gameContext;
 			World& m_world;
 
 		friend class World;

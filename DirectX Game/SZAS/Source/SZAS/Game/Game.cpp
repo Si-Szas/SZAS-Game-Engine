@@ -4,7 +4,7 @@
 #include <SZAS/Core/Logger.h>
 #include <SZAS/Game/Display.h>
 #include <SZAS/Game/World.h>
-#include <SZAS/Graphics/WorldRenderer.h>
+#include <SZAS/Game/WorldRenderer.h>
 #include <SZAS/AGameObject/AGameObject.h>
 #include <SZAS/InputSystem/InputSystem.h>
 
@@ -18,7 +18,7 @@ szas::Game::Game(const GameDescriptor& descriptor)
 	m_inputSystem = std::make_unique<InputSystem>(InputSystemDescriptor{ *m_logger });
 	m_graphicsDevice = std::make_unique<GraphicsDevice>(GraphicsDeviceDescriptor{ *m_logger });
 	m_display = std::make_unique<Display>(DisplayDescriptor{ {*m_logger, descriptor.windowSize}, *m_graphicsDevice});
-	m_world = std::make_unique<World>(WorldDescriptor{ {*m_logger} });
+	m_world = std::make_unique<World>(WorldDescriptor{ BaseDescriptor{*m_logger}, GameContext{*m_inputSystem} });
 	m_worldRenderer = std::make_unique<WorldRenderer>(WorldRendererDescriptor{ {*m_logger}, *m_graphicsDevice });
 
 	//TEMPORARY CURSOR LOCK

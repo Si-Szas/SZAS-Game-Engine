@@ -1,4 +1,4 @@
-#include <SZAS/Graphics/WorldRenderer.h>
+#include <SZAS/Game/WorldRenderer.h>
 #include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
 #include <SZAS/Graphics/DeviceContext/DeviceContext.h>
 #include <SZAS/Graphics/SwapChain/SwapChain.h>
@@ -14,6 +14,7 @@
 #include <SZAS/AComponent/AComponent.h>
 #include <SZAS/AComponent/TransformComponent.h>
 #include <SZAS/AComponent/CubeComponent.h>
+#include <SZAS/AComponent/CameraComponent.h>
 
 #include <SZAS/Math/Vec3.h>
 #include <fstream>
@@ -259,11 +260,7 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 {	
 	////////// ORTHOGRAPHIC CAMERA SET-UP //////////
 	auto size = swapChain.GetSize();
-	auto aspect = static_cast<f32>(size.width) / size.height;
-	auto unitsPerScreenHeight = 5.0f;
-	auto viewHeight = unitsPerScreenHeight;
-	auto viewWidth = unitsPerScreenHeight * aspect;
-
+	
 	////////// DEVICE CONTEXT //////////
 	// - Update the constant buffer before everything
 	// - context.UpdateConstantBuffer(vsConstantBuffer, &data);
@@ -278,34 +275,43 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 
 	////////// ACOMPONENTS //////////
 	auto numberOfComponents = 0u;
-	auto componentList = world.GetAComponents<CubeComponent>(numberOfComponents);
-
+	
 	////////// CONSTANT BUFFER DATA //////////
 	ConstantData data{};
-
-	for (auto i : std::views::iota(0u, numberOfComponents))
 	{
-		auto component = componentList[i];
-		auto& transform = component->GetGameObject().GetTransform();
+		auto cameraComponents = world.GetAComponents<CameraComponent>(numberOfComponents);
 
-		data =
-			ConstantData
-			{
-				transform.GetWorldMatrix(),
-				Matrix4x4::OrthoLH(viewWidth, viewHeight, -10.0f, 10.0f)
-			};
+		for (auto i : std::views::iota(0u, numberOfComponents))
+		{
+			auto camComponent = cameraComponents[i];
+			data.view = camComponent->GetViewMatrix();
+			camComponent->SetViewportSize(size);
+			data.projection = camComponent->GetProjectionMatrix();
+			//TEST: Whats the point of the break here?
+			break;
+		}
+	}
 
-		auto& vsConstantBuffer = *m_vsConstantBuffer;
-		auto& psConstantBuffer = *m_psConstantBuffer;
-		context.UpdateConstantBuffer(vsConstantBuffer, &data);
-		//context.UpdateConstantBuffer(psConstantBuffer, &data);
+	{
+		auto cubeComponents = world.GetAComponents<CubeComponent>(numberOfComponents);
+		for (auto i : std::views::iota(0u, numberOfComponents))
+		{
+			auto cubeComponent = cubeComponents[i];
+			auto& transform = cubeComponent->GetGameObject().GetTransform();
 
-		auto& vb = *m_vertexBuffer;
-		auto& ib = *m_indexBuffer;
-		context.SetVertexBuffer(vb);
-		context.SetConstantBuffer(vsConstantBuffer, psConstantBuffer);
-		context.SetIndexBuffer(ib);
-		context.Draw4PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
+			data.world = transform.GetAffineWorldMatrix();
+
+			auto& vsConstantBuffer = *m_vsConstantBuffer;
+			auto& psConstantBuffer = *m_psConstantBuffer;
+			context.UpdateConstantBuffer(&(*m_vsConstantBuffer), &data);
+			context.UpdateConstantBuffer(&(*m_psConstantBuffer), &data);
+			
+			auto& vb = *m_vertexBuffer;
+			auto& ib = *m_indexBuffer;
+			context.SetVertexBuffer(vb);
+			context.SetConstantBuffer(vsConstantBuffer, psConstantBuffer);
+			context.SetIndexBuffer(ib);
+			context.Draw4PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);}
 	}
 
 	//Pass device context where we will extract the commands from

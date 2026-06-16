@@ -24,17 +24,25 @@ void szas::DeviceContext::ClearAndSetBackBuffer(const SwapChain& swapChain, cons
 	f32 colorArray[] = {color.x, color.y, color.z, color.w};
 	
 	auto RTV = swapChain.m_renderTargetView.Get();
+	auto DSV = swapChain.m_depthStencilView.Get();
 
 	m_context->ClearRenderTargetView(
 		RTV,	//RTV, object representing view into a so-called render target
 		colorArray							//Array of 4 float values representing RGBA	
 	);
 	
+	m_context->ClearDepthStencilView(
+		DSV,
+		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
+		1,
+		0
+	);
+
 	//Call OMSetRenderTarget to bind buffer we want to render graphics into
 	m_context->OMSetRenderTargets(
 		1,			//Number of render target views (we set all in one view, our back buffer)
 		&RTV,		//An array of pointers to the views (we simulate an array using &)
-		nullptr		//Depth Stensive View
+		DSV		//Depth Stencil View
 	);
 }
 
@@ -144,23 +152,40 @@ Microsoft::WRL::ComPtr<ID3D11DeviceContext> szas::DeviceContext::GetD3D11DeviceC
 }
 
 
-void szas::DeviceContext::UpdateConstantBuffer(const ConstantBuffer& buffer, const void* data)
+void szas::DeviceContext::UpdateConstantBuffer(const ConstantBuffer* buffer, const void* data)
 {
-	if (!data) SZASLogThrowInvalidArgument("Null data pointer passed to UpdateConstantBuffer()");
+	if (!buffer) return;
+	//{
+	//	SZASLogWarning("Null buffer passed to UpdateConstantBuffer(). Skipping update.");
+	//	return;
+	//}
 
-	auto buff = buffer.m_buffer.Get();
+	if (!data)
+	{
+		SZASLogError("Null data pointer passed to UpdateConstantBuffer()");
+		return;
+	}
+
+	auto buff = buffer->m_buffer.Get();
+
 	D3D11_MAPPED_SUBRESOURCE mapped{}; //Tells you how much data can be viewed
 
-	SZASGraphicsLogThrowOnFail(m_context->Map
+	auto hr = m_context->Map
 	(
-			buff,	//List of constant buffers
-			0,		//Start slot, starting point in list
-			D3D11_MAP_WRITE_DISCARD, //CPU read and write permissions
-			0,		//What CPU does if GPU is busy. Optional
-			&mapped //Pointer to structure for mapped subresources
-	), "ID3D11DeviceContext::Map failed.");
+		buff,	//List of constant buffers
+		0,		//Start slot, starting point in list
+		D3D11_MAP_WRITE_DISCARD, //CPU read and write permissions
+		0,		//What CPU does if GPU is busy. Optional
+		&mapped //Pointer to structure for mapped subresources
+	);
 
-	std::memcpy(mapped.pData, data, buffer.m_size);
+	if (FAILED(hr))
+	{
+		SZASLogError("ID3D11DeviceContext::Map failed.");
+		return;
+	}
+
+	std::memcpy(mapped.pData, data, buffer->m_size);
 	m_context->Unmap(buff, 0);
 }
 

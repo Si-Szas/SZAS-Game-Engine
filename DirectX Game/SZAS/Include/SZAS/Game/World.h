@@ -24,6 +24,7 @@ namespace szas
 				UniquePtr<AGameObject> gameObjEvent = std::make_unique<Type>(AGameObjectDescriptor
 					{
 						{m_logger},
+						m_gameContext,
 						*this
 					});
 
@@ -67,6 +68,8 @@ namespace szas
 
 			std::vector<AGameObjectEvent> m_events{};
 			std::vector<AGameObjectEvent> m_eventsSwapBuffer{};
+
+			GameContext m_gameContext;
 
 		friend class AGameObject;
 		friend class AComponent;

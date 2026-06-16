@@ -42,12 +42,18 @@ szas::SwapChain::SwapChain(const SwapChainDescriptor& swapChainDescriptor, const
 
 void szas::SwapChain::Present(bool vsync)
 {
-	SZASGraphicsLogThrowOnFail(
-	m_swapChain->Present
-	(
-		vsync,		//Synchronization interval (syncrhonizes frame presentation with monitor's vertical refresh rate
-		0			//Presentation flag
-	), "Present() failed.");
+	auto hr =
+		m_swapChain->Present
+		(
+			vsync,		//Synchronization interval (syncrhonizes frame presentation with monitor's vertical refresh rate
+			0			//Presentation flag
+		);
+
+	if (FAILED(hr))
+	{
+		SZASLogError("Present() failed.");
+		return;
+	}
 }
 
 szas::Rect szas::SwapChain::GetSize() const noexcept
@@ -77,4 +83,28 @@ void szas::SwapChain::ReloadBuffers()
 		&m_renderTargetView		//Pointer to receive RTV instance
 		
 	), "CreateRenderTargetView() failed.");
+
+	//DEPTH STENCIL//
+	D3D11_TEXTURE2D_DESC depthTextureDescriptor = {};
+	depthTextureDescriptor.Width = std::max(1, m_size.width);
+	depthTextureDescriptor.Height = std::max(1, m_size.height);
+	depthTextureDescriptor.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthTextureDescriptor.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	depthTextureDescriptor.MipLevels = 1;
+	depthTextureDescriptor.SampleDesc.Count = 1;
+	depthTextureDescriptor.ArraySize = 1;
+
+	SZASGraphicsLogThrowOnFail(
+	m_d3dDevice.CreateTexture2D(
+		&depthTextureDescriptor,
+		nullptr,
+		&buffer
+	), "CreateTexture2D() failed.");
+
+	SZASGraphicsLogThrowOnFail(
+	m_d3dDevice.CreateDepthStencilView(
+		buffer.Get(),
+		NULL,
+		&m_depthStencilView
+	), "CreateTexture2D() failed.");
 }

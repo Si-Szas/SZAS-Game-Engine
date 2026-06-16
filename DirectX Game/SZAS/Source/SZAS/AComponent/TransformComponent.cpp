@@ -42,6 +42,24 @@ Vec3 szas::TransformComponent::GetRotation() const noexcept
 	return m_rotation;
 }
 
+Vec3 szas::TransformComponent::Forward()
+{
+	auto forward = GetRigidWorldMatrix().Row(2);
+	return szas::Vec3::normalize({ forward.x, forward.y, forward.z });
+}
+
+Vec3 szas::TransformComponent::Right()
+{
+	auto right = GetRigidWorldMatrix().Row(0);
+	return szas::Vec3::normalize({ right.x, right.y, right.z });
+}
+
+Vec3 szas::TransformComponent::Up()
+{
+	auto up = GetRigidWorldMatrix().Row(1);
+	return szas::Vec3::normalize({ up.x, up.y, up.z });
+}
+
 void szas::TransformComponent::UpdateWorldMatrix() noexcept
 {
 	//If the transform component is not marked to be updated, then return
@@ -49,25 +67,30 @@ void szas::TransformComponent::UpdateWorldMatrix() noexcept
 	{
 		m_isDirty = false;
 
-		//If we want to translate, then rotate, then scale an object with a transform, then...
-		m_worldMatrix =
-			//Scale first the world matrix
-			Matrix4x4::Scale(m_scale) *
-
-			//Then rotate it
+		m_rigidWorldMatrix =
+			//Concerned only about rotation and translate
 			Matrix4x4::RotateAlongX(m_rotation.x) *
 			Matrix4x4::RotateAlongY(m_rotation.y) *
 			Matrix4x4::RotateAlongZ(m_rotation.z) *
 
 			//Then translate
 			Matrix4x4::Translate(m_position);
+
+		m_affineWorldMatrix =
+			Matrix4x4::Scale(m_scale) * m_rigidWorldMatrix;
 	}
 }
 
-Matrix4x4 szas::TransformComponent::GetWorldMatrix()
+Matrix4x4 szas::TransformComponent::GetAffineWorldMatrix() noexcept
 {
 	UpdateWorldMatrix();
-	return m_worldMatrix;
+	return m_affineWorldMatrix;
+}
+
+Matrix4x4 szas::TransformComponent::GetRigidWorldMatrix() noexcept
+{
+	UpdateWorldMatrix();
+	return m_rigidWorldMatrix;
 }
 
 void szas::TransformComponent::MarkAsDirty()

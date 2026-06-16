@@ -21,6 +21,7 @@ namespace szas
 		private:
 			Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain{};
 			Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView{};
+			Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depthStencilView{};
 			Rect m_size{};
 
 			friend class DeviceContext;

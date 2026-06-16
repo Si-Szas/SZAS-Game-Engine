@@ -25,6 +25,11 @@ namespace szas
 		GraphicsDevice& graphicsDevice;
 	};
 
+	struct GameContext
+	{
+		InputSystem& inputSystem;
+	};
+
 	struct WorldRendererDescriptor 
 	{
 		BaseDescriptor base;
@@ -106,13 +111,10 @@ namespace szas
 		Vec4 color;
 	};
 
-	struct WorldDescriptor {
-		BaseDescriptor base;
-	};
-
 	struct AGameObjectDescriptor
 	{
 		BaseDescriptor base;
+		GameContext gameContext;
 		World& world;
 	};
 
@@ -156,6 +158,11 @@ namespace szas
 		MouseLeft = 0,
 		MouseRight,
 		MouseMiddle
+	};
+
+	struct WorldDescriptor {
+		BaseDescriptor base;
+		GameContext gameContext;
 	};
 
 	struct GameDescriptor

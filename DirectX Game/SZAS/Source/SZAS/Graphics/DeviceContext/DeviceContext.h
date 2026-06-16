@@ -25,7 +25,7 @@ namespace szas {
 			Microsoft::WRL::ComPtr<ID3D11DeviceContext> GetD3D11DeviceContext();
 
 			//UPDATE 
-			void UpdateConstantBuffer(const ConstantBuffer& buffer, const void* data);
+			void UpdateConstantBuffer(const ConstantBuffer* buffer, const void* data);
 			
 			//DRAW
 			void DrawTriangleList(ui32 vertexCount, ui32 startVertexLocation);

@@ -1,4 +1,5 @@
 #include "MainGame.h"
+#include "Player/Player.h"
 
 using namespace szas;
 
@@ -12,56 +13,36 @@ void MainGame::OnCreate()
 	Game::OnCreate();
 	auto& world = GetWorld();
 
-	//// DEFINE GAME OBJECTS //// 
-	for (auto x = 0; x < 3;x++)
+	auto floor = world.CreateAGameObject<szas::Cube>();
+	floor->GetTransform().SetScale({ 6.8f, 0.1f, 6.8f });
+	floor->GetTransform().SetPosition({ 0, -1, 0 });
+
+	srand((unsigned int)time(NULL));
+
+	for (auto y = -2; y < 4; y++)
 	{
-		for (auto y = 0; y < 3; y++)
+		for (auto x = -2; x < 4; x++)
 		{
-			auto cubes = world.CreateAGameObject<szas::Cube>();
-			cubes->GetTransform().SetPosition({ (szas::f32) + x, (szas::f32) + y, 0});
-			
-			m_objects[y * 3 + x] = cubes;
+			auto cube = world.CreateAGameObject<szas::Cube>();
+			auto height = (rand() % 120) + (80.0f);
+			height /= 100.0f;
+
+			auto width = (rand() % 600) + (200.0f);
+			width /= 1000.0f;
+
+			cube->GetTransform().SetScale({ width, height, width });
+			cube->GetTransform().SetPosition({ x * 1.4f, (height / 2.0f) - 1.0f, y * 1.4f });
 		}
 	}
 
-	//// DEFINE CUBE AS PLAYER ////
-	auto cube = world.CreateAGameObject<szas::Cube>();
-	cube->GetTransform().SetPosition({ 0.0f });
-
-	m_player = cube;
+	auto player = world.CreateAGameObject<Player>();
+	player->GetTransform().SetPosition({ 0, 1, -2 });
+	
+	//GetInputSystem().SetCursorLocked(true);
+	//GetInputSystem().SetCursorVisible(false);
 }
 
 void MainGame::OnUpdate(f32 deltaTime)
 {
 	Game::OnUpdate(deltaTime);
-
-	auto rot = m_player->GetTransform().GetRotation();
-	rot.x += GetInputSystem().GetMouseDelta().y * 0.01f;
-	rot.y -= GetInputSystem().GetMouseDelta().x * 0.01f;
-
-	m_player->GetTransform().SetRotation(rot);
-
-	auto pos = m_player->GetTransform().GetPosition();
-	auto forward = 0.0f;
-	auto rightward = 0.0f;
-	auto speed = 3.0f;
-
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::W)) forward = 1.0f;
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::S)) forward = -1.0f;
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::D)) rightward = 1.0f;
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::A)) rightward = -1.0f;
-
-	auto direction = szas::Vec3::normalize({ rightward,forward,0 });
-	pos = pos + direction * speed * deltaTime;
-	m_player->GetTransform().SetPosition(pos);
-
-	m_rotation += deltaTime * 0.707f;
-	m_scale = std::abs(std::sin(m_rotation));
-
-	for (auto i = 0; i < 9; i++)
-	{
-		m_objects[i]->GetTransform().SetRotation({ m_rotation * i, m_rotation, m_rotation * i });
-		m_objects[i]->GetTransform().SetScale({ m_scale,m_scale,m_scale });
-	}
-
 }

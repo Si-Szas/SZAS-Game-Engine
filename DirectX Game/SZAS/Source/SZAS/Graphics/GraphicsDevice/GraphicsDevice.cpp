@@ -105,13 +105,19 @@ void GraphicsDevice::ExecuteCommandList(DeviceContext& context)
 	Microsoft::WRL::ComPtr<ID3D11CommandList> commandList{};
 
 	//Retrieve command list from passed in device context
-	SZASGraphicsLogThrowOnFail(
-	context.m_context->FinishCommandList
-	(
-		false,			//Bool flag whether to restore previous graphics pipeline state. Pass false to optimize
-		&commandList	//Output parameter where we retrieve command list
-	), "FinishCommandList() failed.");
+	auto hr =
+		context.m_context->FinishCommandList
+		(
+			false,			//Bool flag whether to restore previous graphics pipeline state. Pass false to optimize
+			&commandList	//Output parameter where we retrieve command list
+		);
 	
+	if (FAILED(hr))
+	{
+		SZASLogError("FinishCommandList() failed.");
+		return;
+	}
+
 	//Sends commands directly to GPU as they are issued (immediate)
 	m_d3dContext->ExecuteCommandList
 	(
