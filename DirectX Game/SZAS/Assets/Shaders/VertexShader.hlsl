@@ -25,7 +25,7 @@ VS_OUTPUT VS_Main(VS_INPUT input)
     //Using float4 localPosition prevents warnings of implicit truncation
     float4 localPosition = float4(input.position, 1.0f);
     localPosition = mul(localPosition, world);
-    //localPosition = mul(localPosition, view);
+    localPosition = mul(localPosition, view);
     localPosition = mul(localPosition, projection);
     
     output.position = localPosition.xyz;
