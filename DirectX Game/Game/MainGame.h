@@ -16,6 +16,6 @@ class MainGame : public szas::Game
 		//LIST OF GAME OBJECTS
 		//szas::AGameObject* m_objects[9]{};
 		szas::AGameObject* m_player{};
-		szas::f32 m_rotation{0.0f}, m_scale{1.0f};
+		szas::f32 m_rotation{}, m_scale{};
 };
 
