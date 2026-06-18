@@ -24,7 +24,7 @@ VS_OUTPUT VS_Main(VS_INPUT input)
     output.position = mul(float4(input.position, 1), world);
     output.position = mul(output.position, view);
     output.position = mul(output.position, projection);
-    output.color = input.color;
+    output.color = float4(1.0f, 1.0f, 1.0f, 1.0f);
     
     return output;
 }
