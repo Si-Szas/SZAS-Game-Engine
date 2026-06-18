@@ -23,7 +23,7 @@ VS_OUTPUT VS_Main(VS_INPUT input)
     VS_OUTPUT output;
     
     output.position = input.position;
-    output.color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+    output.color = input.color;
     
     return output;
 }
@@ -108,5 +108,5 @@ DS_OUTPUT DS_Main(
 
 float4 PS_Main(DS_OUTPUT input) : SV_Target
 {
-    return input.color;
+    return float4(1.0f, 1.0f, 1.0f, 1.0f);
 }
