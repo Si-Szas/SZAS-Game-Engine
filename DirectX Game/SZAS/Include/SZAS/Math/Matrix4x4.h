@@ -21,8 +21,8 @@ namespace szas
 
 				identityMatrix.m_data[0][0] = 1;
 				identityMatrix.m_data[1][1] = 1;
-				identityMatrix.m_data[1][1] = 1;
-				identityMatrix.m_data[1][1] = 1;
+				identityMatrix.m_data[2][2] = 1;
+				identityMatrix.m_data[3][3] = 1;
 
 				return identityMatrix;
 
@@ -57,8 +57,8 @@ namespace szas
 
 				matrix.m_data[0][0] = 1;
 				matrix.m_data[1][1] = std::cos(xRotation);
-				matrix.m_data[2][1] = -std::sin(xRotation);
 				matrix.m_data[1][2] = std::sin(xRotation);
+				matrix.m_data[2][1] = -std::sin(xRotation);
 				matrix.m_data[2][2] = std::cos(xRotation);
 				matrix.m_data[3][3] = 1;
 
@@ -70,9 +70,9 @@ namespace szas
 				Matrix4x4 matrix{};
 
 				matrix.m_data[0][0] = std::cos(yRotation);
-				matrix.m_data[2][0] = std::sin(yRotation);
-				matrix.m_data[1][1] = 1;
 				matrix.m_data[0][2] = -std::sin(yRotation);
+				matrix.m_data[1][1] = 1;
+				matrix.m_data[2][0] = std::sin(yRotation);
 				matrix.m_data[2][2] = std::cos(yRotation);
 				matrix.m_data[3][3] = 1;
 
