@@ -289,7 +289,6 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 			data.view = camComponent->GetViewMatrix();
 			camComponent->SetViewportSize(size);
 			data.projection = camComponent->GetProjectionMatrix();
-			//TEST: Whats the point of the break here?
 			break;
 		}
 	}
