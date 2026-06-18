@@ -18,14 +18,18 @@ namespace szas {
 			void SetViewportSize(const Rect& size);
 
 			void SetVertexBuffer(const VertexBuffer& buffer);
-			void SetConstantBuffer(const ConstantBuffer& vsConstantBuffer, const ConstantBuffer& psConstantBuffer);
+			void SetAllConstantBuffer(ui32 startSlot, ui32 numberOfBuffers, const ConstantBuffer& buffer);
+			void SetVSConstantBuffer(ui32 startSlot, ui32 numberOfBuffers, const ConstantBuffer& buffer);
+			void SetHSConstantBuffer(ui32 startSlot, ui32 numberOfBuffers, const ConstantBuffer& buffer);
+			void SetDSConstantBuffer(ui32 startSlot, ui32 numberOfBuffers, const ConstantBuffer& buffer);
+			void SetPSConstantBuffer(ui32 startSlot, ui32 numberOfBuffers, const ConstantBuffer& buffer);
 			void SetIndexBuffer(const IndexBuffer& buffer);
 
 			//GETTER
 			Microsoft::WRL::ComPtr<ID3D11DeviceContext> GetD3D11DeviceContext();
 
 			//UPDATE 
-			void UpdateConstantBuffer(const ConstantBuffer* buffer, const void* data);
+			void UpdateConstantBuffer(const ConstantBuffer& buffer, const void* data);
 			
 			//DRAW
 			void DrawTriangleList(ui32 vertexCount, ui32 startVertexLocation);

@@ -240,13 +240,15 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	});
 
 	//Create constant buffer
-	m_vsConstantBuffer = device.CreateConstantBuffer
+	m_dsConstantBuffer = device.CreateConstantBuffer
 	({
-		&m_vsConstantBuffer,
+		&m_dsConstantBuffer,
 		sizeof(ConstantData)
 	});
 
-	//We don't have any constant data to pass to the pixel shader
+	//We don't have any constant data to pass to the vertex, hull, or pixel shader
+	m_vsConstantBuffer = nullptr;
+	m_hsConstantBuffer = nullptr;
 	m_psConstantBuffer = nullptr;
 
 	m_indexBuffer = device.CreateIndexBuffer
@@ -301,15 +303,25 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 
 			data.world = transform.GetAffineWorldMatrix();
 
+			////////// UPDATE EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
 			auto& vsConstantBuffer = *m_vsConstantBuffer;
+			auto& hsConstantBuffer = *m_hsConstantBuffer;
+			auto& dsConstantBuffer = *m_dsConstantBuffer;
 			auto& psConstantBuffer = *m_psConstantBuffer;
-			context.UpdateConstantBuffer(&(*m_vsConstantBuffer), &data);
-			context.UpdateConstantBuffer(&(*m_psConstantBuffer), &data);
+			context.UpdateConstantBuffer(vsConstantBuffer, &data);
+			context.UpdateConstantBuffer(hsConstantBuffer, &data);
+			context.UpdateConstantBuffer(dsConstantBuffer, &data);
+			context.UpdateConstantBuffer(psConstantBuffer, &data);
 			
 			auto& vb = *m_vertexBuffer;
 			auto& ib = *m_indexBuffer;
 			context.SetVertexBuffer(vb);
-			context.SetConstantBuffer(vsConstantBuffer, psConstantBuffer);
+			////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
+			context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
+			context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
+			context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
+			context.SetPSConstantBuffer(0, 1, psConstantBuffer);
+			
 			context.SetIndexBuffer(ib);
 			context.Draw4PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);}
 	}
@@ -319,34 +331,6 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 
 	//Present our back buffer with its rendered content on the window
 	swapChain.Present();
-
-	//Bind the vertex buffer to the graphics pipeline (input assembler stage)
-		//First retieve reference to vertex buffer
-		//Then call Set Vertex to bind buffer to pipeline
-	//Bind constant buffer as well
-	//auto& vertexBuffer = *m_vertexBuffer;
-	//auto& indexBuffer = *m_indexBuffer;
-	//
-	//context.SetVertexBuffer(vertexBuffer);
-	//context.SetConstantBuffer(vsConstantBuffer, psConstantBuffer);
-	//context.SetIndexBuffer(indexBuffer);
-
-	//////////// DRAW TRIANGLES ////////////
-		//Can only be called once graphics pipeline is set up. Provides all shaders
-		//Set viewport size which defines area of render target (back buffer)
-		//Bind vertex buffer to graphics pipeline, which provides vertices from which geometric shapes and raster image will be generated
-
-	// Draws all quads using its own draw function
-	//for (size_t i = 0; i < m_quadList.size(); ++i) {
-	//	m_quadList[i]->Draw(m_vertexBuffer, context.GetD3D11DeviceContext()); 
-	//}
-	
-	//m_quadList[0]->Draw(m_vertexBuffer, context.GetD3D11DeviceContext());
-
-	//context.DrawQuadList(
-	//	vertexBuffer.GetVertexListSize(),		//Vertex List size
-	//	0u										//Index we want to start drawing at
-	//);
 }
 
 szas::WorldRenderer::~WorldRenderer()

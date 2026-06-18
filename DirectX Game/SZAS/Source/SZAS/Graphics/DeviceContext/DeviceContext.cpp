@@ -119,21 +119,69 @@ void szas::DeviceContext::SetVertexBuffer(const VertexBuffer& buffer)
 	);
 }
 
-void szas::DeviceContext::SetConstantBuffer(const ConstantBuffer& vsConstantBuffer, const ConstantBuffer& psConstantBuffer)
+void szas::DeviceContext::SetAllConstantBuffer(ui32 startSlot, ui32 numberOfBuffers, const ConstantBuffer& buffer)
 {
-	//Checkers to ensure that the constant buffer for the vertex and pixel shader exist
-	if (&vsConstantBuffer)
+	if (&buffer)
 	{
-		auto vsBuff = vsConstantBuffer.m_buffer.Get();
-		m_context->VSSetConstantBuffers(0, 1, &vsBuff);
-	}
-
-	if (&psConstantBuffer)
-	{
-		auto psBuff = psConstantBuffer.m_buffer.Get();
-		m_context->PSSetConstantBuffers(0, 1, &psBuff);
+		auto buff = buffer.m_buffer.Get();
+		m_context->VSSetConstantBuffers(startSlot, numberOfBuffers, &buff);
+		m_context->HSSetConstantBuffers(startSlot, numberOfBuffers, &buff);
+		m_context->DSSetConstantBuffers(startSlot, numberOfBuffers, &buff);
+		m_context->PSSetConstantBuffers(startSlot, numberOfBuffers, &buff);
 	}
 }
+
+void szas::DeviceContext::SetVSConstantBuffer(ui32 startSlot, ui32 numberOfBuffers, const ConstantBuffer& buffer)
+{
+	if (&buffer)
+	{
+		auto buff = buffer.m_buffer.Get();
+		m_context->VSSetConstantBuffers(startSlot, numberOfBuffers, &buff);
+	}
+}
+
+void szas::DeviceContext::SetHSConstantBuffer(ui32 startSlot, ui32 numberOfBuffers, const ConstantBuffer& buffer)
+{
+	if (&buffer)
+	{
+		auto buff = buffer.m_buffer.Get();
+		m_context->HSSetConstantBuffers(startSlot, numberOfBuffers, &buff);
+	}
+}
+
+void szas::DeviceContext::SetDSConstantBuffer(ui32 startSlot, ui32 numberOfBuffers, const ConstantBuffer& buffer)
+{
+	if (&buffer)
+	{
+		auto buff = buffer.m_buffer.Get();
+		m_context->DSSetConstantBuffers(startSlot, numberOfBuffers, &buff);
+	}
+}
+
+void szas::DeviceContext::SetPSConstantBuffer(ui32 startSlot, ui32 numberOfBuffers, const ConstantBuffer& buffer)
+{
+	if (&buffer)
+	{
+		auto buff = buffer.m_buffer.Get();
+		m_context->PSSetConstantBuffers(startSlot, numberOfBuffers, &buff);
+	}
+}
+
+//void szas::DeviceContext::SetConstantBuffer(const ConstantBuffer& vsConstantBuffer, const ConstantBuffer& psConstantBuffer)
+//{
+//	//Checkers to ensure that the constant buffer for the vertex and pixel shader exist
+//	if (&vsConstantBuffer)
+//	{
+//		auto vsBuff = vsConstantBuffer.m_buffer.Get();
+//		m_context->DSSetConstantBuffers(0, 1, &vsBuff);
+//	}
+//
+//	if (&psConstantBuffer)
+//	{
+//		auto psBuff = psConstantBuffer.m_buffer.Get();
+//		m_context->PSSetConstantBuffers(0, 1, &psBuff);
+//	}
+//}
 
 void szas::DeviceContext::SetIndexBuffer(const IndexBuffer& buffer)
 {
@@ -152,13 +200,10 @@ Microsoft::WRL::ComPtr<ID3D11DeviceContext> szas::DeviceContext::GetD3D11DeviceC
 }
 
 
-void szas::DeviceContext::UpdateConstantBuffer(const ConstantBuffer* buffer, const void* data)
+void szas::DeviceContext::UpdateConstantBuffer(const ConstantBuffer& buffer, const void* data)
 {
-	if (!buffer) return;
-	//{
-	//	SZASLogWarning("Null buffer passed to UpdateConstantBuffer(). Skipping update.");
-	//	return;
-	//}
+	//Means the buffer provided is a nullptr
+	if (!&buffer) return;
 
 	if (!data)
 	{
@@ -166,7 +211,7 @@ void szas::DeviceContext::UpdateConstantBuffer(const ConstantBuffer* buffer, con
 		return;
 	}
 
-	auto buff = buffer->m_buffer.Get();
+	auto buff = buffer.m_buffer.Get();
 
 	D3D11_MAPPED_SUBRESOURCE mapped{}; //Tells you how much data can be viewed
 
@@ -185,7 +230,7 @@ void szas::DeviceContext::UpdateConstantBuffer(const ConstantBuffer* buffer, con
 		return;
 	}
 
-	std::memcpy(mapped.pData, data, buffer->m_size);
+	std::memcpy(mapped.pData, data, buffer.m_size);
 	m_context->Unmap(buff, 0);
 }
 
