@@ -332,19 +332,26 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	//	sizeof(Vertex)
 	//});
 
-	m_cubeVertexBuffer = device.CreateVertexBuffer
-	({
-		cubeVertices,
-		std::size(cubeVertices),
-		sizeof(Vertex)
-	});
+	//m_cubeVertexBuffer = device.CreateVertexBuffer
+	//({
+	//	cubeVertices,
+	//	std::size(cubeVertices),
+	//	sizeof(Vertex)
+	//});
 
-	m_vertexBuffer = device.CreateVertexBuffer
+	m_vertexBuffer.push_back(device.CreateVertexBuffer
 	({
 		sphereVertices.data(),					//Vertex List
 		static_cast<UINT>(sphereVertices.size()),		//Vertex List Size
 		sizeof(Vertex)				//Vertex Size
-	});
+	}));
+
+	m_vertexBuffer.push_back(device.CreateVertexBuffer
+	({
+		cubeVertices,
+		std::size(cubeVertices),
+		sizeof(Vertex)
+	}));
 
 	//Create constant buffer
 	m_dsConstantBuffer = device.CreateConstantBuffer
@@ -358,17 +365,17 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	m_hsConstantBuffer = nullptr;
 	m_psConstantBuffer = nullptr;
 
-	m_indexBuffer = device.CreateIndexBuffer
+	m_indexBuffer.push_back(device.CreateIndexBuffer
 	({
 		sphereIndices.data(),//Index List
 		static_cast<UINT>(sphereIndices.size())//Index List Size
-	});
+	}));
 
-	m_cubeIndexBuffer = device.CreateIndexBuffer
+	m_indexBuffer.push_back(device.CreateIndexBuffer
 	({
 		indexList,//Index List
 		std::size(indexList)//Index List Size
-	});
+	}));
 }
 
 void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 deltaTime)
@@ -408,64 +415,35 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 
 	{
 		auto cubeComponents = world.GetAComponents<CubeComponent>(numberOfComponents);
+
 		for (auto i : std::views::iota(0u, numberOfComponents))
 		{
-			if(i == 0u){
-				auto cubeComponent = cubeComponents[i];
-				auto& transform = cubeComponent->GetGameObject().GetTransform();
+			auto cubeComponent = cubeComponents[i];
+			auto& transform = cubeComponent->GetGameObject().GetTransform();
 
-				data.world = transform.GetAffineWorldMatrix();
+			data.world = transform.GetAffineWorldMatrix();
 
-				////////// UPDATE EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
-				auto& vsConstantBuffer = *m_vsConstantBuffer;
-				auto& hsConstantBuffer = *m_hsConstantBuffer;
-				auto& dsConstantBuffer = *m_dsConstantBuffer;
-				auto& psConstantBuffer = *m_psConstantBuffer;
-				context.UpdateConstantBuffer(vsConstantBuffer, &data);
-				context.UpdateConstantBuffer(hsConstantBuffer, &data);
-				context.UpdateConstantBuffer(dsConstantBuffer, &data);
-				context.UpdateConstantBuffer(psConstantBuffer, &data);
+			////////// UPDATE EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
+			auto& vsConstantBuffer = *m_vsConstantBuffer;
+			auto& hsConstantBuffer = *m_hsConstantBuffer;
+			auto& dsConstantBuffer = *m_dsConstantBuffer;
+			auto& psConstantBuffer = *m_psConstantBuffer;
+			context.UpdateConstantBuffer(vsConstantBuffer, &data);
+			context.UpdateConstantBuffer(hsConstantBuffer, &data);
+			context.UpdateConstantBuffer(dsConstantBuffer, &data);
+			context.UpdateConstantBuffer(psConstantBuffer, &data);
 			
-				auto& vb = *m_vertexBuffer;
-				auto& ib = *m_indexBuffer;
-				context.SetVertexBuffer(vb);
-				////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
-				context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
-				context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
-				context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
-				context.SetPSConstantBuffer(0, 1, psConstantBuffer);
+			auto& vb = *m_vertexBuffer[1];
+			auto& ib = *m_indexBuffer[1];
+			context.SetVertexBuffer(vb);
+			////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
+			context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
+			context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
+			context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
+			context.SetPSConstantBuffer(0, 1, psConstantBuffer);
 			
-				context.SetIndexBuffer(ib);
-				context.Draw3PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
-			}
-			else {
-				auto cubeComponent = cubeComponents[i];
-				auto& transform = cubeComponent->GetGameObject().GetTransform();
-
-				data.world = transform.GetAffineWorldMatrix();
-
-				////////// UPDATE EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
-				auto& vsConstantBuffer = *m_vsConstantBuffer;
-				auto& hsConstantBuffer = *m_hsConstantBuffer;
-				auto& dsConstantBuffer = *m_dsConstantBuffer;
-				auto& psConstantBuffer = *m_psConstantBuffer;
-				context.UpdateConstantBuffer(vsConstantBuffer, &data);
-				context.UpdateConstantBuffer(hsConstantBuffer, &data);
-				context.UpdateConstantBuffer(dsConstantBuffer, &data);
-				context.UpdateConstantBuffer(psConstantBuffer, &data);
-
-				auto& vb = *m_cubeVertexBuffer;
-				auto& ib = *m_cubeIndexBuffer;
-				context.SetVertexBuffer(vb);
-				////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
-				context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
-				context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
-				context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
-				context.SetPSConstantBuffer(0, 1, psConstantBuffer);
-
-				context.SetIndexBuffer(ib);
-				context.Draw3PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
-			}
+			context.SetIndexBuffer(ib);
+			context.Draw3PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
 		}
 	}
 	
