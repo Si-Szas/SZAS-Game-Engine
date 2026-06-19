@@ -17,42 +17,30 @@ void szas::Player::OnUpdate(f32 deltaTime)
 {
 	auto& input = GetInputSystem();
 
-
 	auto sensitivity = 0.001f;
-	auto rot = GetTransform().GetRotation();
-	rot.x += GetInputSystem().GetMouseDelta().y * sensitivity;
-	rot.y += GetInputSystem().GetMouseDelta().x * sensitivity;
-	if (rot.x > 1.57f) rot.x = 1.57f;
-	else if (rot.x < -1.57f) rot.x = -1.57f;
-	GetTransform().SetRotation(rot);
+	auto rotation = GetTransform().GetRotation();
+	rotation.x += GetInputSystem().GetMouseDelta().y * sensitivity;
+	rotation.y += GetInputSystem().GetMouseDelta().x * sensitivity;
+	if (rotation.x > 1.57f) rotation.x = 1.57f;
+	else if (rotation.x < -1.57f) rotation.x = -1.57f;
+	GetTransform().SetRotation(rotation);
 
-
-	auto pos = GetTransform().GetPosition();
+	auto position = GetTransform().GetPosition();
 	auto forward = 0.0f;
 	auto right = 0.0f;
 	auto speed = 3.0f;
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::W)) {
-		forward = 1.0f;
-		std::cout << "W Key Pressed!" << std::endl;
-	}
 
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::S)) {
-		forward = -1.0f;
-		std::cout << "S Key Pressed!" << std::endl;
-	}
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::D)) {
-		right = 1.0f;
-		std::cout << "D Key Pressed!" << std::endl;
-	}
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::A)) {
-		right = -1.0f;
-		std::cout << "A Key Pressed!" << std::endl;
-	}
+	if (GetInputSystem().IsKeyDown(szas::KeyCode::W)) forward = 1.0f;
+	if (GetInputSystem().IsKeyDown(szas::KeyCode::S)) forward = -1.0f;
+	if (GetInputSystem().IsKeyDown(szas::KeyCode::D)) right = 1.0f;
+	if (GetInputSystem().IsKeyDown(szas::KeyCode::A)) right = -1.0f;
+
 	auto forwardDir = GetTransform().Forward() * forward;
 	auto rightDir = GetTransform().Right() * right;
-	auto direction = szas::Vec3::normalize(forwardDir + rightDir);
-	pos = pos + direction * speed * deltaTime;
-	GetTransform().SetPosition(pos);
+	auto direction = szas::Vec3::Normalize(forwardDir + rightDir);
+
+	position = position + direction * speed * deltaTime;
+	GetTransform().SetPosition(position);
 }
 
 szas::Player::~Player()

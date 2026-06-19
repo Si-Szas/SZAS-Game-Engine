@@ -33,7 +33,7 @@ namespace szas
 			return *this;
 		}
 
-		static Vec3 normalize(const Vec3& vector)
+		static Vec3 Normalize(const Vec3& vector)
 		{
 			float lengthSquared = 
 				vector.x * vector.x + 

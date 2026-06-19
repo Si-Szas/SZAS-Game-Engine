@@ -45,19 +45,19 @@ Vec3 szas::TransformComponent::GetRotation() const noexcept
 Vec3 szas::TransformComponent::Forward()
 {
 	auto forward = GetRigidWorldMatrix().Row(2);
-	return szas::Vec3::normalize({ forward.x, forward.y, forward.z });
+	return szas::Vec3::Normalize({ forward.x, forward.y, forward.z });
 }
 
 Vec3 szas::TransformComponent::Right()
 {
 	auto right = GetRigidWorldMatrix().Row(0);
-	return szas::Vec3::normalize({ right.x, right.y, right.z });
+	return szas::Vec3::Normalize({ right.x, right.y, right.z });
 }
 
 Vec3 szas::TransformComponent::Up()
 {
 	auto up = GetRigidWorldMatrix().Row(1);
-	return szas::Vec3::normalize({ up.x, up.y, up.z });
+	return szas::Vec3::Normalize({ up.x, up.y, up.z });
 }
 
 void szas::TransformComponent::UpdateWorldMatrix() noexcept

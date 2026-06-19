@@ -43,11 +43,13 @@ namespace szas
 			RefPtr<DeviceContext> m_deviceContext{};
 			RefPtr<GraphicsPipelineState> m_pipeline{};
 			RefPtr<VertexBuffer> m_vertexBuffer{};
+			RefPtr<VertexBuffer> m_cubeVertexBuffer{};
 			RefPtr<ConstantBuffer> m_vsConstantBuffer{};
 			RefPtr<ConstantBuffer> m_hsConstantBuffer{};
 			RefPtr<ConstantBuffer> m_dsConstantBuffer{};
 			RefPtr<ConstantBuffer> m_psConstantBuffer{};
 			RefPtr<IndexBuffer> m_indexBuffer{};
+			RefPtr<IndexBuffer> m_cubeIndexBuffer{};
 	};
 }
 

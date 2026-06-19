@@ -16,9 +16,11 @@
 #include <SZAS/AComponent/CubeComponent.h>
 #include <SZAS/AComponent/CameraComponent.h>
 
+#include <SZAS/Math/Vec2.h>
 #include <SZAS/Math/Vec3.h>
 #include <fstream>
 #include <ranges>
+#include <DirectXMath.h>
 
 szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	Base(descriptor.base),
@@ -52,7 +54,7 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 		vertexShaderSourceCodeSize,
 		"VS_Main",
 		ShaderType::VertexShader
-	});
+		});
 
 	//Define Shader File Path for Hull Shader
 	constexpr char hullShaderFilePath[] = "SZAS/Assets/Shaders/HullShader.hlsl";
@@ -63,7 +65,7 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 		std::istreambuf_iterator<char>(hullShaderStream),	//Beginning of the file
 		std::istreambuf_iterator<char>()				//Beginning of the end
 	};
-	
+
 	auto hullShaderSourceCode = hullShaderFileData.c_str();
 	auto hullShaderSourceCodeSize = hullShaderFileData.length();
 
@@ -96,7 +98,7 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 		domainShaderSourceCodeSize,
 		"DS_Main",
 		ShaderType::DomainShader
-	});
+		});
 
 	constexpr char pixelShaderFilePath[] = "SZAS/Assets/Shaders/PixelShader.hlsl";
 	//Read the contents of the shader file
@@ -121,10 +123,10 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 		ShaderType::PixelShader
 		});
 
-	auto vertexShaderSignature = device.CreateVertexShaderSignature({vs});
+	auto vertexShaderSignature = device.CreateVertexShaderSignature({ vs });
 
 	//Create Graphics Pipeline State
-	m_pipeline = device.CreateGraphicsPipelineState({*vertexShaderSignature, *ps, *hs, *ds});
+	m_pipeline = device.CreateGraphicsPipelineState({ *vertexShaderSignature, *ps, *hs, *ds });
 
 	////////////// CREATING QUADS //////////////
 	//const Vertex quad1Vertices[] =
@@ -136,6 +138,104 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	//};
 
 	/// CREATING A 3D OBJECT //
+	//Defines how smooth the circle looks
+	int radius = 1;
+	int sliceCount = radius * 20;
+	int stackCount = radius * 20;
+
+	std::vector<Vertex> sphereVertices;
+	sphereVertices.push_back(Vertex({ 0.0f, szas::f32(radius), 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
+
+	float phiStep = DirectX::XM_PI / stackCount;
+	float thetaStep = DirectX::XM_2PI / sliceCount;
+
+	for (int i = 1; i < stackCount; ++i) {
+		float phi = i * phiStep;
+		for (int j = 0; j <= sliceCount; ++j) {
+			f32 theta = j * thetaStep;
+
+			Vertex v;
+
+			// 1. Compute your float positions explicitly first
+			v.position.x = radius * sinf(phi) * cosf(theta);
+			v.position.y = radius * cosf(phi);
+			v.position.z = radius * sinf(phi) * sinf(theta);
+
+			// 2. Compute your float colors explicitly first
+			v.color.x = (v.position.x / radius) * 0.5f + 0.5f;
+			v.color.y = (v.position.y / radius) * 0.5f + 0.5f;
+			v.color.z = (v.position.z / radius) * 0.5f + 0.5f;
+			v.color.w = 1.0f;
+
+			const Vertex* vertexArray = static_cast<const Vertex*>(&v);
+			//allQuadVertices.push_back(vertexArray[k]);
+
+			sphereVertices.push_back(*vertexArray);
+		}
+	}
+
+	sphereVertices.push_back(Vertex({ 0.0f, szas::f32(-radius), 0.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }));
+
+	std::vector<ui32> sphereIndices;
+	for (int i = 0; i < stackCount; ++i) {
+		for (int j = 0; j < sliceCount; ++j) {
+			sphereIndices.push_back(0); // Top pole (degenerated edge)
+			sphereIndices.push_back(0); // Top pole (degenerated edge)
+			sphereIndices.push_back(static_cast<uint32_t>(1 + j));
+			sphereIndices.push_back(static_cast<uint32_t>(1 + j + 1));
+		}
+	}
+	//for (uint32_t i = 1; i <= sliceCount; ++i) {
+	//	sphereIndices.push_back(0);
+	//	sphereIndices.push_back(i + 1);
+	//	sphereIndices.push_back(i);
+	//}
+
+	// Inner ring quads
+	int baseIndex = 1;
+	int ringVertexCount = sliceCount + 1;
+	for (int i = 0; i < stackCount - 2; ++i) {
+		for (int j = 0; j < sliceCount; ++j) {
+			// Calculate the 4 unique quad corner vertices cleanly
+			uint32_t topLeft = static_cast<uint32_t>(baseIndex + i * ringVertexCount + j);
+			uint32_t topRight = static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1);
+			uint32_t bottomLeft = static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j);
+			uint32_t bottomRight = static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j + 1);
+
+			// Push exactly 4 indices per patch in Clockwise (CW) winding order
+			sphereIndices.push_back(topLeft);
+			sphereIndices.push_back(topRight);
+			sphereIndices.push_back(bottomLeft);
+			sphereIndices.push_back(bottomRight);
+		}
+	}
+
+	//for (int i = 0; i < stackCount - 2; ++i) {
+	//	for (int j = 0; j < sliceCount; ++j) {
+	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j));
+	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1));
+	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j));
+	//		
+	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j));
+	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1));
+	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j + 1));
+	//	}
+	//}
+	
+	// Bottom pole triangles
+	uint32_t southPoleIndex = (uint32_t)sphereVertices.size() - 1;
+	baseIndex = southPoleIndex - ringVertexCount;
+	//for (uint32_t i = 0; i < sliceCount; ++i) {
+	//	sphereIndices.push_back(southPoleIndex);
+	//	sphereIndices.push_back(baseIndex + i);
+	//	sphereIndices.push_back(baseIndex + i + 1);
+	//}
+	for (int j = 0; j < sliceCount; ++j) {
+		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + j));
+		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + j + 1));
+		sphereIndices.push_back(southPoleIndex); // Bottom pole (degenerated edge)
+		sphereIndices.push_back(southPoleIndex); // Bottom pole (degenerated edge)
+	}
 
 	const Vertex cubeVertices[] =
 	{
@@ -232,10 +332,17 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	//	sizeof(Vertex)
 	//});
 
+	m_cubeVertexBuffer = device.CreateVertexBuffer
+	({
+		cubeVertices,
+		std::size(cubeVertices),
+		sizeof(Vertex)
+	});
+
 	m_vertexBuffer = device.CreateVertexBuffer
 	({
-		cubeVertices,					//Vertex List
-		std::size(cubeVertices),		//Vertex List Size
+		sphereVertices.data(),					//Vertex List
+		static_cast<UINT>(sphereVertices.size()),		//Vertex List Size
 		sizeof(Vertex)				//Vertex Size
 	});
 
@@ -252,6 +359,12 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	m_psConstantBuffer = nullptr;
 
 	m_indexBuffer = device.CreateIndexBuffer
+	({
+		sphereIndices.data(),//Index List
+		static_cast<UINT>(sphereIndices.size())//Index List Size
+	});
+
+	m_cubeIndexBuffer = device.CreateIndexBuffer
 	({
 		indexList,//Index List
 		std::size(indexList)//Index List Size
@@ -297,33 +410,65 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 		auto cubeComponents = world.GetAComponents<CubeComponent>(numberOfComponents);
 		for (auto i : std::views::iota(0u, numberOfComponents))
 		{
-			auto cubeComponent = cubeComponents[i];
-			auto& transform = cubeComponent->GetGameObject().GetTransform();
+			if(i == 0u){
+				auto cubeComponent = cubeComponents[i];
+				auto& transform = cubeComponent->GetGameObject().GetTransform();
 
-			data.world = transform.GetAffineWorldMatrix();
+				data.world = transform.GetAffineWorldMatrix();
 
-			////////// UPDATE EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
-			auto& vsConstantBuffer = *m_vsConstantBuffer;
-			auto& hsConstantBuffer = *m_hsConstantBuffer;
-			auto& dsConstantBuffer = *m_dsConstantBuffer;
-			auto& psConstantBuffer = *m_psConstantBuffer;
-			context.UpdateConstantBuffer(vsConstantBuffer, &data);
-			context.UpdateConstantBuffer(hsConstantBuffer, &data);
-			context.UpdateConstantBuffer(dsConstantBuffer, &data);
-			context.UpdateConstantBuffer(psConstantBuffer, &data);
+				////////// UPDATE EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
+				auto& vsConstantBuffer = *m_vsConstantBuffer;
+				auto& hsConstantBuffer = *m_hsConstantBuffer;
+				auto& dsConstantBuffer = *m_dsConstantBuffer;
+				auto& psConstantBuffer = *m_psConstantBuffer;
+				context.UpdateConstantBuffer(vsConstantBuffer, &data);
+				context.UpdateConstantBuffer(hsConstantBuffer, &data);
+				context.UpdateConstantBuffer(dsConstantBuffer, &data);
+				context.UpdateConstantBuffer(psConstantBuffer, &data);
 			
-			auto& vb = *m_vertexBuffer;
-			auto& ib = *m_indexBuffer;
-			context.SetVertexBuffer(vb);
-			////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
-			context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
-			context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
-			context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
-			context.SetPSConstantBuffer(0, 1, psConstantBuffer);
+				auto& vb = *m_vertexBuffer;
+				auto& ib = *m_indexBuffer;
+				context.SetVertexBuffer(vb);
+				////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
+				context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
+				context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
+				context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
+				context.SetPSConstantBuffer(0, 1, psConstantBuffer);
 			
-			context.SetIndexBuffer(ib);
-			context.Draw4PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);}
+				context.SetIndexBuffer(ib);
+				context.Draw3PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
+			}
+			else {
+				auto cubeComponent = cubeComponents[i];
+				auto& transform = cubeComponent->GetGameObject().GetTransform();
+
+				data.world = transform.GetAffineWorldMatrix();
+
+				////////// UPDATE EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
+				auto& vsConstantBuffer = *m_vsConstantBuffer;
+				auto& hsConstantBuffer = *m_hsConstantBuffer;
+				auto& dsConstantBuffer = *m_dsConstantBuffer;
+				auto& psConstantBuffer = *m_psConstantBuffer;
+				context.UpdateConstantBuffer(vsConstantBuffer, &data);
+				context.UpdateConstantBuffer(hsConstantBuffer, &data);
+				context.UpdateConstantBuffer(dsConstantBuffer, &data);
+				context.UpdateConstantBuffer(psConstantBuffer, &data);
+
+				auto& vb = *m_cubeVertexBuffer;
+				auto& ib = *m_cubeIndexBuffer;
+				context.SetVertexBuffer(vb);
+				////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
+				context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
+				context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
+				context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
+				context.SetPSConstantBuffer(0, 1, psConstantBuffer);
+
+				context.SetIndexBuffer(ib);
+				context.Draw3PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
+			}
+		}
 	}
+	
 
 	//Pass device context where we will extract the commands from
 	m_graphicsDevice.ExecuteCommandList(context);
