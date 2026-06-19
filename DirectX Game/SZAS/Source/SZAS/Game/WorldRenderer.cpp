@@ -14,6 +14,7 @@
 #include <SZAS/AComponent/AComponent.h>
 #include <SZAS/AComponent/TransformComponent.h>
 #include <SZAS/AComponent/CubeComponent.h>
+#include <SZAS/AComponent/SphereComponent.h>
 #include <SZAS/AComponent/CameraComponent.h>
 
 #include <SZAS/Math/Vec2.h>
