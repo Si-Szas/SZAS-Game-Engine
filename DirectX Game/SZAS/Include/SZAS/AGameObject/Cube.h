@@ -19,7 +19,7 @@ namespace szas
 			~Cube();
 
 		private:
-			CubeComponent* m_cube{};
+			CubeComponent* m_cubeComponent{};
 	};
 }
 

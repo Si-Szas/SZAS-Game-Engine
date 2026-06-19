@@ -3,7 +3,7 @@
 szas::Cube::Cube(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
-	m_cube = CreateOrGetComponent<CubeComponent>();
+	m_cubeComponent = CreateOrGetComponent<CubeComponent>();
 }
 
 void szas::Cube::OnCreate() 

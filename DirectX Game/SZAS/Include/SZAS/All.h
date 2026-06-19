@@ -7,10 +7,12 @@
 //GAME OBJECTS HEADER//
 #include <SZAS/AGameObject/AGameObject.h>
 #include <SZAS/AGameObject/Cube.h>
+#include <SZAS/AGameObject/Sphere.h>
 //COMPONENTS HEADER//
 #include <SZAS/AComponent/AComponent.h>
 #include <SZAS/AComponent/TransformComponent.h>
 #include <SZAS/AComponent/CubeComponent.h>
+#include <SZAS/AComponent/SphereComponent.h>
 #include <SZAS/AComponent/CameraComponent.h>
 //INPUT SYSTEM HEADER//
 #include <SZAS/InputSystem/InputSystem.h>

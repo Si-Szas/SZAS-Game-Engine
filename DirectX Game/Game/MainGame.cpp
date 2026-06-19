@@ -19,15 +19,15 @@ void MainGame::OnCreate()
 
 	srand((unsigned int)time(NULL));
 
-	auto sphere = world.CreateAGameObject<szas::Cube>();
+	auto sphere = world.CreateAGameObject<szas::Sphere>();
 	sphere->GetTransform().SetScale({1.0f});
 	sphere->GetTransform().SetPosition({0.0f});
 
-	auto sphere1 = world.CreateAGameObject<szas::Cube>();
-	sphere1->GetTransform().SetScale({ 1.0f });
-	sphere1->GetTransform().SetPosition({-2.0f, 0.0f, 0.0f });
+	auto cube = world.CreateAGameObject<szas::Cube>();
+	cube->GetTransform().SetScale({ 1.0f });
+	cube->GetTransform().SetPosition({-2.0f, 0.0f, 0.0f });
 
-	auto sphere2 = world.CreateAGameObject<szas::Cube>();
+	auto sphere2 = world.CreateAGameObject<szas::Sphere>();
 	sphere2->GetTransform().SetScale({ 1.0f });
 	sphere2->GetTransform().SetPosition({ 2.0f, 0.0f, 0.0f });
 
