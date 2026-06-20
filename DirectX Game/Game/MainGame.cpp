@@ -19,7 +19,7 @@ void MainGame::OnCreate()
 
 	srand((unsigned int)time(NULL));
 
-	auto sphere = world.CreateAGameObject<szas::Sphere>();
+	auto sphere = world.CreateAGameObject<szas::Cube>();
 	sphere->GetTransform().SetScale({1.0f});
 	sphere->GetTransform().SetPosition({0.0f});
 
@@ -27,7 +27,7 @@ void MainGame::OnCreate()
 	cube->GetTransform().SetScale({ 1.0f });
 	cube->GetTransform().SetPosition({-2.0f, 0.0f, 0.0f });
 
-	auto sphere2 = world.CreateAGameObject<szas::Sphere>();
+	auto sphere2 = world.CreateAGameObject<szas::Cube>();
 	sphere2->GetTransform().SetScale({ 1.0f });
 	sphere2->GetTransform().SetPosition({ 2.0f, 0.0f, 0.0f });
 

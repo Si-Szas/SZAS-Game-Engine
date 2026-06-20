@@ -44,6 +44,16 @@ szas::AComponent* szas::AGameObject::GetComponentInternal(size_t ID)
 	return {};
 }
 
+szas::ui32 szas::AGameObject::GetVertexOffset() noexcept
+{
+	return m_vertexOffset;
+}
+
+szas::ui32 szas::AGameObject::GetIndexLocation() noexcept
+{
+	return m_indexLocation;
+}
+
 szas::TransformComponent& szas::AGameObject::GetTransform() noexcept
 {
 	return *m_transform;

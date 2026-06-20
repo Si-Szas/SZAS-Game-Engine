@@ -289,12 +289,12 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	//	sizeof(Vertex)
 	//});
 
-	m_vertexBuffer.push_back(device.CreateVertexBuffer
-	({
-		sphereVertices.data(),					//Vertex List
-		static_cast<UINT>(sphereVertices.size()),		//Vertex List Size
-		sizeof(Vertex)				//Vertex Size
-	}));
+	//m_vertexBuffer.push_back(device.CreateVertexBuffer
+	//({
+	//	sphereVertices.data(),					//Vertex List
+	//	static_cast<UINT>(sphereVertices.size()),		//Vertex List Size
+	//	sizeof(Vertex)				//Vertex Size
+	//}));
 
 	//Create constant buffer
 	m_dsConstantBuffer = device.CreateConstantBuffer
@@ -308,11 +308,11 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	m_hsConstantBuffer = nullptr;
 	m_psConstantBuffer = nullptr;
 
-	m_indexBuffer.push_back(device.CreateIndexBuffer
-	({
-		sphereIndices.data(),//Index List
-		static_cast<UINT>(sphereIndices.size())//Index List Size
-		}));
+	//m_indexBuffer.push_back(device.CreateIndexBuffer
+	//({
+	//	sphereIndices.data(),//Index List
+	//	static_cast<UINT>(sphereIndices.size())//Index List Size
+	//	}));
 }
 
 void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 deltaTime)
@@ -375,38 +375,18 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 			context.UpdateConstantBuffer(dsConstantBuffer, &data);
 			context.UpdateConstantBuffer(psConstantBuffer, &data);
 
-			if(objectType == szas::Cube::getTypeId())
-			{
-				auto& vb = *m_vertexBuffer[0];
-				auto& ib = *m_indexBuffer[0];
+			auto& vb = *m_vertexBuffer[object->GetVertexOffset()];
+			auto& ib = *m_indexBuffer[object->GetIndexLocation()];
 
-				context.SetVertexBuffer(vb);
-				////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
-				context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
-				context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
-				context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
-				context.SetPSConstantBuffer(0, 1, psConstantBuffer);
+			context.SetVertexBuffer(vb);
+			////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
+			context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
+			context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
+			context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
+			context.SetPSConstantBuffer(0, 1, psConstantBuffer);
 
-				context.SetIndexBuffer(ib);
-				context.Draw4PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
-			}
-
-			if (objectType == szas::Sphere::getTypeId())
-			{
-				auto& vb = *m_vertexBuffer[1];
-				auto& ib = *m_indexBuffer[1];
-
-				context.SetVertexBuffer(vb);
-				////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
-				context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
-				context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
-				context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
-				context.SetPSConstantBuffer(0, 1, psConstantBuffer);
-
-				context.SetIndexBuffer(ib);
-				context.Draw4PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
-			}
-
+			context.SetIndexBuffer(ib);
+			context.Draw4PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
 		}
 	}
 	

@@ -33,6 +33,10 @@ namespace szas
 				return static_cast<Type*>(GetComponentInternal(Type::getTypeId()));
 			}
 
+			//Get offset
+			ui32 GetVertexOffset() noexcept;
+			ui32 GetIndexLocation() noexcept;
+
 			//Get the transform component
 			TransformComponent& GetTransform() noexcept;
 			World& GetWorld() noexcept;
@@ -62,6 +66,11 @@ namespace szas
 			GameContext m_gameContext;
 			World& m_world;
 			const WorldRenderer& m_worldRenderer;
+
+		protected:
+			// COUNTERS
+			ui32 m_vertexOffset = 0;
+			ui32 m_indexLocation = 0;
 
 		friend class World;
 	};

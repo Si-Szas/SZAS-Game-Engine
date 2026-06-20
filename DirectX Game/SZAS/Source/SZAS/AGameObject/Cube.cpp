@@ -40,6 +40,9 @@ szas::Cube::Cube(const AGameObjectDescriptor& descriptor) :
 
 	auto& device = worldRenderer.GetGraphicsDevice();
 
+	m_vertexOffset = static_cast<ui32>(worldRenderer.GetVertexBuffer().size());
+	m_indexLocation = static_cast<ui32>(worldRenderer.GetIndexBuffer().size());
+
 	worldRenderer.GetVertexBuffer().push_back(device.CreateVertexBuffer
 	({
 		cubeVertices,
