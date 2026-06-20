@@ -1,13 +1,12 @@
 #include <SZAS/AGameObject/Cube.h>
 #include <SZAS/Game/WorldRenderer.h>
 #include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
+
 #include <iostream>
 
 szas::Cube::Cube(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
-	auto& worldRenderer = GetWorldRenderer();
-
 	const Vertex cubeVertices[] =
 	{
 		{ {-0.5f,-0.5f,-0.5f},	{1,0,0,1}},
@@ -38,10 +37,13 @@ szas::Cube::Cube(const AGameObjectDescriptor& descriptor) :
 		7, 6, 0, 1
 	};
 
+	auto& worldRenderer = GetWorldRenderer();
 	auto& device = worldRenderer.GetGraphicsDevice();
 
 	m_vertexOffset = static_cast<ui32>(worldRenderer.GetVertexBuffer().size());
 	m_indexLocation = static_cast<ui32>(worldRenderer.GetIndexBuffer().size());
+
+	std::cout << "Cube vertices are at: " << m_vertexOffset << std::endl;
 
 	worldRenderer.GetVertexBuffer().push_back(device.CreateVertexBuffer
 	({

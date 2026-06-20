@@ -23,7 +23,6 @@
 #include <SZAS/Math/Vec3.h>
 #include <fstream>
 #include <ranges>
-#include <DirectXMath.h>
 
 szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	Base(descriptor.base),
@@ -142,102 +141,102 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 
 	/// CREATING A 3D OBJECT //
 	//Defines how smooth the circle looks
-	int radius = 1;
-	int sliceCount = radius * 20;
-	int stackCount = radius * 20;
-
-	std::vector<Vertex> sphereVertices;
-	sphereVertices.push_back(Vertex({ 0.0f, szas::f32(radius), 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
-
-	float phiStep = MathUtility::PI / stackCount;
-	float thetaStep = MathUtility::PI2 / sliceCount;
-
-	for (int i = 1; i < stackCount; ++i) {
-		float phi = i * phiStep;
-		for (int j = 0; j <= sliceCount; ++j) {
-			f32 theta = j * thetaStep;
-
-			Vertex v;
-
-			// Compute positions
-			v.position.x = radius * std::sin(phi) * std::cos(theta);
-			v.position.y = radius * std::cos(phi);
-			v.position.z = radius * std::sin(phi) * std::sin(theta);
-
-			// Compute colors
-			v.color.x = (v.position.x / radius) * 0.5f + 0.5f;
-			v.color.y = (v.position.y / radius) * 0.5f + 0.5f;
-			v.color.z = (v.position.z / radius) * 0.5f + 0.5f;
-			v.color.w = 1.0f;
-
-			const Vertex* vertexArray = static_cast<const Vertex*>(&v);
-
-			sphereVertices.push_back(*vertexArray);
-		}
-	}
-
-	sphereVertices.push_back(Vertex({ 0.0f, szas::f32(-radius), 0.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }));
-
-	std::vector<ui32> sphereIndices;
-	for (int i = 0; i < stackCount; ++i) {
-		for (int j = 0; j < sliceCount; ++j) {
-			sphereIndices.push_back(0);
-			sphereIndices.push_back(0);
-			sphereIndices.push_back(static_cast<uint32_t>(1 + j));
-			sphereIndices.push_back(static_cast<uint32_t>(1 + j + 1));
-		}
-	}
-	//for (uint32_t i = 1; i <= sliceCount; ++i) {
-	//	sphereIndices.push_back(0);
-	//	sphereIndices.push_back(i + 1);
-	//	sphereIndices.push_back(i);
-	//}
-
-	// Inner ring quads
-	int baseIndex = 1;
-	int ringVertexCount = sliceCount + 1;
-	for (int i = 0; i < stackCount - 2; ++i) {
-		for (int j = 0; j < sliceCount; ++j) {
-			// Calculate quad corners
-			uint32_t topLeft = static_cast<uint32_t>(baseIndex + i * ringVertexCount + j);
-			uint32_t topRight = static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1);
-			uint32_t bottomLeft = static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j);
-			uint32_t bottomRight = static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j + 1);
-
-			// 4 indices pushed since domain shader working with quad patches
-			sphereIndices.push_back(topLeft);
-			sphereIndices.push_back(topRight);
-			sphereIndices.push_back(bottomLeft);
-			sphereIndices.push_back(bottomRight);
-		}
-	}
-
-	//for (int i = 0; i < stackCount - 2; ++i) {
-	//	for (int j = 0; j < sliceCount; ++j) {
-	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j));
-	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1));
-	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j));
-	//		
-	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j));
-	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1));
-	//		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j + 1));
+	//int radius = 1;
+	//int sliceCount = radius * 20;
+	//int stackCount = radius * 20;
+	//
+	//std::vector<Vertex> sphereVertices;
+	//sphereVertices.push_back(Vertex({ 0.0f, szas::f32(radius), 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
+	//
+	//float phiStep = MathUtility::PI / stackCount;
+	//float thetaStep = MathUtility::PI2 / sliceCount;
+	//
+	//for (int i = 1; i < stackCount; ++i) {
+	//	float phi = i * phiStep;
+	//	for (int j = 0; j <= sliceCount; ++j) {
+	//		f32 theta = j * thetaStep;
+	//
+	//		Vertex v;
+	//
+	//		// Compute positions
+	//		v.position.x = radius * std::sin(phi) * std::cos(theta);
+	//		v.position.y = radius * std::cos(phi);
+	//		v.position.z = radius * std::sin(phi) * std::sin(theta);
+	//
+	//		// Compute colors
+	//		v.color.x = (v.position.x / radius) * 0.5f + 0.5f;
+	//		v.color.y = (v.position.y / radius) * 0.5f + 0.5f;
+	//		v.color.z = (v.position.z / radius) * 0.5f + 0.5f;
+	//		v.color.w = 1.0f;
+	//
+	//		const Vertex* vertexArray = static_cast<const Vertex*>(&v);
+	//
+	//		sphereVertices.push_back(*vertexArray);
 	//	}
 	//}
-	
-	// Bottom pole triangles
-	uint32_t southPoleIndex = (uint32_t)sphereVertices.size() - 1;
-	baseIndex = southPoleIndex - ringVertexCount;
-	//for (uint32_t i = 0; i < sliceCount; ++i) {
-	//	sphereIndices.push_back(southPoleIndex);
-	//	sphereIndices.push_back(baseIndex + i);
-	//	sphereIndices.push_back(baseIndex + i + 1);
+	//
+	//sphereVertices.push_back(Vertex({ 0.0f, szas::f32(-radius), 0.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }));
+	//
+	//std::vector<ui32> sphereIndices;
+	//for (int i = 0; i < stackCount; ++i) {
+	//	for (int j = 0; j < sliceCount; ++j) {
+	//		sphereIndices.push_back(0);
+	//		sphereIndices.push_back(0);
+	//		sphereIndices.push_back(static_cast<uint32_t>(1 + j));
+	//		sphereIndices.push_back(static_cast<uint32_t>(1 + j + 1));
+	//	}
 	//}
-	for (int j = 0; j < sliceCount; ++j) {
-		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + j));
-		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + j + 1));
-		sphereIndices.push_back(southPoleIndex); 
-		sphereIndices.push_back(southPoleIndex); 
-	}
+	////for (uint32_t i = 1; i <= sliceCount; ++i) {
+	////	sphereIndices.push_back(0);
+	////	sphereIndices.push_back(i + 1);
+	////	sphereIndices.push_back(i);
+	////}
+	//
+	//// Inner ring quads
+	//int baseIndex = 1;
+	//int ringVertexCount = sliceCount + 1;
+	//for (int i = 0; i < stackCount - 2; ++i) {
+	//	for (int j = 0; j < sliceCount; ++j) {
+	//		// Calculate quad corners
+	//		uint32_t topLeft = static_cast<uint32_t>(baseIndex + i * ringVertexCount + j);
+	//		uint32_t topRight = static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1);
+	//		uint32_t bottomLeft = static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j);
+	//		uint32_t bottomRight = static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j + 1);
+	//
+	//		// 4 indices pushed since domain shader working with quad patches
+	//		sphereIndices.push_back(topLeft);
+	//		sphereIndices.push_back(topRight);
+	//		sphereIndices.push_back(bottomLeft);
+	//		sphereIndices.push_back(bottomRight);
+	//	}
+	//}
+	//
+	////for (int i = 0; i < stackCount - 2; ++i) {
+	////	for (int j = 0; j < sliceCount; ++j) {
+	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j));
+	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1));
+	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j));
+	////		
+	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j));
+	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1));
+	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j + 1));
+	////	}
+	////}
+	//
+	//// Bottom pole
+	//uint32_t southPoleIndex = (uint32_t)sphereVertices.size() - 1;
+	//baseIndex = southPoleIndex - ringVertexCount;
+	////for (uint32_t i = 0; i < sliceCount; ++i) {
+	////	sphereIndices.push_back(southPoleIndex);
+	////	sphereIndices.push_back(baseIndex + i);
+	////	sphereIndices.push_back(baseIndex + i + 1);
+	////}
+	//for (int j = 0; j < sliceCount; ++j) {
+	//	sphereIndices.push_back(static_cast<uint32_t>(baseIndex + j));
+	//	sphereIndices.push_back(static_cast<uint32_t>(baseIndex + j + 1));
+	//	sphereIndices.push_back(southPoleIndex); 
+	//	sphereIndices.push_back(southPoleIndex); 
+	//}
 
 	//const Vertex quad2Vertices[] =
 	//{
@@ -334,10 +333,7 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 
 	////////// ACOMPONENTS //////////
 	auto numberOfComponents = 0u;
-	//auto numberOfObjects = 0u;
 	
-	std::cout << m_indexBuffer.size() << " SIZE" << std::endl;
-
 	////////// CONSTANT BUFFER DATA //////////
 	ConstantData data{};
 	{
