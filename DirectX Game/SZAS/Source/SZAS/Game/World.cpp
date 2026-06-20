@@ -6,7 +6,8 @@
 #include <span>
 
 szas::World::World(const WorldDescriptor& descriptor) : Base(descriptor.base),
-	m_gameContext(descriptor.gameContext)
+	m_gameContext(descriptor.gameContext),
+	m_worldRenderer(descriptor.worldRenderer)
 {
 
 }

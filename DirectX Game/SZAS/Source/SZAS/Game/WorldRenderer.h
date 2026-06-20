@@ -20,6 +20,11 @@ namespace szas
 			//RENDER
 			void Render(const World& world, SwapChain& swapChain, f32 deltaTime); //Important for rendering objects to the screen (app window)
 
+			//GETTERS
+			GraphicsDevice& GetGraphicsDevice() const noexcept;
+			std::vector<RefPtr<VertexBuffer>>& GetVertexBuffer() const noexcept;
+			std::vector<RefPtr<IndexBuffer>>& GetIndexBuffer() const noexcept;
+
 			//DESTRUCTOR
 			virtual ~WorldRenderer() override;
 

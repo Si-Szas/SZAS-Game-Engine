@@ -3,9 +3,12 @@
 #include <SZAS/Core/Common.h>
 #include <SZAS/Core/Base.h>
 #include <SZAS/Core/Identifier.h>
+
+#include <SZAS/Game/WorldRenderer.h>
+#include <SZAS/AGameObject/Cube.h>
+
 #include <unordered_map>
 #include <vector>
-
 #include <span>
 
 namespace szas
@@ -23,14 +26,28 @@ namespace szas
 				static_assert(std::is_base_of<AGameObject, Type>::value, "Type must inherit from szas::AGameObject.");
 				static_assert(HasTypeID<Type>, "Type needs a unique TypeID. Make sure you have added szas_typeid and applied it to the correct class.");
 
-				UniquePtr<AGameObject> gameObjEvent = std::make_unique<Type>(AGameObjectDescriptor
-					{
-						{m_logger},
-						m_gameContext,
-						*this
-					});
+				AGameObjectDescriptor descriptor{
+					.base = {m_logger},
+					.gameContext = m_gameContext,
+					.world = *this,
+					.worldRenderer = m_worldRenderer
+				};
+
+				std::unique_ptr<Type> typedPointer = std::make_unique<Type>(descriptor);
+
+				UniquePtr<AGameObject> gameObjEvent = std::move(typedPointer);
 
 				return static_cast<Type*>(CreateAGameObjectInternal(gameObjEvent));
+
+				//UniquePtr<AGameObject> gameObjEvent = std::make_unique<Type>(AGameObjectDescriptor
+				//	{
+				//		{m_logger},
+				//		m_gameContext,
+				//		*this,
+				//		*m_worldRenderer
+				//	});
+				//
+				//return static_cast<Type*>(CreateAGameObjectInternal(gameObjEvent));
 			}
 
 			template <typename Type>
@@ -83,8 +100,12 @@ namespace szas
 			std::vector<AGameObjectEvent> m_eventsSwapBuffer{};
 
 			GameContext m_gameContext;
+			WorldRenderer& m_worldRenderer;
 
 		friend class AGameObject;
+		friend class Cube;
+		friend class Sphere;
+
 		friend class AComponent;
 	};
 }

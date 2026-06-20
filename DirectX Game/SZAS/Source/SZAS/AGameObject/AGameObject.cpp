@@ -2,11 +2,13 @@
 #include <SZAS/AComponent/AComponent.h>
 #include <SZAS/AComponent/TransformComponent.h>
 #include <SZAS/Game/World.h>
+#include <SZAS/Game/WorldRenderer.h>
 
 szas::AGameObject::AGameObject(const AGameObjectDescriptor& descriptor) :
 	Identifier(descriptor.base),
 	m_gameContext(descriptor.gameContext),
-	m_world(descriptor.world)
+	m_world(descriptor.world),
+	m_worldRenderer(descriptor.worldRenderer)
 {
 	m_transform = CreateOrGetComponent<TransformComponent>();
 }
@@ -55,6 +57,11 @@ szas::World& szas::AGameObject::GetWorld() noexcept
 szas::InputSystem& szas::AGameObject::GetInputSystem() noexcept
 {
 	return m_gameContext.inputSystem;
+}
+
+const szas::WorldRenderer& szas::AGameObject::GetWorldRenderer() noexcept
+{
+	return m_worldRenderer;
 }
 
 //size_t szas::AGameObject::GetWorldIndex() const noexcept

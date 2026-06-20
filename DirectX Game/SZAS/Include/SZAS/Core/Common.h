@@ -116,6 +116,7 @@ namespace szas
 		BaseDescriptor base;
 		GameContext gameContext;
 		World& world;
+		WorldRenderer& worldRenderer;
 	};
 
 	struct AComponentDescriptor
@@ -163,6 +164,7 @@ namespace szas
 	struct WorldDescriptor {
 		BaseDescriptor base;
 		GameContext gameContext;
+		WorldRenderer& worldRenderer;
 	};
 
 	struct GameDescriptor

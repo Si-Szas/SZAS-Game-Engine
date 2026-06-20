@@ -37,6 +37,7 @@ namespace szas
 			TransformComponent& GetTransform() noexcept;
 			World& GetWorld() noexcept;
 			InputSystem& GetInputSystem() noexcept;
+			const WorldRenderer& GetWorldRenderer() noexcept;
 
 			//DESTRUCTOR
 			virtual ~AGameObject();
@@ -60,6 +61,7 @@ namespace szas
 			TransformComponent* m_transform{};
 			GameContext m_gameContext;
 			World& m_world;
+			const WorldRenderer& m_worldRenderer;
 
 		friend class World;
 	};

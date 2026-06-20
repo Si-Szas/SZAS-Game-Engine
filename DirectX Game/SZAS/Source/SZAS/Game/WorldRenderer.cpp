@@ -239,58 +239,6 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 		sphereIndices.push_back(southPoleIndex); 
 	}
 
-	const Vertex cubeVertices[] =
-	{
-		{ {-0.5f,-0.5f,-0.5f},	{1,0,0,1}},
-		{ {-0.5f,0.5f,-0.5f},	{0,1,0,1}},
-		{ {0.5f,0.5f,-0.5f},	{0,0,1,1}},
-		{ {0.5f,-0.5f,-0.5f},	{1,1,1,1}},
-		  
-		{ {0.5f,-0.5f,0.5f},	{0,0,0,1}},
-		{ {0.5f,0.5f,0.5f},		{1,0,1,1}},
-		{ {-0.5f,0.5f,0.5f},	{0,1,1,1}},
-		{ {-0.5f,-0.5f,0.5f},	{1,1,0,1}}
-	};
-
-	//const ui32 indexList[] =
-	//{
-	//	//Front Face
-	//	0, 1, 2,
-	//	2, 3, 0,
-	//	//Right Face
-	//	3, 2, 5,
-	//	5, 4, 3,
-	//	//Left Face
-	//	6, 1, 0,
-	//	0, 7, 6,
-	//	//Back Face
-	//	7, 6, 5,
-	//	5, 4, 7,
-	//	//Top Face
-	//	6, 5, 2, 
-	//	2, 1, 6,
-	//	//Bottom Face
-	//	7, 0, 3,
-	//	3, 4, 7
-	//};
-
-	//We are drawing in 4 control point patches
-	const ui32 cubeIndices[] =
-	{
-		//Front Face
-		0, 1, 3, 2,
-		//Back Face
-		4, 5, 7, 6,
-		//Top Face
-		5, 2, 6, 1,
-		//Bottom Face
-		7, 0, 4, 3,
-		//Right Face
-		3, 2, 4, 5,
-		//Left Face
-		7, 6, 0, 1
-	};
-
 	//const Vertex quad2Vertices[] =
 	//{
 	//	/* BL */ { {-0.35f, -0.25f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f} },
@@ -343,13 +291,6 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 
 	m_vertexBuffer.push_back(device.CreateVertexBuffer
 	({
-		cubeVertices,
-		std::size(cubeVertices),
-		sizeof(Vertex)
-		}));
-
-	m_vertexBuffer.push_back(device.CreateVertexBuffer
-	({
 		sphereVertices.data(),					//Vertex List
 		static_cast<UINT>(sphereVertices.size()),		//Vertex List Size
 		sizeof(Vertex)				//Vertex Size
@@ -366,12 +307,6 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	m_vsConstantBuffer = nullptr;
 	m_hsConstantBuffer = nullptr;
 	m_psConstantBuffer = nullptr;
-
-	m_indexBuffer.push_back(device.CreateIndexBuffer
-	({
-		cubeIndices,//Index List
-		std::size(cubeIndices)//Index List Size
-	}));
 
 	m_indexBuffer.push_back(device.CreateIndexBuffer
 	({
@@ -401,6 +336,8 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 	auto numberOfComponents = 0u;
 	//auto numberOfObjects = 0u;
 	
+	std::cout << m_indexBuffer.size() << " SIZE" << std::endl;
+
 	////////// CONSTANT BUFFER DATA //////////
 	ConstantData data{};
 	{
@@ -451,7 +388,7 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 				context.SetPSConstantBuffer(0, 1, psConstantBuffer);
 
 				context.SetIndexBuffer(ib);
-				context.Draw3PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
+				context.Draw4PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
 			}
 
 			if (objectType == szas::Sphere::getTypeId())
@@ -467,7 +404,7 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 				context.SetPSConstantBuffer(0, 1, psConstantBuffer);
 
 				context.SetIndexBuffer(ib);
-				context.Draw3PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
+				context.Draw4PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
 			}
 
 		}
@@ -479,6 +416,21 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 
 	//Present our back buffer with its rendered content on the window
 	swapChain.Present();
+}
+
+szas::GraphicsDevice& szas::WorldRenderer::GetGraphicsDevice() const noexcept
+{
+	return m_graphicsDevice;
+}
+
+std::vector<szas::RefPtr<szas::VertexBuffer>>& szas::WorldRenderer::GetVertexBuffer() const noexcept
+{
+	return const_cast<WorldRenderer*>(this)->m_vertexBuffer;
+}
+
+std::vector<szas::RefPtr<szas::IndexBuffer>>& szas::WorldRenderer::GetIndexBuffer() const noexcept
+{
+	return const_cast<WorldRenderer*>(this)->m_indexBuffer;
 }
 
 szas::WorldRenderer::~WorldRenderer()

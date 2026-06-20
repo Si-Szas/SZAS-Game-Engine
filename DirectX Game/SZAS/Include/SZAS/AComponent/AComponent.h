@@ -18,6 +18,6 @@ namespace szas
 
 		protected:
 			AGameObject& m_object;
-			World & m_world;
+			World& m_world;
 	};
 }
