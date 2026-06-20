@@ -180,8 +180,8 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	std::vector<ui32> sphereIndices;
 	for (int i = 0; i < stackCount; ++i) {
 		for (int j = 0; j < sliceCount; ++j) {
-			sphereIndices.push_back(0); // Top pole (degenerated edge)
-			sphereIndices.push_back(0); // Top pole (degenerated edge)
+			sphereIndices.push_back(0);
+			sphereIndices.push_back(0);
 			sphereIndices.push_back(static_cast<uint32_t>(1 + j));
 			sphereIndices.push_back(static_cast<uint32_t>(1 + j + 1));
 		}
@@ -197,13 +197,13 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	int ringVertexCount = sliceCount + 1;
 	for (int i = 0; i < stackCount - 2; ++i) {
 		for (int j = 0; j < sliceCount; ++j) {
-			// Calculate the 4 unique quad corner vertices cleanly
+			// Calculate quad corners
 			uint32_t topLeft = static_cast<uint32_t>(baseIndex + i * ringVertexCount + j);
 			uint32_t topRight = static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1);
 			uint32_t bottomLeft = static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j);
 			uint32_t bottomRight = static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j + 1);
 
-			// Push exactly 4 indices per patch in Clockwise (CW) winding order
+			// 4 indices pushed since domain shader working with quad patches
 			sphereIndices.push_back(topLeft);
 			sphereIndices.push_back(topRight);
 			sphereIndices.push_back(bottomLeft);
@@ -234,8 +234,8 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	for (int j = 0; j < sliceCount; ++j) {
 		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + j));
 		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + j + 1));
-		sphereIndices.push_back(southPoleIndex); // Bottom pole (degenerated edge)
-		sphereIndices.push_back(southPoleIndex); // Bottom pole (degenerated edge)
+		sphereIndices.push_back(southPoleIndex); 
+		sphereIndices.push_back(southPoleIndex); 
 	}
 
 	const Vertex cubeVertices[] =
