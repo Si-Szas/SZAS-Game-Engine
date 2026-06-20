@@ -274,7 +274,7 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	//};
 
 	//We are drawing in 4 control point patches
-	const ui32 indexList[] =
+	const ui32 cubeIndices[] =
 	{
 		//Front Face
 		0, 1, 3, 2,
@@ -342,16 +342,16 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 
 	m_vertexBuffer.push_back(device.CreateVertexBuffer
 	({
-		sphereVertices.data(),					//Vertex List
-		static_cast<UINT>(sphereVertices.size()),		//Vertex List Size
-		sizeof(Vertex)				//Vertex Size
-	}));
-
-	m_vertexBuffer.push_back(device.CreateVertexBuffer
-	({
 		cubeVertices,
 		std::size(cubeVertices),
 		sizeof(Vertex)
+		}));
+
+	m_vertexBuffer.push_back(device.CreateVertexBuffer
+	({
+		sphereVertices.data(),					//Vertex List
+		static_cast<UINT>(sphereVertices.size()),		//Vertex List Size
+		sizeof(Vertex)				//Vertex Size
 	}));
 
 	//Create constant buffer
@@ -368,15 +368,15 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 
 	m_indexBuffer.push_back(device.CreateIndexBuffer
 	({
-		sphereIndices.data(),//Index List
-		static_cast<UINT>(sphereIndices.size())//Index List Size
+		cubeIndices,//Index List
+		std::size(cubeIndices)//Index List Size
 	}));
 
 	m_indexBuffer.push_back(device.CreateIndexBuffer
 	({
-		indexList,//Index List
-		std::size(indexList)//Index List Size
-	}));
+		sphereIndices.data(),//Index List
+		static_cast<UINT>(sphereIndices.size())//Index List Size
+		}));
 }
 
 void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 deltaTime)
