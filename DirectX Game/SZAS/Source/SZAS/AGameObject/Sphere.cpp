@@ -3,8 +3,6 @@
 #include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
 #include <SZAS/Math/MathUtility.h>
 
-#include <iostream>
-
 szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
@@ -89,8 +87,6 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 
 	m_vertexOffset = static_cast<ui32>(worldRenderer.GetVertexBuffer().size());
 	m_indexLocation = static_cast<ui32>(worldRenderer.GetIndexBuffer().size());
-
-	std::cout << "Sphere vertices are at: " << m_vertexOffset << std::endl;
 
 	worldRenderer.GetVertexBuffer().push_back(device.CreateVertexBuffer
 	({
