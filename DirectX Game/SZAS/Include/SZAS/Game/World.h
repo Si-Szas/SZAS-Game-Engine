@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include <span>
+
 namespace szas
 {
 	class World final : public Base
@@ -32,7 +34,13 @@ namespace szas
 			}
 
 			template <typename Type>
-			Type* const* GetAComponents(ui32& numberOfComponents) const noexcept
+			Type* const* GetAGameObject(ui32& numberOfComponents) const noexcept
+			{
+				return reinterpret_cast<Type* const*>(GetAGameObjectsInternal(Type::getTypeId(), &numberOfComponents));
+			}
+
+			template <typename Type>
+			Type* const* GetAComponent(ui32& numberOfComponents) const noexcept
 			{
 				return reinterpret_cast<Type* const*>(CreateAComponentsInternal(Type::getTypeId(), &numberOfComponents));
 			}
@@ -40,6 +48,9 @@ namespace szas
 			AGameObject* CreateAGameObjectInternal(UniquePtr<AGameObject>& object);
 			AComponent* const* CreateAComponentsInternal(size_t typeID, ui32* numberOfComponents) const noexcept;
 
+			std::span<szas::AGameObject* const> GetAllGameObjects() const noexcept;
+			AGameObject* const* GetAGameObjectsInternal(size_t typeID, ui32* numberOfObjects) const noexcept;
+			
 			void AddComponentInternal(AComponent& component);
 			void AddDirtyTransformInternal(TransformComponent& transformComponent);
 
@@ -57,6 +68,8 @@ namespace szas
 				size_t pendingObjectIndex{};
 				EventType eventType{};
 			};
+
+			std::vector<AGameObject*> m_allObjects{};
 
 			std::unordered_map<size_t, std::vector<UniquePtr<AGameObject>>> m_objects{};
 			std::unordered_map<size_t, std::vector<AComponent*>> m_components{};

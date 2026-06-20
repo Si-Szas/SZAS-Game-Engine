@@ -3,6 +3,8 @@
 #include <SZAS/AComponent/AComponent.h>
 #include <SZAS/AComponent/TransformComponent.h>
 
+#include <span>
+
 szas::World::World(const WorldDescriptor& descriptor) : Base(descriptor.base),
 	m_gameContext(descriptor.gameContext)
 {
@@ -62,6 +64,10 @@ szas::AGameObject* szas::World::CreateAGameObjectInternal(UniquePtr<szas::AGameO
 
 		auto pointer = object.get();
 
+		size_t typeID = pointer->getTypeId();
+
+		m_allObjects.push_back(pointer);
+
 		auto index = m_pendingObjects.size();
 
 		m_pendingObjects.push_back(std::move(object));
@@ -87,6 +93,25 @@ szas::AComponent* const* szas::World::CreateAComponentsInternal(size_t typeID, u
 	return {};
 }
 
+szas::AGameObject* const* szas::World::GetAGameObjectsInternal(size_t typeID, ui32* numberOfObjects) const noexcept
+{
+	auto obj = m_objects.find(typeID);
+
+	if (obj == m_objects.end() || obj->second.empty())
+	{
+		if (numberOfObjects) *numberOfObjects = 0;
+		return nullptr;
+	}
+
+	const auto& uniquePtrs = obj->second;
+	if (numberOfObjects)
+	{
+		*numberOfObjects = static_cast<ui32>(uniquePtrs.size());
+	}
+
+	return reinterpret_cast<AGameObject* const*>(uniquePtrs.data());
+}
+
 void szas::World::AddComponentInternal(AComponent& component)
 {
 	//Add a component via ID
@@ -99,3 +124,7 @@ void szas::World::AddDirtyTransformInternal(TransformComponent& transformCompone
 	m_dirtyTransforms.push_back(&transformComponent);
 }
 
+std::span<szas::AGameObject* const> szas::World::GetAllGameObjects() const noexcept
+{
+	return m_allObjects;
+}

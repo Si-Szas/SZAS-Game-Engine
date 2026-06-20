@@ -10,6 +10,8 @@
 #include <SZAS/Game/World.h>
 //GAME OBJECTS//
 #include <SZAS/AGameObject/AGameObject.h>
+#include <SZAS/AGameObject/Cube.h>
+#include <SZAS/AGameObject/Sphere.h>
 //COMPONENTS//
 #include <SZAS/AComponent/AComponent.h>
 #include <SZAS/AComponent/TransformComponent.h>
@@ -147,8 +149,8 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	std::vector<Vertex> sphereVertices;
 	sphereVertices.push_back(Vertex({ 0.0f, szas::f32(radius), 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
 
-	float phiStep = DirectX::XM_PI / stackCount;
-	float thetaStep = DirectX::XM_2PI / sliceCount;
+	float phiStep = MathUtility::PI / stackCount;
+	float thetaStep = MathUtility::PI2 / sliceCount;
 
 	for (int i = 1; i < stackCount; ++i) {
 		float phi = i * phiStep;
@@ -157,19 +159,18 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 
 			Vertex v;
 
-			// 1. Compute your float positions explicitly first
-			v.position.x = radius * sinf(phi) * cosf(theta);
-			v.position.y = radius * cosf(phi);
-			v.position.z = radius * sinf(phi) * sinf(theta);
+			// Compute positions
+			v.position.x = radius * std::sin(phi) * std::cos(theta);
+			v.position.y = radius * std::cos(phi);
+			v.position.z = radius * std::sin(phi) * std::sin(theta);
 
-			// 2. Compute your float colors explicitly first
+			// Compute colors
 			v.color.x = (v.position.x / radius) * 0.5f + 0.5f;
 			v.color.y = (v.position.y / radius) * 0.5f + 0.5f;
 			v.color.z = (v.position.z / radius) * 0.5f + 0.5f;
 			v.color.w = 1.0f;
 
 			const Vertex* vertexArray = static_cast<const Vertex*>(&v);
-			//allQuadVertices.push_back(vertexArray[k]);
 
 			sphereVertices.push_back(*vertexArray);
 		}
@@ -398,11 +399,12 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 
 	////////// ACOMPONENTS //////////
 	auto numberOfComponents = 0u;
+	//auto numberOfObjects = 0u;
 	
 	////////// CONSTANT BUFFER DATA //////////
 	ConstantData data{};
 	{
-		auto cameraComponents = world.GetAComponents<CameraComponent>(numberOfComponents);
+		auto cameraComponents = world.GetAComponent<CameraComponent>(numberOfComponents);
 
 		for (auto i : std::views::iota(0u, numberOfComponents))
 		{
@@ -415,12 +417,14 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 	}
 
 	{
-		auto cubeComponents = world.GetAComponents<CubeComponent>(numberOfComponents);
+		auto gameObjects = world.GetAllGameObjects();
+		ui32 totalGameObjects = static_cast<ui32>(gameObjects.size());
 
-		for (auto i : std::views::iota(0u, numberOfComponents))
+		for (auto i : std::views::iota(0u, totalGameObjects))
 		{
-			auto cubeComponent = cubeComponents[i];
-			auto& transform = cubeComponent->GetGameObject().GetTransform();
+			auto object = gameObjects[i];
+			auto& transform = object->GetTransform();
+			size_t objectType = object->GetTypeID();
 
 			data.world = transform.GetAffineWorldMatrix();
 
@@ -433,18 +437,39 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 			context.UpdateConstantBuffer(hsConstantBuffer, &data);
 			context.UpdateConstantBuffer(dsConstantBuffer, &data);
 			context.UpdateConstantBuffer(psConstantBuffer, &data);
-			
-			auto& vb = *m_vertexBuffer[1];
-			auto& ib = *m_indexBuffer[1];
-			context.SetVertexBuffer(vb);
-			////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
-			context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
-			context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
-			context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
-			context.SetPSConstantBuffer(0, 1, psConstantBuffer);
-			
-			context.SetIndexBuffer(ib);
-			context.Draw3PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
+
+			if(objectType == szas::Cube::getTypeId())
+			{
+				auto& vb = *m_vertexBuffer[0];
+				auto& ib = *m_indexBuffer[0];
+
+				context.SetVertexBuffer(vb);
+				////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
+				context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
+				context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
+				context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
+				context.SetPSConstantBuffer(0, 1, psConstantBuffer);
+
+				context.SetIndexBuffer(ib);
+				context.Draw3PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
+			}
+
+			if (objectType == szas::Sphere::getTypeId())
+			{
+				auto& vb = *m_vertexBuffer[1];
+				auto& ib = *m_indexBuffer[1];
+
+				context.SetVertexBuffer(vb);
+				////////// SET EACH CONSTANT BUFFER PASSED TO THE SHADERS //////////
+				context.SetVSConstantBuffer(0, 1, vsConstantBuffer);
+				context.SetHSConstantBuffer(0, 1, hsConstantBuffer);
+				context.SetDSConstantBuffer(0, 1, dsConstantBuffer);
+				context.SetPSConstantBuffer(0, 1, psConstantBuffer);
+
+				context.SetIndexBuffer(ib);
+				context.Draw3PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
+			}
+
 		}
 	}
 	

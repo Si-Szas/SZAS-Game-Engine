@@ -7,5 +7,6 @@ namespace szas
 	namespace MathUtility
 	{
 		inline auto PI = std::numbers::pi_v<float>;
+		inline auto PI2 = std::numbers::pi_v<float> * 2.0f;
 	}
 }
