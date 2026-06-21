@@ -39,10 +39,16 @@ namespace szas {
 	class WorldRenderer;
 	//Game Object
 	class AGameObject;
+		class Cube;
+		class Sphere;
+		class Cylinder;
 	//Components
 	class AComponent;
-		//Transform Component
-	class TransformComponent;
+		class TransformComponent;
+		class CameraComponent;
+		class CubeComponent;
+		class SphereComponent;
+		class CylinderComponent;
 	
 	///////////// INPUT SYSTEM /////////////
 	class InputSystem;

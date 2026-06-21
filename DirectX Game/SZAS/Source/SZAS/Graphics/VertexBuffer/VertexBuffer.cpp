@@ -30,7 +30,6 @@ szas::VertexBuffer::VertexBuffer(const VertexBufferDescriptor& vertexBufferDescr
 		&initialData,		//D3D11 Subresource data. Provides a way to supply initial CPU side data to the GPU resource during creation 
 		&m_buffer			//Output parameter. Hold the final buffer object
 	), "CreateBuffer() failed.");
-
 }
 
 szas::ui32 szas::VertexBuffer::GetVertexListSize() const noexcept

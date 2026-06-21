@@ -7,67 +7,73 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
 	//Defines how smooth the circle looks
-	int radius = 1;
-	int sliceCount = radius * 20;
-	int stackCount = radius * 20;
+	f32 radius = 1.0f;
+	ui32 sliceCount = radius * 20;
+	ui32 stackCount = radius * 20;
 
 	std::vector<Vertex> sphereVertices;
 	//Push back the topmost vertex of the sphere
-	sphereVertices.push_back(Vertex({ 0.0f, szas::f32(radius), 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
+	sphereVertices.push_back(
+		{ { 0.0f, radius, 0.0f }, 
+		{ 1.0f, 1.0f, 1.0f, 1.0f } 
+	});
 
-	float phiStep = MathUtility::PI / stackCount;
-	float thetaStep = MathUtility::PI2 / sliceCount;
+	f32 phiStep = MathUtility::PI / stackCount;
+	f32 thetaStep = MathUtility::PI2 / sliceCount;
 
-	for (int i = 1; i < stackCount; ++i) {
-		float phi = i * phiStep;
-		for (int j = 0; j <= sliceCount; ++j) {
+	for (ui32 i = 1; i < stackCount; ++i) {
+		f32 phi = i * phiStep;
+		for (ui32 j = 0; j <= sliceCount; ++j) {
 			f32 theta = j * thetaStep;
 
-			Vertex v;
-
 			// Compute positions
-			v.position.x = radius * std::sin(phi) * std::cos(theta);
-			v.position.y = radius * std::cos(phi);
-			v.position.z = radius * std::sin(phi) * std::sin(theta);
-
+			f32 x = radius * std::sin(phi) * std::cos(theta);
+			f32 y = radius * std::cos(phi);
+			f32 z = radius * std::sin(phi) * std::sin(theta);
 			// Compute colors
-			v.color.x = (v.position.x / radius) * 0.5f + 0.5f;
-			v.color.y = (v.position.y / radius) * 0.5f + 0.5f;
-			v.color.z = (v.position.z / radius) * 0.5f + 0.5f;
-			v.color.w = 1.0f;
+			f32 r = (x / radius) * 0.5f + 0.5f;
+			f32 g = (y / radius) * 0.5f + 0.5f;
+			f32 b = (z / radius) * 0.5f + 0.5f;
+			f32 a = 1.0f;
 
-			sphereVertices.push_back(*(static_cast<const Vertex*>(&v)));
+			sphereVertices.push_back({
+				{x, y, z},
+				{r, g, b, a}
+			});
 		}
 	}
 	//Push back the bottommost vertex of the sphere
-	sphereVertices.push_back(Vertex({ 0.0f, szas::f32(-radius), 0.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }));
+	sphereVertices.push_back(
+		{ { 0.0f, -radius, 0.0f },
+		{ 0.0f, 0.0f, 0.0f, 1.0f }
+	});
 
 	std::vector<ui32> sphereIndices;
-	for (int i = 0; i < stackCount; ++i) {
-		for (int j = 0; j < sliceCount; ++j) {
+	for (ui32 i = 0; i < stackCount; ++i) {
+		for (ui32 j = 0; j < sliceCount; ++j) {
 			sphereIndices.push_back(0);
 			sphereIndices.push_back(0);
-			sphereIndices.push_back(static_cast<ui32>(1 + j));
-			sphereIndices.push_back(static_cast<ui32>(1 + j + 1));
+			sphereIndices.push_back(j + 1);
+			sphereIndices.push_back(j + 2);
 		}
 	}
 
 	// Inner ring quads
-	int baseIndex = 1;
-	int ringVertexCount = sliceCount + 1;
-	for (int i = 0; i < stackCount - 2; ++i) {
-		for (int j = 0; j < sliceCount; ++j) {
+	ui32 baseIndex = 1;
+	ui32 ringVertexCount = sliceCount + 1;
+	for (ui32 i = 0; i < stackCount - 2; ++i) {
+		for (ui32 j = 0; j < sliceCount; ++j) {
 			// Calculate quad corners
-			ui32 topLeft = static_cast<ui32>(baseIndex + i * ringVertexCount + j);
-			ui32 topRight = static_cast<ui32>(baseIndex + i * ringVertexCount + j + 1);
-			ui32 bottomLeft = static_cast<ui32>(baseIndex + (i + 1) * ringVertexCount + j);
-			ui32 bottomRight = static_cast<ui32>(baseIndex + (i + 1) * ringVertexCount + j + 1);
+			ui32 bottomLeft = baseIndex + i * ringVertexCount + j;
+			ui32 bottomRight = bottomLeft + 1;
+			ui32 topLeft = baseIndex + (i + 1) * ringVertexCount + j;
+			ui32 topRight = topLeft + 1;
 
 			// 4 indices pushed since domain shader working with quad patches
-			sphereIndices.push_back(topLeft);
-			sphereIndices.push_back(topRight);
 			sphereIndices.push_back(bottomLeft);
 			sphereIndices.push_back(bottomRight);
+			sphereIndices.push_back(topLeft);
+			sphereIndices.push_back(topRight);
 		}
 	}
 
@@ -75,9 +81,9 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 	ui32 southPoleIndex = (ui32)sphereVertices.size() - 1;
 	baseIndex = southPoleIndex - ringVertexCount;
 
-	for (int j = 0; j < sliceCount; ++j) {
-		sphereIndices.push_back(static_cast<ui32>(baseIndex + j));
-		sphereIndices.push_back(static_cast<ui32>(baseIndex + j + 1));
+	for (ui32 j = 0; j < sliceCount; ++j) {
+		sphereIndices.push_back(baseIndex + j);
+		sphereIndices.push_back(baseIndex + j + 1);
 		sphereIndices.push_back(southPoleIndex);
 		sphereIndices.push_back(southPoleIndex);
 	}

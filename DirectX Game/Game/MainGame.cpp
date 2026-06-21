@@ -27,9 +27,10 @@ void MainGame::OnCreate()
 	cube->GetTransform().SetScale({ 1.0f });
 	cube->GetTransform().SetPosition({-2.0f, 0.0f, 0.0f });
 
-	auto sphere2 = world.CreateAGameObject<szas::Cube>();
-	sphere2->GetTransform().SetScale({ 1.0f });
-	sphere2->GetTransform().SetPosition({ 2.0f, 0.0f, 0.0f });
+	auto cylinder = world.CreateAGameObject<szas::Cylinder>();
+	cylinder->GetTransform().SetScale({ 1.0f });
+	cylinder->GetTransform().SetPosition({ 2.0f, 0.0f, 0.0f });
+
 
 	//for (auto y = -2; y < 4; y++)
 	//{

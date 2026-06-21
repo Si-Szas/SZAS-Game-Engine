@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\AGameObject\Cylinder.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\AComponent\CylinderComponent.cpp" />
     <ClCompile Include="Game\Player\Player.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AGameObject\Sphere.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AComponent\SphereComponent.cpp" />
@@ -174,6 +176,8 @@
     <ClCompile Include="SZAS\Source\SZAS\AComponent\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Include\SZAS\AGameObject\Cylinder.h" />
+    <ClInclude Include="SZAS\Include\SZAS\AComponent\CylinderComponent.h" />
     <ClInclude Include="Game\Player\Player.h" />
     <ClInclude Include="SZAS\Include\SZAS\AGameObject\Sphere.h" />
     <ClInclude Include="SZAS\Include\SZAS\AComponent\SphereComponent.h" />

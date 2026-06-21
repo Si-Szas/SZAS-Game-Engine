@@ -8,6 +8,7 @@
 #include <SZAS/AGameObject/AGameObject.h>
 #include <SZAS/AGameObject/Cube.h>
 #include <SZAS/AGameObject/Sphere.h>
+#include <SZAS/AGameObject/Cylinder.h>
 //COMPONENTS HEADER//
 #include <SZAS/AComponent/AComponent.h>
 #include <SZAS/AComponent/TransformComponent.h>
