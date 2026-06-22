@@ -7,6 +7,8 @@
 #include <SZAS/InputSystem/Commands/MoveLeftCommand.h>
 #include <SZAS/InputSystem/Commands/MoveBackwardCommand.h>
 
+#include <iostream>
+
 szas::Player::Player(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
@@ -50,19 +52,38 @@ void szas::Player::OnUpdate(f32 deltaTime)
 		if (commandType == szas::MoveRightCommand::getTypeId()) command->ExecuteCommand(*this);
 		if (commandType == szas::MoveLeftCommand::getTypeId()) command->ExecuteCommand(*this);
 		if (commandType == szas::MoveBackwardCommand::getTypeId()) command->ExecuteCommand(*this);
-	}
-
-	auto forwardDir = GetTransform().Forward() * GetForwardModifier();
-	auto rightDir = GetTransform().Right() * GetRightModifier();
-	auto directionSum = forwardDir + rightDir;
-
-	if (szas::Vec3::LengthSquared(directionSum) > 0.001f)
-	{
-		auto direction = szas::Vec3::Normalize(directionSum);
-		position = position + direction * GetSpeedModifier() * deltaTime;
-	}
 	
-	GetTransform().SetPosition(position);
+		//Record the command that was just executed
+		GetInputSystem().RecordCommand(command);
+	}
+
+	/// TEMPORARY ///
+	if (GetInputSystem().IsKeyDown(szas::KeyCode::LeftControl) || GetInputSystem().IsKeyDown(szas::KeyCode::RightControl))
+	{
+		std::cout << "Holding CTRL" << std::endl;
+		if (GetInputSystem().IsKeyPressed(szas::KeyCode::Z)) // Pressed this frame
+		{
+			std::cout << "Command Undoed" << std::endl;
+			GetInputSystem().UndoCommand(*this);
+		}
+		else if (GetInputSystem().IsKeyPressed(szas::KeyCode::Y))
+		{
+			std::cout << "Command Redoed" << std::endl;
+			GetInputSystem().RedoCommand(*this);
+		}
+	}
+
+	//auto forwardDir = GetTransform().Forward() * GetForwardModifier();
+	//auto rightDir = GetTransform().Right() * GetRightModifier();
+	//auto directionSum = forwardDir + rightDir;
+	//
+	//if (szas::Vec3::LengthSquared(directionSum) > 0.001f)
+	//{
+	//	auto direction = szas::Vec3::Normalize(directionSum);
+	//	position = position + direction * GetSpeedModifier() * deltaTime;
+	//}
+	//
+	//GetTransform().SetPosition(position);
 }
 
 szas::Player::~Player()

@@ -14,8 +14,12 @@ namespace szas
 
 			//FUNCTION
 			virtual void ExecuteCommand(AGameObject& gameObject) = 0;
+			virtual void UndoCommand(AGameObject& gameObject) = 0;
+			//virtual void RedoCommand(AGameObject& gameObject) = 0;
 
 			//DESTRUCTOR
 			virtual ~InputCommand();
+		protected:
+			BaseDescriptor m_base;
 	};
 }

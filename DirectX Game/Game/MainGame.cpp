@@ -54,8 +54,8 @@ void MainGame::OnCreate()
 	auto player = world.CreateAGameObject<Player>();
 	player->GetTransform().SetPosition({0.0f, 0.75f, -3.0f});
 	
-	GetInputSystem().SetCursorLocked(true);
-	GetInputSystem().SetCursorVisible(false);
+	//GetInputSystem().SetCursorLocked(true);
+	//GetInputSystem().SetCursorVisible(false);
 }
 
 void MainGame::OnUpdate(f32 deltaTime)

@@ -49,6 +49,41 @@ szas::InputCommand* szas::InputSystem::HandleInput()
 	else return NULL;
 }
 
+void szas::InputSystem::RecordCommand(InputCommand* command)
+{
+
+	m_undoList.push_back(command);
+	m_redoList.clear();
+}
+
+void szas::InputSystem::UndoCommand(AGameObject& gameObject)
+{
+	//If the undo queue is empty, do not allow player to undo
+	if (m_undoList.empty()) return;
+
+	//Else, get the end of the undo queue
+	InputCommand* command = m_undoList.back();
+	m_undoList.pop_back();
+	//Undo the command
+	command->UndoCommand(gameObject);
+	//Push undoed command into redo queue in case user wants to redo
+	m_redoList.push_back(command);
+}
+
+void szas::InputSystem::RedoCommand(AGameObject& gameObject)
+{
+	//Similar implementation to UndoCommand
+	if (m_redoList.empty()) return;
+
+	//Get redoed command
+	InputCommand* command = m_redoList.back();
+	m_redoList.pop_back();
+	//Reexecute the command
+	command->ExecuteCommand(gameObject);
+	//Add redoed command to undo list
+	m_undoList.push_back(command);
+}
+
 void szas::InputSystem::BindWKeyCommand(InputCommand* newCommandBind)
 {
 	//If the key is already binded somewhere, delete that
@@ -146,6 +181,8 @@ short szas::InputSystem::GetInternalKeyCode(const KeyCode& key)
 		case KeyCode::Escape: return VK_ESCAPE;
 		case KeyCode::Space: return VK_SPACE;
 		case KeyCode::Enter: return VK_RETURN;
+		case KeyCode::LeftControl: return VK_LCONTROL;
+		case KeyCode::RightControl: return VK_RCONTROL;
 		case KeyCode::Up: return VK_UP;
 		case KeyCode::Down: return VK_DOWN;
 		case KeyCode::Left: return VK_LEFT;

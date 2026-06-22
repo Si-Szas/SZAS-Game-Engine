@@ -148,6 +148,7 @@ namespace szas
 		Num9,
 
 		Escape, Shift, Space, Enter,
+		LeftControl, RightControl,
 
 		Up, Down, Left, Right,
 

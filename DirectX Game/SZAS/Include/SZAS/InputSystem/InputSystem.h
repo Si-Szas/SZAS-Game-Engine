@@ -5,6 +5,8 @@
 #include <SZAS/Core/Base.h>
 #include <SZAS/Math/Vec2.h>
 #include <SZAS/Math/Rect.h>
+
+#include <vector>
 #include <array>
 
 namespace szas
@@ -19,13 +21,15 @@ namespace szas
 			void Update();
 				//Handling of Inputs
 			InputCommand* HandleInput();
+			void RecordCommand(InputCommand* command);
+			void UndoCommand(AGameObject& gameObject);
+			void RedoCommand(AGameObject& gameObject);
 
 			//BINDERS
 			void BindWKeyCommand(InputCommand* newCommandBind);
 			void BindAKeyCommand(InputCommand* newCommandBind);
 			void BindSKeyCommand(InputCommand* newCommandBind);
 			void BindDKeyCommand(InputCommand* newCommandBind);
-
 
 			//CHECKERS
 			bool IsKeyDown(KeyCode key) const;
@@ -56,6 +60,10 @@ namespace szas
 			InputCommand* AKeyCommand;
 			InputCommand* SKeyCommand;
 			InputCommand* DKeyCommand;
+
+			///// UNDO AND REDO QUEUE /////
+			std::vector<InputCommand*> m_undoList;
+			std::vector<InputCommand*> m_redoList;
 
 			std::array<bool, static_cast<std::size_t>(KeyCode::Count)> m_currentKeys{};
 			std::array<bool, static_cast<std::size_t>(KeyCode::Count)> m_previousKeys{};
