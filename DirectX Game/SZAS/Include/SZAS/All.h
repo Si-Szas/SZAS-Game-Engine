@@ -6,6 +6,7 @@
 #include <SZAS/Game/World.h>
 //GAME OBJECTS HEADER//
 #include <SZAS/AGameObject/AGameObject.h>
+#include <SZAS/AGameObject/Quad.h>
 #include <SZAS/AGameObject/Cube.h>
 #include <SZAS/AGameObject/Sphere.h>
 #include <SZAS/AGameObject/Cylinder.h>

@@ -13,11 +13,11 @@ void MainGame::OnCreate()
 	Game::OnCreate();
 	auto& world = GetWorld();
 
-	//auto floor = world.CreateAGameObject<szas::Cube>();
-	//floor->GetTransform().SetScale({ 6.8f, 0.1f, 6.8f });
-	//floor->GetTransform().SetPosition({ 0, -1, 0 });
-
 	srand((unsigned int)time(NULL));
+
+	auto floor = world.CreateAGameObject<szas::Quad>();
+	floor->GetTransform().SetScale({ 10.0f, 1.0f, 10.0f });
+	floor->GetTransform().SetPosition({0.0f, -1.0f, 0.0f});
 
 	auto sphere = world.CreateAGameObject<szas::Sphere>();
 	sphere->GetTransform().SetScale({1.0f});

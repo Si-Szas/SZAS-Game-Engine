@@ -8,18 +8,18 @@ namespace szas
 	class Sphere final : public AGameObject
 	{
 		szas_typeid(Sphere)
-	public:
-		//CONSTRUCTOR
-		explicit Sphere(const AGameObjectDescriptor& descriptor);
+		public:
+			//CONSTRUCTOR
+			explicit Sphere(const AGameObjectDescriptor& descriptor);
 
-		void OnCreate();
-		void OnUpdate(f32 deltaTime);
+			void OnCreate();
+			void OnUpdate(f32 deltaTime);
 
-		//DESTRUCTOR
-		~Sphere();
+			//DESTRUCTOR
+			~Sphere();
 
-	private:
-		SphereComponent* m_sphereComponent{};
+		private:
+			SphereComponent* m_sphereComponent{};
 	};
 }
 

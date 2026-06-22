@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\AComponent\QuadComponent.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AGameObject\Cylinder.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AComponent\CylinderComponent.cpp" />
     <ClCompile Include="Game\Player\Player.cpp" />
@@ -155,7 +156,7 @@
     <ClCompile Include="SZAS\Source\SZAS\Game\World.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\IndexBuffer\IndexBuffer.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AGameObject\AGameObject.cpp" />
-    <ClCompile Include="SZAS\Source\SZAS\AGameObject\Quad\Quad.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\AGameObject\Quad.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Time\EngineTime.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\GraphicsPipelineState\GraphicsPipelineState.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="SZAS\Source\SZAS\AComponent\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Include\SZAS\AComponent\QuadComponent.h" />
     <ClInclude Include="SZAS\Include\SZAS\AGameObject\Cylinder.h" />
     <ClInclude Include="SZAS\Include\SZAS\AComponent\CylinderComponent.h" />
     <ClInclude Include="Game\Player\Player.h" />
@@ -193,7 +195,7 @@
     <ClInclude Include="SZAS\Include\SZAS\Math\Vec2.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\IndexBuffer\IndexBuffer.h" />
     <ClInclude Include="SZAS\Include\SZAS\AGameObject\AGameObject.h" />
-    <ClInclude Include="SZAS\Source\SZAS\AGameObject\Quad\Quad.h" />
+    <ClInclude Include="SZAS\Include\SZAS\AGameObject\Quad.h" />
     <ClInclude Include="SZAS\Source\SZAS\Time\EngineTime.h" />
     <ClInclude Include="SZAS\Include\SZAS\Math\Matrix4x4.h" />
     <ClInclude Include="SZAS\Source\SZAS\Graphics\ConstantBuffer\ConstantBuffer.h" />

@@ -55,6 +55,40 @@ szas::Cylinder::Cylinder(const AGameObjectDescriptor& descriptor) :
         }
     }
 
+    //Add bottom center index
+    ui32 bottomCenterIndex = static_cast<ui32>(cylinderVertices.size());
+    cylinderVertices.push_back({ 
+        { 0.0f, -radius, 0.0f },
+        { 0.0f, 0.0f, 0.0f, 1.0f } 
+    });
+
+    //Add top center index
+    ui32 topCenterIndex = static_cast<ui32>(cylinderVertices.size());
+    cylinderVertices.push_back({
+        { 0.0f, radius, 0.0f },
+        { 1.0f, 1.0f, 1.0f, 1.0f }
+    });
+
+    for (ui32 i = 0; i < sliceCount; i++)
+    {
+        ui32 bottomCurrent = i;
+        ui32 bottomNext = i + 1;
+        ui32 topCurrent = ringVertexCount + i;
+        ui32 topNext = ringVertexCount + i + 1;
+
+        //Push back the bottom of the cylinder's quads
+        cylinderIndices.push_back(bottomNext);
+        cylinderIndices.push_back(bottomCenterIndex);
+        cylinderIndices.push_back(bottomCurrent);
+        cylinderIndices.push_back(bottomCenterIndex);
+
+        //Push back the top of the cylinder's quads
+        cylinderIndices.push_back(topCurrent);
+        cylinderIndices.push_back(topCenterIndex);
+        cylinderIndices.push_back(topNext);
+        cylinderIndices.push_back(topCenterIndex);
+    }
+
 	auto& worldRenderer = GetWorldRenderer();
 	auto& device = worldRenderer.GetGraphicsDevice();
 
