@@ -8,15 +8,15 @@ szas::Cylinder::Cylinder(const AGameObjectDescriptor& descriptor) :
     //Defines how smooth the cylinder looks
     f32 height = 1.0f;
     f32 radius = 0.5f;
-    ui32 sliceCount = height * 20;
-    ui32 stackCount = height * 20;
+    ui32 sliceCount = 50 * radius;
+    ui32 stackCount = 10 * height;
 
     std::vector<Vertex> cylinderVertices;
-    //Push topmost vertex of cylinder
-    ui32 topCenterIndex = static_cast<ui32>(cylinderVertices.size());
+    //Push bottommost vertex of cylinder
+    ui32 bottomCenterIndex = static_cast<ui32>(cylinderVertices.size());
     cylinderVertices.push_back({
-        { 0.0f, (height * 0.5f), 0.0f },
-        { 1.0f, 1.0f, 1.0f, 1.0f }
+        { 0.0f, -(height * 0.5f), 0.0f },
+        { 0.0f, 0.0f, 0.0f, 1.0f }
         });
 
     //Cylinder body / ring
@@ -35,37 +35,37 @@ szas::Cylinder::Cylinder(const AGameObjectDescriptor& descriptor) :
             f32 r = (x  / (2.0f * radius)) + 0.5f;
             f32 g = (y / height) + 0.5f;
             f32 b = (z / (2.0f * radius)) + 0.5f;
-            f32 a = 1.0f;
             
             cylinderVertices.push_back({
                 {x, y, z},
-                {r, g, b, a}
+                {r, g, b, 1.0f}
             });
         }
     }
 
-    //Push bottommost vertex of cylinder
-    ui32 bottomCenterIndex = static_cast<ui32>(cylinderVertices.size());
+    //Push topmost vertex of cylinder
+    ui32 topCenterIndex = static_cast<ui32>(cylinderVertices.size());
     cylinderVertices.push_back({
-        { 0.0f, -(height * 0.5f), 0.0f },
-        { 0.0f, 0.0f, 0.0f, 1.0f }
-    });
-
+        { 0.0f, (height * 0.5f), 0.0f },
+        { 1.0f, 1.0f, 1.0f, 1.0f }
+        });
+    
     //Create indices
     std::vector<ui32> cylinderIndices;
-    //Top vertex indices
+    //Bottom vertex indices
     ui32 ringVertexCount = sliceCount + 1;
-    ui32 topStart = (stackCount * ringVertexCount) + 1;
     for (ui32 i = 0; i < sliceCount; i++)
     {
-        ui32 topCurrent = topStart + i;
-        ui32 topNext = topStart + i + 1;
+        ui32 bottomCurrent = i + 1;
+        ui32 bottomNext = i + 2;
 
-        cylinderIndices.push_back(topCurrent);
-        cylinderIndices.push_back(topCenterIndex);
-        cylinderIndices.push_back(topNext);
-        cylinderIndices.push_back(topCenterIndex);
+        //Push back the bottom of the cylinder's quads
+        cylinderIndices.push_back(bottomNext);
+        cylinderIndices.push_back(bottomCenterIndex);
+        cylinderIndices.push_back(bottomCurrent);
+        cylinderIndices.push_back(bottomCenterIndex);
     }
+
     //Ring vertex indices
     for (ui32 i = 0; i < stackCount; i++)
     {
@@ -84,17 +84,17 @@ szas::Cylinder::Cylinder(const AGameObjectDescriptor& descriptor) :
         }
     }
 
-    //Bottom vertex indices
+    //Top vertex indices
+    ui32 topStart = (stackCount * ringVertexCount) + 1;
     for (ui32 i = 0; i < sliceCount; i++)
     {
-        ui32 bottomCurrent = i + 1;
-        ui32 bottomNext = i + 2;
+        ui32 topCurrent = topStart + i;
+        ui32 topNext = topStart + i + 1;
 
-        //Push back the bottom of the cylinder's quads
-        cylinderIndices.push_back(bottomNext);
-        cylinderIndices.push_back(bottomCenterIndex);
-        cylinderIndices.push_back(bottomCurrent);
-        cylinderIndices.push_back(bottomCenterIndex);
+        cylinderIndices.push_back(topCurrent);
+        cylinderIndices.push_back(topCenterIndex);
+        cylinderIndices.push_back(topNext);
+        cylinderIndices.push_back(topCenterIndex);
     }
 
 	auto& worldRenderer = GetWorldRenderer();

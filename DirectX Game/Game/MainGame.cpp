@@ -25,7 +25,7 @@ void MainGame::OnCreate()
 
 	auto sphere = world.CreateAGameObject<szas::Sphere>();
 	sphere->GetTransform().SetScale({1.0f});
-	sphere->GetTransform().SetPosition({0.0f, 0.0f, 4.0f});
+	sphere->GetTransform().SetPosition({0.0f, 0.0f, 6.0f});
 
 	auto cylinder = world.CreateAGameObject<szas::Cylinder>();
 	cylinder->GetTransform().SetScale({ 1.0f });
@@ -33,7 +33,7 @@ void MainGame::OnCreate()
 
 	auto capsule = world.CreateAGameObject<szas::Capsule>();
 	capsule->GetTransform().SetScale({ 1.0f });
-	capsule->GetTransform().SetPosition({0.0f, 0.0f, 6.0f});
+	capsule->GetTransform().SetPosition({0.0f, 0.0f, 4.0f});
 
 	//for (auto y = -2; y < 4; y++)
 	//{

@@ -1,36 +1,56 @@
 #include <SZAS/AGameObject/Capsule.h>
 #include <SZAS/Game/WorldRenderer.h>
 #include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
+#include <SZAS/Math/MathUtility.h>
 
 szas::Capsule::Capsule(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
-    //Defines how smooth the cylinder looks
+    //Defines how smooth the capsule looks
     f32 height = 1.0f;
     f32 radius = 0.5f;
-    ui32 sliceCount = 20;
-    ui32 stackCount = 1;
+    ui32 sliceCount = 50 * radius;
+    ui32 stackCount = 10 * height;
 
     std::vector<Vertex> capsuleVertices;
-    //Push topmost vertex of capsule
-    ui32 topCenterIndex = static_cast<ui32>(capsuleVertices.size());
-    capsuleVertices.push_back({
-        { 0.0f, height, 0.0f },
-        { 1.0f, 1.0f, 1.0f, 1.0f }
-    });
+    f32 phiStep = MathUtility::PI / 2;
+    f32 thetaStep = MathUtility::PI2 / sliceCount;
 
-    //Half-circle connecting to topmost vertex
+    //Half-circle connecting to bottommost vertex
     //Basically using the algorithm to draw a sphere but only half of it
+    for (ui32 i = 0; i < stackCount; i++)
+    {
+        f32 phi = -phiStep + ((f32)i / stackCount) * phiStep;
+        f32 bottomYPos = -(height * 0.5f);
 
+        for (ui32 j = 0; j <= sliceCount; j++) {
+            f32 theta = j * thetaStep;
 
-    //Cylinder body / ring
+            // Compute positions
+            f32 x = radius * cosf(phi) * cosf(theta);
+            f32 y = radius * sinf(phi) + bottomYPos;
+            f32 z = radius * cosf(phi) * sinf(theta);
+            // Compute colors
+            f32 r = (x / radius) * 0.5f + 0.5f;
+            f32 g = (y / radius) * 0.5f + 0.5f;
+            f32 b = (z / radius) * 0.5f + 0.5f;
+
+            capsuleVertices.push_back({
+                {x, y, z},
+                {r, g, b, 1.0f}
+                });
+        }
+    }
+    
+    //Capsule body / ring
+    //Uses the same algorithm as making the body of the cylinder
     for (ui32 i = 0; i <= stackCount; i++)
     {
         f32 y = ((f32)i / stackCount) * height - (height * 0.5f);
 
         for (ui32 j = 0; j <= sliceCount; j++)
         {
-            // Calculate angle around the cylinder
+            // Calculate angle around the capsule
             f32 theta = ((f32)j / sliceCount) * MathUtility::PI2;
 
             f32 x = radius * cosf(theta);
@@ -39,66 +59,56 @@ szas::Capsule::Capsule(const AGameObjectDescriptor& descriptor) :
             f32 r = (x / (2.0f * radius)) + 0.5f;
             f32 g = (y / height) + 0.5f;
             f32 b = (z / (2.0f * radius)) + 0.5f;
-            f32 a = 1.0f;
 
             capsuleVertices.push_back({
                 {x, y, z},
-                {r, g, b, a}
-                });
+                {r, g, b, 1.0f}
+            });
         }
     }
 
-    //Push bottommost vertex of cylinder
-    ui32 bottomCenterIndex = static_cast<ui32>(capsuleVertices.size());
-    capsuleVertices.push_back({
-        { 0.0f, -height, 0.0f },
-        { 0.0f, 0.0f, 0.0f, 1.0f }
-        });
+    //Half-circle connecting to topmost vertex
+    for (ui32 i = 1; i <= stackCount; i++) {
+        f32 phi = ((f32)i / stackCount) * phiStep;
+        f32 topYPos = height * 0.5f;
+
+        for (ui32 j = 0; j <= sliceCount; j++) {
+            f32 theta = j * thetaStep;
+
+            // Compute positions
+            f32 x = radius * cosf(phi) * cosf(theta);
+            f32 y = radius * sinf(phi) + topYPos;
+            f32 z = radius * cosf(phi) * sinf(theta);
+            // Compute colors
+            f32 r = (x / radius) * 0.5f + 0.5f;
+            f32 g = (y / radius) * 0.5f + 0.5f;
+            f32 b = (z / radius) * 0.5f + 0.5f;
+
+            capsuleVertices.push_back({
+                {x, y, z},
+                {r, g, b, 1.0f}
+            });
+        }
+    }
 
     //Create indices
     std::vector<ui32> capsuleIndices;
-    //Top vertex indices
     ui32 ringVertexCount = sliceCount + 1;
-    ui32 topStart = (stackCount * ringVertexCount) + 1;
-    for (ui32 i = 0; i < sliceCount; i++)
-    {
-        ui32 topCurrent = topStart + i;
-        ui32 topNext = topStart + i + 1;
-
-        capsuleIndices.push_back(topCurrent);
-        capsuleIndices.push_back(topCenterIndex);
-        capsuleIndices.push_back(topNext);
-        capsuleIndices.push_back(topCenterIndex);
-    }
-    //Ring vertex indices
-    for (ui32 i = 0; i < stackCount; i++)
+    ui32 totalStackCount = stackCount * 3;
+    for (ui32 i = 0; i < totalStackCount; i++)
     {
         for (ui32 j = 0; j < sliceCount; j++)
         {
-            //Calculate 4 corners of patch
-            ui32 bottomLeft = (i * ringVertexCount + j) + 1;
+            ui32 bottomLeft = i * ringVertexCount + j;
             ui32 bottomRight = bottomLeft + 1;
-            ui32 topLeft = ((i + 1) * ringVertexCount + j) + 1;
+            ui32 topLeft = (i + 1) * ringVertexCount + j;
             ui32 topRight = topLeft + 1;
-            // 4 indices pushed since domain shader working with quad patches
+
             capsuleIndices.push_back(bottomLeft);
             capsuleIndices.push_back(topLeft);
             capsuleIndices.push_back(bottomRight);
             capsuleIndices.push_back(topRight);
         }
-    }
-
-    //Bottom vertex indices
-    for (ui32 i = 0; i < sliceCount; i++)
-    {
-        ui32 bottomCurrent = i + 1;
-        ui32 bottomNext = i + 2;
-
-        //Push back the bottom of the cylinder's quads
-        capsuleIndices.push_back(bottomNext);
-        capsuleIndices.push_back(bottomCenterIndex);
-        capsuleIndices.push_back(bottomCurrent);
-        capsuleIndices.push_back(bottomCenterIndex);
     }
 
 	auto& worldRenderer = GetWorldRenderer();

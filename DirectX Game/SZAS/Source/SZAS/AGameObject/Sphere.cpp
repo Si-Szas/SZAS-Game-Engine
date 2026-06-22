@@ -21,9 +21,9 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 	f32 phiStep = MathUtility::PI / stackCount;
 	f32 thetaStep = MathUtility::PI2 / sliceCount;
 
-	for (ui32 i = 1; i < stackCount; ++i) {
+	for (ui32 i = 1; i < stackCount; i++) {
 		f32 phi = i * phiStep;
-		for (ui32 j = 0; j <= sliceCount; ++j) {
+		for (ui32 j = 0; j <= sliceCount; j++) {
 			f32 theta = j * thetaStep;
 
 			// Compute positions
@@ -34,11 +34,10 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 			f32 r = (x / radius) * 0.5f + 0.5f;
 			f32 g = (y / radius) * 0.5f + 0.5f;
 			f32 b = (z / radius) * 0.5f + 0.5f;
-			f32 a = 1.0f;
 
 			sphereVertices.push_back({
 				{x, y, z},
-				{r, g, b, a}
+				{r, g, b, 1.0f}
 			});
 		}
 	}
@@ -51,8 +50,8 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 	//Create index buffer
 	std::vector<ui32> sphereIndices;
 	//Top vertex indices
-	for (ui32 i = 0; i < stackCount; ++i) {
-		for (ui32 j = 0; j < sliceCount; ++j) {
+	for (ui32 i = 0; i < stackCount; i++) {
+		for (ui32 j = 0; j < sliceCount; j++) {
 			sphereIndices.push_back(0);
 			sphereIndices.push_back(0);
 			sphereIndices.push_back(j + 1);
@@ -62,8 +61,8 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 
 	// Inner ring quads
 	ui32 ringVertexCount = sliceCount + 1;
-	for (ui32 i = 0; i < stackCount - 2; ++i) {
-		for (ui32 j = 0; j < sliceCount; ++j) {
+	for (ui32 i = 0; i < stackCount - 2; i++) {
+		for (ui32 j = 0; j < sliceCount; j++) {
 			// Calculate quad corners
 			ui32 bottomLeft = 1 + i * ringVertexCount + j;
 			ui32 bottomRight = bottomLeft + 1;
@@ -81,7 +80,7 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 	// Bottom vertex indices
 	ui32 southPoleIndex = (ui32)sphereVertices.size() - 1;
 
-	for (ui32 j = 0; j < sliceCount; ++j) {
+	for (ui32 j = 0; j < sliceCount; j++) {
 		sphereIndices.push_back((southPoleIndex - ringVertexCount) + j);
 		sphereIndices.push_back((southPoleIndex - ringVertexCount) + j + 1);
 		sphereIndices.push_back(southPoleIndex);
