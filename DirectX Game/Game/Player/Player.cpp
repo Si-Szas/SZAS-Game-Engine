@@ -73,17 +73,17 @@ void szas::Player::OnUpdate(f32 deltaTime)
 		}
 	}
 
-	//auto forwardDir = GetTransform().Forward() * GetForwardModifier();
-	//auto rightDir = GetTransform().Right() * GetRightModifier();
-	//auto directionSum = forwardDir + rightDir;
-	//
-	//if (szas::Vec3::LengthSquared(directionSum) > 0.001f)
-	//{
-	//	auto direction = szas::Vec3::Normalize(directionSum);
-	//	position = position + direction * GetSpeedModifier() * deltaTime;
-	//}
-	//
-	//GetTransform().SetPosition(position);
+	auto forwardDir = GetTransform().Forward() * GetForwardModifier();
+	auto rightDir = GetTransform().Right() * GetRightModifier();
+	auto directionSum = forwardDir + rightDir;
+	
+	if (szas::Vec3::LengthSquared(directionSum) > 0.001f)
+	{
+		auto direction = szas::Vec3::Normalize(directionSum);
+		position = position + direction * GetSpeedModifier() * deltaTime;
+	}
+	
+	GetTransform().SetPosition(position);
 }
 
 szas::Player::~Player()
