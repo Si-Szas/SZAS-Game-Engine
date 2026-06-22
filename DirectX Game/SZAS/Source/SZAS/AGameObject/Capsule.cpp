@@ -12,12 +12,16 @@ szas::Capsule::Capsule(const AGameObjectDescriptor& descriptor) :
     ui32 stackCount = 1;
 
     std::vector<Vertex> capsuleVertices;
-    //Push topmost vertex of cylinder
+    //Push topmost vertex of capsule
     ui32 topCenterIndex = static_cast<ui32>(capsuleVertices.size());
     capsuleVertices.push_back({
         { 0.0f, height, 0.0f },
         { 1.0f, 1.0f, 1.0f, 1.0f }
-        });
+    });
+
+    //Half-circle connecting to topmost vertex
+    //Basically using the algorithm to draw a sphere but only half of it
+
 
     //Cylinder body / ring
     for (ui32 i = 0; i <= stackCount; i++)

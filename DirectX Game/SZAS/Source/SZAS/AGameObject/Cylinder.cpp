@@ -8,8 +8,8 @@ szas::Cylinder::Cylinder(const AGameObjectDescriptor& descriptor) :
     //Defines how smooth the cylinder looks
     f32 height = 1.0f;
     f32 radius = 0.5f;
-    ui32 sliceCount = 20;
-    ui32 stackCount = 1;
+    ui32 sliceCount = height * 20;
+    ui32 stackCount = height * 20;
 
     std::vector<Vertex> cylinderVertices;
     //Push topmost vertex of cylinder
