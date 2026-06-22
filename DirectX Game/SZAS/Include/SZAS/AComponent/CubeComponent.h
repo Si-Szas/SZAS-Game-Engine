@@ -1,8 +1,6 @@
 #pragma once
 #include <SZAS/Core/Common.h>
 #include <SZAS/AComponent/AComponent.h>
-#include <SZAS/Math/Vec3.h>
-#include <SZAS/Math/Matrix4x4.h>
 
 namespace szas
 {
