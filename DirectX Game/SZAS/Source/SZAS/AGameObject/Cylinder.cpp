@@ -58,14 +58,14 @@ szas::Cylinder::Cylinder(const AGameObjectDescriptor& descriptor) :
     //Add bottom center index
     ui32 bottomCenterIndex = static_cast<ui32>(cylinderVertices.size());
     cylinderVertices.push_back({ 
-        { 0.0f, -radius, 0.0f },
+        { 0.0f, -(height/2), 0.0f },
         { 0.0f, 0.0f, 0.0f, 1.0f } 
     });
 
     //Add top center index
     ui32 topCenterIndex = static_cast<ui32>(cylinderVertices.size());
     cylinderVertices.push_back({
-        { 0.0f, radius, 0.0f },
+        { 0.0f, (height / 2), 0.0f },
         { 1.0f, 1.0f, 1.0f, 1.0f }
     });
 
