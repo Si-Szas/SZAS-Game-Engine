@@ -34,21 +34,27 @@ namespace szas {
 	class IndexBuffer;
 	
 	///////////// WORLD /////////////
+	// Identifier
+	class Identifier;
 	//World
 	class World;
 	class WorldRenderer;
 	//Game Object
 	class AGameObject;
+		class Quad;
 		class Cube;
 		class Sphere;
 		class Cylinder;
+		class Capsule;
 	//Components
 	class AComponent;
 		class TransformComponent;
 		class CameraComponent;
+		class QuadComponent;
 		class CubeComponent;
 		class SphereComponent;
 		class CylinderComponent;
+		class CapsuleComponent;
 	
 	///////////// INPUT SYSTEM /////////////
 	class InputSystem;
