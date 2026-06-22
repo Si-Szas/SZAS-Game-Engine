@@ -48,7 +48,9 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 		{ 0.0f, 0.0f, 0.0f, 1.0f }
 	});
 
+	//Create index buffer
 	std::vector<ui32> sphereIndices;
+	//Top vertex indices
 	for (ui32 i = 0; i < stackCount; ++i) {
 		for (ui32 j = 0; j < sliceCount; ++j) {
 			sphereIndices.push_back(0);
@@ -59,14 +61,13 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 	}
 
 	// Inner ring quads
-	ui32 baseIndex = 1;
 	ui32 ringVertexCount = sliceCount + 1;
 	for (ui32 i = 0; i < stackCount - 2; ++i) {
 		for (ui32 j = 0; j < sliceCount; ++j) {
 			// Calculate quad corners
-			ui32 bottomLeft = baseIndex + i * ringVertexCount + j;
+			ui32 bottomLeft = 1 + i * ringVertexCount + j;
 			ui32 bottomRight = bottomLeft + 1;
-			ui32 topLeft = baseIndex + (i + 1) * ringVertexCount + j;
+			ui32 topLeft = 1 + (i + 1) * ringVertexCount + j;
 			ui32 topRight = topLeft + 1;
 
 			// 4 indices pushed since domain shader working with quad patches
@@ -77,13 +78,12 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 		}
 	}
 
-	// Bottom pole 
+	// Bottom vertex indices
 	ui32 southPoleIndex = (ui32)sphereVertices.size() - 1;
-	baseIndex = southPoleIndex - ringVertexCount;
 
 	for (ui32 j = 0; j < sliceCount; ++j) {
-		sphereIndices.push_back(baseIndex + j);
-		sphereIndices.push_back(baseIndex + j + 1);
+		sphereIndices.push_back((southPoleIndex - ringVertexCount) + j);
+		sphereIndices.push_back((southPoleIndex - ringVertexCount) + j + 1);
 		sphereIndices.push_back(southPoleIndex);
 		sphereIndices.push_back(southPoleIndex);
 	}
