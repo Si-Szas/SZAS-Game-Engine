@@ -1,7 +1,11 @@
 #include "Player.h"
 #include <SZAS/AComponent/TransformComponent.h>
 #include <SZAS/InputSystem/InputSystem.h>
-#include <iostream>
+#include <SZAS/InputSystem/InputCommand.h>
+#include <SZAS/InputSystem/Commands/MoveForwardCommand.h>
+#include <SZAS/InputSystem/Commands/MoveRightCommand.h>
+#include <SZAS/InputSystem/Commands/MoveLeftCommand.h>
+#include <SZAS/InputSystem/Commands/MoveBackwardCommand.h>
 
 szas::Player::Player(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
@@ -26,20 +30,38 @@ void szas::Player::OnUpdate(f32 deltaTime)
 	GetTransform().SetRotation(rotation);
 
 	auto position = GetTransform().GetPosition();
-	auto forward = 0.0f;
-	auto right = 0.0f;
-	auto speed = 3.0f;
+	//auto f = 0.0f;
+	//auto r = 0.0f;
+	//auto s = 3.0f;
+	//
+	//if (GetInputSystem().IsKeyDown(szas::KeyCode::W)) f = 1.0f;
+	//if (GetInputSystem().IsKeyDown(szas::KeyCode::S)) f = -1.0f;
+	//if (GetInputSystem().IsKeyDown(szas::KeyCode::D)) r = 1.0f;
+	//if (GetInputSystem().IsKeyDown(szas::KeyCode::A)) r = -1.0f;
 
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::W)) forward = 1.0f;
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::S)) forward = -1.0f;
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::D)) right = 1.0f;
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::A)) right = -1.0f;
+	ResetMovementModifiers();
 
-	auto forwardDir = GetTransform().Forward() * forward;
-	auto rightDir = GetTransform().Right() * right;
-	auto direction = szas::Vec3::Normalize(forwardDir + rightDir);
+	InputCommand* command = GetInputSystem().HandleInput();
+	if (command) 
+	{
+		size_t commandType = command->GetTypeID();
 
-	position = position + direction * speed * deltaTime;
+		if (commandType == szas::MoveForwardCommand::getTypeId()) command->ExecuteCommand(*this);
+		if (commandType == szas::MoveRightCommand::getTypeId()) command->ExecuteCommand(*this);
+		if (commandType == szas::MoveLeftCommand::getTypeId()) command->ExecuteCommand(*this);
+		if (commandType == szas::MoveBackwardCommand::getTypeId()) command->ExecuteCommand(*this);
+	}
+
+	auto forwardDir = GetTransform().Forward() * GetForwardModifier();
+	auto rightDir = GetTransform().Right() * GetRightModifier();
+	auto directionSum = forwardDir + rightDir;
+
+	if (szas::Vec3::LengthSquared(directionSum) > 0.001f)
+	{
+		auto direction = szas::Vec3::Normalize(directionSum);
+		position = position + direction * GetSpeedModifier() * deltaTime;
+	}
+	
 	GetTransform().SetPosition(position);
 }
 

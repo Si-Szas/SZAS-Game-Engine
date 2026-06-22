@@ -141,6 +141,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\MoveBackwardCommand.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\MoveLeftCommand.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\MoveRightCommand.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\MoveForwardCommandForwardCommand.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\InputCommand.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AGameObject\Capsule.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AComponent\CapsuleComponent.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\AComponent\QuadComponent.cpp" />
@@ -179,6 +184,11 @@
     <ClCompile Include="SZAS\Source\SZAS\AComponent\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\MoveBackwardCommand.h" />
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\MoveLeftCommand.h" />
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\MoveRightCommand.h" />
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\MoveForwardCommand.h" />
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\InputCommand.h" />
     <ClInclude Include="SZAS\Include\SZAS\AGameObject\Capsule.h" />
     <ClInclude Include="SZAS\Include\SZAS\AComponent\CapsuleComponent.h" />
     <ClInclude Include="SZAS\Include\SZAS\AComponent\QuadComponent.h" />

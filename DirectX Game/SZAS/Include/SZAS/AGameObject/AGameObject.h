@@ -43,6 +43,18 @@ namespace szas
 			InputSystem& GetInputSystem() noexcept;
 			const WorldRenderer& GetWorldRenderer() noexcept;
 
+			//Movement Modifiers
+			void ResetMovementModifiers();
+
+			f32 GetForwardModifier() const noexcept;
+			void SetForwardModifier(f32 newForward) noexcept;
+
+			f32 GetRightModifier() const noexcept;
+			void SetRightModifier(f32 newRight) noexcept;
+
+			f32 GetSpeedModifier() const noexcept;
+			void SetSpeedModifier(f32 newSpeed) noexcept;
+
 			//DESTRUCTOR
 			virtual ~AGameObject();
 
@@ -71,6 +83,10 @@ namespace szas
 			// COUNTERS
 			ui32 m_vertexOffset = 0;
 			ui32 m_indexLocation = 0;
+
+			// MODIFIERS FOR MOVEMENT
+			f32 forwardModifier, rightModifier = 0.0f;
+			f32 speedModifier = 3.0f;
 
 		friend class World;
 	};

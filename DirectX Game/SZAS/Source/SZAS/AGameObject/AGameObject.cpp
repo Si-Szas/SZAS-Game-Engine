@@ -74,6 +74,42 @@ const szas::WorldRenderer& szas::AGameObject::GetWorldRenderer() noexcept
 	return m_worldRenderer;
 }
 
+void szas::AGameObject::ResetMovementModifiers()
+{
+	forwardModifier = 0.0f;
+	rightModifier = 0.0f;
+}
+
+szas::f32 szas::AGameObject::GetForwardModifier() const noexcept
+{
+	return forwardModifier;
+}
+
+void szas::AGameObject::SetForwardModifier(f32 newForward) noexcept
+{
+	forwardModifier = newForward;
+}
+
+szas::f32 szas::AGameObject::GetRightModifier() const noexcept
+{
+	return rightModifier;
+}
+
+void szas::AGameObject::SetRightModifier(f32 newRight) noexcept
+{
+	rightModifier = newRight;
+}
+
+szas::f32 szas::AGameObject::GetSpeedModifier() const noexcept
+{
+	return speedModifier;
+}
+
+void szas::AGameObject::SetSpeedModifier(f32 newSpeed) noexcept
+{
+	speedModifier = newSpeed;
+}
+
 //size_t szas::AGameObject::GetWorldIndex() const noexcept
 //{
 //	return m_worldIndex;

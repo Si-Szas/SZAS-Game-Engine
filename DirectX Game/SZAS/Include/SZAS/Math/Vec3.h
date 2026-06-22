@@ -35,10 +35,7 @@ namespace szas
 
 		static Vec3 Normalize(const Vec3& vector)
 		{
-			float lengthSquared = 
-				vector.x * vector.x + 
-				vector.y * vector.y + 
-				vector.z * vector.z;
+			float lengthSquared = LengthSquared(vector);
 
 			if (lengthSquared == 0) return Vec3{ 0.0f };
 
@@ -50,6 +47,14 @@ namespace szas
 				vector.y * inverseLength,
 				vector.z * inverseLength
 			};
+		}
+
+		static float LengthSquared(const Vec3& vector)
+		{
+			return
+				vector.x * vector.x +
+				vector.y * vector.y +
+				vector.z * vector.z;
 		}
 
 		friend Vec3 operator+(Vec3 leftHandSide, const Vec3& rightHandSide)

@@ -58,6 +58,11 @@ namespace szas {
 	
 	///////////// INPUT SYSTEM /////////////
 	class InputSystem;
+	class InputCommand;
+		class MoveForwardCommand;
+		class MoveBackwardCommand;
+		class MoveRightCommand;
+		class MoveLeftCommand;
 
 	/////////// GAME LOOP - ENGINE TIME ///////////
 	class EngineTime;

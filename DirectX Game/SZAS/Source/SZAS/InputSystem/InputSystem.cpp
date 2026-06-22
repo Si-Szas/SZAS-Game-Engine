@@ -1,10 +1,19 @@
 #include <SZAS/InputSystem/InputSystem.h>
+#include <SZAS/Core/Identifier.h>
+#include <SZAS/InputSystem/Commands/MoveForwardCommand.h>
+#include <SZAS/InputSystem/Commands/MoveLeftCommand.h>
+#include <SZAS/InputSystem/Commands/MoveBackwardCommand.h>
+#include <SZAS/InputSystem/Commands/MoveRightCommand.h>
 #include <ranges>
 #include <Windows.h>
 
 szas::InputSystem::InputSystem(const InputSystemDescriptor& descriptor) :
 	Base(descriptor.base)
 {
+	BindWKeyCommand(new MoveForwardCommand(descriptor));
+	BindAKeyCommand(new MoveLeftCommand(descriptor));
+	BindSKeyCommand(new MoveBackwardCommand(descriptor));
+	BindDKeyCommand(new MoveRightCommand(descriptor));
 }
 
 void szas::InputSystem::Update()
@@ -29,6 +38,44 @@ void szas::InputSystem::Update()
 	m_mouseDelta.y = m_mousePosition.y - m_previousMousePosition.y;
 
 	if (m_cursorLocked) CenterCursor();
+}
+
+szas::InputCommand* szas::InputSystem::HandleInput()
+{
+	if (IsKeyDown(szas::KeyCode::W)) return WKeyCommand;
+	else if (IsKeyDown(szas::KeyCode::A)) return AKeyCommand;
+	else if (IsKeyDown(szas::KeyCode::S)) return SKeyCommand;
+	else if (IsKeyDown(szas::KeyCode::D)) return DKeyCommand;
+	else return NULL;
+}
+
+void szas::InputSystem::BindWKeyCommand(InputCommand* newCommandBind)
+{
+	//If the key is already binded somewhere, delete that
+	if (WKeyCommand != nullptr) delete WKeyCommand;
+
+	WKeyCommand = newCommandBind;
+}
+
+void szas::InputSystem::BindAKeyCommand(InputCommand* newCommandBind)
+{
+	if (AKeyCommand != nullptr) delete AKeyCommand;
+
+	AKeyCommand = newCommandBind;
+}
+
+void szas::InputSystem::BindSKeyCommand(InputCommand* newCommandBind)
+{
+	if (SKeyCommand != nullptr) delete SKeyCommand;
+
+	SKeyCommand = newCommandBind;
+}
+
+void szas::InputSystem::BindDKeyCommand(InputCommand* newCommandBind)
+{
+	if (DKeyCommand != nullptr) delete DKeyCommand;
+
+	DKeyCommand = newCommandBind;
 }
 
 bool szas::InputSystem::IsKeyDown(KeyCode key) const
@@ -79,6 +126,10 @@ void szas::InputSystem::SetCursorLockArea(const Rect& lockedArea)
 
 szas::InputSystem::~InputSystem()
 {
+	delete WKeyCommand;
+	delete AKeyCommand;
+	delete SKeyCommand;
+	delete DKeyCommand;
 }
 
 short szas::InputSystem::GetInternalKeyCode(const KeyCode& key)

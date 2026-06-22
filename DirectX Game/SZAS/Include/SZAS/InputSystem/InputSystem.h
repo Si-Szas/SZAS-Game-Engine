@@ -1,5 +1,7 @@
 #pragma once
 #include <SZAS/Core/Common.h>
+#include <SZAS/Core/Identifier.h>
+#include <SZAS/InputSystem/InputCommand.h>
 #include <SZAS/Core/Base.h>
 #include <SZAS/Math/Vec2.h>
 #include <SZAS/Math/Rect.h>
@@ -15,6 +17,15 @@ namespace szas
 			
 			//FUNCTIONS
 			void Update();
+				//Handling of Inputs
+			InputCommand* HandleInput();
+
+			//BINDERS
+			void BindWKeyCommand(InputCommand* newCommandBind);
+			void BindAKeyCommand(InputCommand* newCommandBind);
+			void BindSKeyCommand(InputCommand* newCommandBind);
+			void BindDKeyCommand(InputCommand* newCommandBind);
+
 
 			//CHECKERS
 			bool IsKeyDown(KeyCode key) const;
@@ -40,6 +51,12 @@ namespace szas
 			void CenterCursor();
 
 		private:
+			///// INPUT COMMANDS /////
+			InputCommand* WKeyCommand;
+			InputCommand* AKeyCommand;
+			InputCommand* SKeyCommand;
+			InputCommand* DKeyCommand;
+
 			std::array<bool, static_cast<std::size_t>(KeyCode::Count)> m_currentKeys{};
 			std::array<bool, static_cast<std::size_t>(KeyCode::Count)> m_previousKeys{};
 
