@@ -4,6 +4,11 @@
 #include <SZAS/InputSystem/Commands/MoveLeftCommand.h>
 #include <SZAS/InputSystem/Commands/MoveBackwardCommand.h>
 #include <SZAS/InputSystem/Commands/MoveRightCommand.h>
+#include <SZAS/InputSystem/Commands/CreateAGameObjectCommand.h>
+#include <SZAS/InputSystem/Commands/DeleteAGameObjectCommand.h>
+#include <SZAS/InputSystem/Commands/DeleteAllAGameObjectsCommand.h>
+#include <SZAS/InputSystem/Commands/ExitApplicationCommand.h>
+
 #include <ranges>
 #include <Windows.h>
 
@@ -14,6 +19,11 @@ szas::InputSystem::InputSystem(const InputSystemDescriptor& descriptor) :
 	BindAKeyCommand(new MoveLeftCommand(descriptor));
 	BindSKeyCommand(new MoveBackwardCommand(descriptor));
 	BindDKeyCommand(new MoveRightCommand(descriptor));
+
+	SpaceKeyCommand = new CreateAGameObjectCommand(descriptor);
+	BackspaceKeyCommand = new DeleteAGameObjectCommand(descriptor);
+	DeleteKeyCommand = new DeleteAllAGameObjectsCommand(descriptor);
+	EscapeKeyCommand = new ExitApplicationCommand(descriptor);
 }
 
 void szas::InputSystem::Update()
@@ -46,6 +56,12 @@ szas::InputCommand* szas::InputSystem::HandleInput()
 	else if (IsKeyDown(szas::KeyCode::A)) return AKeyCommand;
 	else if (IsKeyDown(szas::KeyCode::S)) return SKeyCommand;
 	else if (IsKeyDown(szas::KeyCode::D)) return DKeyCommand;
+
+	else if (IsKeyDown(szas::KeyCode::Space)) return SpaceKeyCommand;
+	else if (IsKeyDown(szas::KeyCode::Backspace)) return BackspaceKeyCommand;
+	else if (IsKeyDown(szas::KeyCode::Delete)) return DeleteKeyCommand;
+	else if (IsKeyDown(szas::KeyCode::Escape)) return EscapeKeyCommand;
+
 	else return NULL;
 }
 

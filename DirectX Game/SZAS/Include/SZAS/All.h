@@ -26,3 +26,7 @@
 #include <SZAS/InputSystem/Commands/MoveBackwardCommand.h>
 #include <SZAS/InputSystem/Commands/MoveLeftCommand.h>
 #include <SZAS/InputSystem/Commands/MoveRightCommand.h>
+#include <SZAS/InputSystem/Commands/CreateAGameObjectCommand.h>
+#include <SZAS/InputSystem/Commands/DeleteAGameObjectCommand.h>
+#include <SZAS/InputSystem/Commands/DeleteAllAGameObjectsCommand.h>
+#include <SZAS/InputSystem/Commands/ExitApplicationCommand.h>

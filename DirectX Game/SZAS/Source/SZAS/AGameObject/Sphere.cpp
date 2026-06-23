@@ -1,16 +1,14 @@
 #include <SZAS/AGameObject/Sphere.h>
 #include <SZAS/Game/WorldRenderer.h>
 #include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
+#include <SZAS/AComponent/TransformComponent.h>
 #include <SZAS/Math/MathUtility.h>
+
+#include <iostream>
 
 szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
-	//Defines how smooth the circle looks
-	f32 radius = 0.25f;
-	ui32 sliceCount = 20;
-	ui32 stackCount = 20;
-
 	std::vector<Vertex> sphereVertices;
 	//Push back the topmost vertex of the sphere
 	sphereVertices.push_back(
@@ -116,6 +114,47 @@ void szas::Sphere::OnCreate()
 
 void szas::Sphere::OnUpdate(f32 deltaTime)
 {
+	auto position = GetTransform().GetPosition();
+	auto velocity = GetVelocity();
+	auto speed = GetSpeedModifier();
+
+	//Get screen size to know where to bounce
+	auto size = GetWorldRenderer().GetSwapChainSize();
+	auto aspect = (szas::f32(size.width)) / (size.height);
+	//In the world renderer, units per screen height is 5.0f
+	auto halfUnitsPerScreenHeight = 5.0f * 0.5f;
+	auto viewHeight = (halfUnitsPerScreenHeight - radius);
+	auto viewWidth = (halfUnitsPerScreenHeight * aspect) - radius;
+
+	position = position + (velocity * speed * deltaTime);
+
+	//If the spheres' position is greater than the view width (screen size)
+	if (position.x > viewWidth)
+	{
+		//Dont let it go over
+		position.x = viewWidth;
+		//Reverse direction
+		velocity.x *= -1.0f;      
+	}
+	else if (position.x < -viewWidth)
+	{
+		position.x = -viewWidth;
+		velocity.x *= -1.0f;
+	}
+
+	if (position.y > viewHeight)
+	{
+		position.y = viewHeight;
+		velocity.y *= -1.0f;      
+	}
+	else if (position.y < -viewHeight)
+	{
+		position.y = -viewHeight;
+		velocity.y *= -1.0f;
+	}
+
+	SetVelocity(velocity);
+	GetTransform().SetPosition(position);
 }
 
 szas::Sphere::~Sphere()

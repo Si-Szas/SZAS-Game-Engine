@@ -10,7 +10,8 @@ namespace szas
 			SwapChain(const SwapChainDescriptor& swapChainDescriptor, const GraphicsResourceDescriptor& graphicsResourceDescriptor);
 		
 			//FUNCTIONS
-			void Present(bool vsync = false);
+			// Enable vsync to match refresh rate of my laptops monitor (60Hz)
+			void Present(bool vsync = true);
 
 			//GETTER
 			Rect GetSize() const noexcept;

@@ -90,6 +90,16 @@ void szas::AGameObject::ResetMovementModifiers()
 	rightModifier = 0.0f;
 }
 
+szas::Vec3 szas::AGameObject::GetVelocity() const noexcept
+{
+	return m_velocity;
+}
+
+void szas::AGameObject::SetVelocity(Vec3 newVelocity) noexcept
+{
+	m_velocity = newVelocity;
+}
+
 szas::f32 szas::AGameObject::GetForwardModifier() const noexcept
 {
 	return forwardModifier;

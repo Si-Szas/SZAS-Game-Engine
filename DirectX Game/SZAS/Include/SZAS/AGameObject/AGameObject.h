@@ -2,6 +2,8 @@
 #include <SZAS/Core/Common.h>
 #include <SZAS/Core/Identifier.h>
 #include <SZAS/AComponent/AComponent.h>
+#include <SZAS/Math/Vec3.h>
+
 #include <unordered_map>
 
 namespace szas
@@ -49,6 +51,9 @@ namespace szas
 			//Movement Modifiers
 			void ResetMovementModifiers();
 
+			Vec3 GetVelocity() const noexcept;
+			void SetVelocity(Vec3 newVelocity) noexcept;
+
 			f32 GetForwardModifier() const noexcept;
 			void SetForwardModifier(f32 newForward) noexcept;
 
@@ -86,6 +91,9 @@ namespace szas
 			// COUNTERS
 			ui32 m_vertexOffset = 0;
 			ui32 m_indexLocation = 0;
+
+			// VELOCITY
+			Vec3 m_velocity{ 0.0f };
 
 			// MODIFIERS FOR MOVEMENT
 			f32 forwardModifier, rightModifier = 0.0f;

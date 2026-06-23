@@ -317,8 +317,8 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 deltaTime)
 {	
 	////////// ORTHOGRAPHIC CAMERA SET-UP //////////
-	auto size = swapChain.GetSize();
-	auto aspect = static_cast<f32>(size.width) / size.height;
+	m_swapChainSize = swapChain.GetSize();
+	auto aspect = static_cast<f32>(m_swapChainSize.width) / m_swapChainSize.height;
 	auto unitsPerScreenHeight = 5.0f;
 	auto viewHeight = unitsPerScreenHeight;
 	auto viewWidth = unitsPerScreenHeight * aspect;
@@ -333,7 +333,7 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 	auto& context = *m_deviceContext;
 	context.ClearAndSetBackBuffer(swapChain, {0.0f, 0.0f, 0.0f, 1.0f});
 	context.SetGraphicsPipelineState(*m_pipeline);
-	context.SetViewportSize(size);
+	context.SetViewportSize(m_swapChainSize);
 
 	////////// ACOMPONENTS //////////
 	auto numberOfComponents = 0u;
@@ -347,7 +347,7 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 		auto gameObjects = world.GetAllGameObjects();
 		ui32 totalGameObjects = static_cast<ui32>(gameObjects.size());
 
-		std::cout << totalGameObjects << std::endl;
+		//std::cout << "[LOG] Current Game Objects No.: " << totalGameObjects << std::endl;
 
 		for (auto i : std::views::iota(0u, totalGameObjects))
 		{
@@ -394,6 +394,11 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 szas::GraphicsDevice& szas::WorldRenderer::GetGraphicsDevice() const noexcept
 {
 	return m_graphicsDevice;
+}
+
+szas::Rect szas::WorldRenderer::GetSwapChainSize() const noexcept
+{
+	return m_swapChainSize;
 }
 
 std::vector<szas::RefPtr<szas::VertexBuffer>>& szas::WorldRenderer::GetVertexBuffer() const noexcept

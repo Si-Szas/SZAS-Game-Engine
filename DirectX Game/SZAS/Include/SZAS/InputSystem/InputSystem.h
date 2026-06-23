@@ -60,6 +60,10 @@ namespace szas
 			InputCommand* AKeyCommand;
 			InputCommand* SKeyCommand;
 			InputCommand* DKeyCommand;
+			InputCommand* SpaceKeyCommand;
+			InputCommand* BackspaceKeyCommand;
+			InputCommand* DeleteKeyCommand;
+			InputCommand* EscapeKeyCommand;
 
 			///// UNDO AND REDO QUEUE /////
 			std::vector<InputCommand*> m_undoList;

@@ -141,6 +141,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\CreateAGameObjectCommand.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\DeleteAGameObjectCommand.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\DeleteAllAGameObjectsCommand.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\ExitApplicationCommand.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\MoveBackwardCommand.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\MoveLeftCommand.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\MoveRightCommand.cpp" />
@@ -184,6 +188,10 @@
     <ClCompile Include="SZAS\Source\SZAS\AComponent\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\CreateAGameObjectCommand.h" />
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\DeleteAGameObjectCommand.h" />
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\DeleteAllAGameObjectsCommand.h" />
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\ExitApplicationCommand.h" />
     <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\MoveBackwardCommand.h" />
     <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\MoveLeftCommand.h" />
     <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\MoveRightCommand.h" />

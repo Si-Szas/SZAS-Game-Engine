@@ -63,6 +63,7 @@ namespace szas {
 		class MoveBackwardCommand;
 		class MoveRightCommand;
 		class MoveLeftCommand;
+		class CreateAGameObjectCommand;
 
 	/////////// GAME LOOP - ENGINE TIME ///////////
 	class EngineTime;

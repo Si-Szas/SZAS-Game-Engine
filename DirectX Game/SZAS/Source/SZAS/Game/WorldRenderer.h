@@ -2,6 +2,7 @@
 #include <SZAS/Core/Core.h>
 #include <SZAS/Core/Common.h>
 #include <SZAS/Core/Base.h>
+#include <SZAS/Math/Rect.h>
 #include <SZAS/Math/Vec3.h>
 #include <SZAS/Math/Vec4.h>
 #include <SZAS/Math/Matrix4x4.h>
@@ -21,6 +22,7 @@ namespace szas
 
 			//GETTERS
 			GraphicsDevice& GetGraphicsDevice() const noexcept;
+			Rect GetSwapChainSize() const noexcept;
 			std::vector<RefPtr<VertexBuffer>>& GetVertexBuffer() const noexcept;
 			std::vector<RefPtr<IndexBuffer>>& GetIndexBuffer() const noexcept;
 
@@ -42,6 +44,8 @@ namespace szas
 			};
 
 		private:
+			Rect m_swapChainSize{};
+
 			//Define a smart pointer to a render system variable of class Render System
 			GraphicsDevice& m_graphicsDevice;
 			RefPtr<DeviceContext> m_deviceContext{};
