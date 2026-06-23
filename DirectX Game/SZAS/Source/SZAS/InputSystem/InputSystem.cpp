@@ -204,14 +204,6 @@ void szas::InputSystem::SetCursorLockArea(const Rect& lockedArea)
 	m_lockedArea = lockedArea;
 }
 
-szas::InputSystem::~InputSystem()
-{
-	delete WKeyCommand;
-	delete AKeyCommand;
-	delete SKeyCommand;
-	delete DKeyCommand;
-}
-
 short szas::InputSystem::GetInternalKeyCode(const KeyCode& key)
 {
 	const auto value = static_cast<int>(key);
@@ -258,4 +250,16 @@ void szas::InputSystem::CenterCursor()
 
 	m_mousePosition.x = static_cast<f32>(centerX);
 	m_mousePosition.y = static_cast<f32>(centerY);
+}
+
+szas::InputSystem::~InputSystem()
+{
+	delete WKeyCommand;
+	delete AKeyCommand;
+	delete SKeyCommand;
+	delete DKeyCommand;
+	delete spaceKeyCommand;
+	delete backspaceKeyCommand;
+	delete deleteKeyCommand;
+	delete escapeKeyCommand;
 }

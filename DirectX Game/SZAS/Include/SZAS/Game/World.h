@@ -111,7 +111,5 @@ namespace szas
 
 		friend class AGameObject;
 		friend class AComponent;
-
-		friend class InputCommand;
 	};
 }
