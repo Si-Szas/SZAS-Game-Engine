@@ -58,10 +58,26 @@ szas::InputCommand* szas::InputSystem::HandleInput()
 	else if (IsKeyDown(szas::KeyCode::S)) return SKeyCommand;
 	else if (IsKeyDown(szas::KeyCode::D)) return DKeyCommand;
 
-	else if (IsKeyPressed(szas::KeyCode::Space)) return spaceKeyCommand;
-	else if (IsKeyPressed(szas::KeyCode::Backspace)) return backspaceKeyCommand;
-	else if (IsKeyPressed(szas::KeyCode::Delete)) return deleteKeyCommand;
-	else if (IsKeyPressed(szas::KeyCode::Escape)) return escapeKeyCommand;
+	else if (IsKeyPressed(szas::KeyCode::Space))
+	{
+		SZASLogInformation("Space Key Pressed");
+		return spaceKeyCommand;
+	}
+	else if (IsKeyPressed(szas::KeyCode::Backspace))
+	{
+		SZASLogInformation("Backspace Key Pressed");
+		return backspaceKeyCommand;
+	}
+	else if (IsKeyPressed(szas::KeyCode::Delete))
+	{
+		SZASLogInformation("Delete Key Pressed");
+		return deleteKeyCommand;
+	}
+	else if (IsKeyPressed(szas::KeyCode::Escape))
+	{
+		SZASLogInformation("Escape Key Pressed");
+		return escapeKeyCommand;
+	}
 
 	else return NULL;
 }
