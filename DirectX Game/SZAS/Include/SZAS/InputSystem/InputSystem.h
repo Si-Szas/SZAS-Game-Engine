@@ -30,6 +30,10 @@ namespace szas
 			void BindAKeyCommand(InputCommand* newCommandBind);
 			void BindSKeyCommand(InputCommand* newCommandBind);
 			void BindDKeyCommand(InputCommand* newCommandBind);
+			void BindSpaceKeyCommand(InputCommand* newCommandBind);
+			void BindBackspaceKeyCommand(InputCommand* newCommandBind);
+			void BindDeleteKeyCommand(InputCommand* newCommandBind);
+			void BindEscapeKeyCommand(InputCommand* newCommandBind);
 
 			//CHECKERS
 			bool IsKeyDown(KeyCode key) const;
@@ -60,10 +64,10 @@ namespace szas
 			InputCommand* AKeyCommand;
 			InputCommand* SKeyCommand;
 			InputCommand* DKeyCommand;
-			InputCommand* SpaceKeyCommand;
-			InputCommand* BackspaceKeyCommand;
-			InputCommand* DeleteKeyCommand;
-			InputCommand* EscapeKeyCommand;
+			InputCommand* spaceKeyCommand;
+			InputCommand* backspaceKeyCommand;
+			InputCommand* deleteKeyCommand;
+			InputCommand* escapeKeyCommand;
 
 			///// UNDO AND REDO QUEUE /////
 			std::vector<InputCommand*> m_undoList;

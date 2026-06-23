@@ -20,10 +20,10 @@ szas::InputSystem::InputSystem(const InputSystemDescriptor& descriptor) :
 	BindSKeyCommand(new MoveBackwardCommand(descriptor));
 	BindDKeyCommand(new MoveRightCommand(descriptor));
 
-	SpaceKeyCommand = new CreateAGameObjectCommand(descriptor);
-	BackspaceKeyCommand = new DeleteAGameObjectCommand(descriptor);
-	DeleteKeyCommand = new DeleteAllAGameObjectsCommand(descriptor);
-	EscapeKeyCommand = new ExitApplicationCommand(descriptor);
+	BindSpaceKeyCommand(new CreateAGameObjectCommand(descriptor));
+	BindBackspaceKeyCommand(new DeleteAGameObjectCommand(descriptor));
+	BindDeleteKeyCommand(new DeleteAllAGameObjectsCommand(descriptor));
+	BindEscapeKeyCommand(new ExitApplicationCommand(descriptor));
 }
 
 void szas::InputSystem::Update()
@@ -57,10 +57,10 @@ szas::InputCommand* szas::InputSystem::HandleInput()
 	else if (IsKeyDown(szas::KeyCode::S)) return SKeyCommand;
 	else if (IsKeyDown(szas::KeyCode::D)) return DKeyCommand;
 
-	else if (IsKeyDown(szas::KeyCode::Space)) return SpaceKeyCommand;
-	else if (IsKeyDown(szas::KeyCode::Backspace)) return BackspaceKeyCommand;
-	else if (IsKeyDown(szas::KeyCode::Delete)) return DeleteKeyCommand;
-	else if (IsKeyDown(szas::KeyCode::Escape)) return EscapeKeyCommand;
+	else if (IsKeyDown(szas::KeyCode::Space)) return spaceKeyCommand;
+	else if (IsKeyDown(szas::KeyCode::Backspace)) return backspaceKeyCommand;
+	else if (IsKeyDown(szas::KeyCode::Delete)) return deleteKeyCommand;
+	else if (IsKeyDown(szas::KeyCode::Escape)) return escapeKeyCommand;
 
 	else return NULL;
 }
@@ -127,6 +127,34 @@ void szas::InputSystem::BindDKeyCommand(InputCommand* newCommandBind)
 	if (DKeyCommand != nullptr) delete DKeyCommand;
 
 	DKeyCommand = newCommandBind;
+}
+
+void szas::InputSystem::BindSpaceKeyCommand(InputCommand* newCommandBind)
+{
+	if (spaceKeyCommand != nullptr) delete spaceKeyCommand;
+
+	spaceKeyCommand = newCommandBind;
+}
+
+void szas::InputSystem::BindBackspaceKeyCommand(InputCommand* newCommandBind)
+{
+	if (backspaceKeyCommand != nullptr) delete backspaceKeyCommand;
+
+	backspaceKeyCommand = newCommandBind;
+}
+
+void szas::InputSystem::BindDeleteKeyCommand(InputCommand* newCommandBind)
+{
+	if (deleteKeyCommand != nullptr) delete deleteKeyCommand;
+
+	deleteKeyCommand = newCommandBind;
+}
+
+void szas::InputSystem::BindEscapeKeyCommand(InputCommand* newCommandBind)
+{
+	if (escapeKeyCommand != nullptr) delete escapeKeyCommand;
+
+	escapeKeyCommand = newCommandBind;
 }
 
 bool szas::InputSystem::IsKeyDown(KeyCode key) const
