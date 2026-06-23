@@ -15,11 +15,11 @@ szas::Game::Game(const GameDescriptor& descriptor)
 	SZASLogInformation("| Szas | DirectX C++ Game Engine |");
 	SZASLogInformation("|--------------------------------|\n");
 
-	m_inputSystem = std::make_unique<InputSystem>(InputSystemDescriptor{ *m_logger });
 	m_graphicsDevice = std::make_unique<GraphicsDevice>(GraphicsDeviceDescriptor{ *m_logger });
 	m_display = std::make_unique<Display>(DisplayDescriptor{ {*m_logger, descriptor.windowSize}, *m_graphicsDevice });
 	m_worldRenderer = std::make_unique<WorldRenderer>(WorldRendererDescriptor{ {*m_logger}, *m_graphicsDevice });
 	m_world = std::make_unique<World>(WorldDescriptor{ BaseDescriptor{*m_logger}, GameContext{*m_inputSystem}, {*m_worldRenderer} });
+	m_inputSystem = std::make_unique<InputSystem>(InputSystemDescriptor{ { *m_logger }, { *m_world } });
 
 	//TEMPORARY CURSOR LOCK
 	m_inputSystem->SetCursorLockArea(m_display->GetClientAreaInScreenSpace());

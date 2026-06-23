@@ -13,7 +13,8 @@
 #include <Windows.h>
 
 szas::InputSystem::InputSystem(const InputSystemDescriptor& descriptor) :
-	Base(descriptor.base)
+	Base(descriptor.base),
+	m_world(descriptor.world)
 {
 	BindWKeyCommand(new MoveForwardCommand(descriptor));
 	BindAKeyCommand(new MoveLeftCommand(descriptor));
@@ -57,10 +58,10 @@ szas::InputCommand* szas::InputSystem::HandleInput()
 	else if (IsKeyDown(szas::KeyCode::S)) return SKeyCommand;
 	else if (IsKeyDown(szas::KeyCode::D)) return DKeyCommand;
 
-	else if (IsKeyDown(szas::KeyCode::Space)) return spaceKeyCommand;
-	else if (IsKeyDown(szas::KeyCode::Backspace)) return backspaceKeyCommand;
-	else if (IsKeyDown(szas::KeyCode::Delete)) return deleteKeyCommand;
-	else if (IsKeyDown(szas::KeyCode::Escape)) return escapeKeyCommand;
+	else if (IsKeyPressed(szas::KeyCode::Space)) return spaceKeyCommand;
+	else if (IsKeyPressed(szas::KeyCode::Backspace)) return backspaceKeyCommand;
+	else if (IsKeyPressed(szas::KeyCode::Delete)) return deleteKeyCommand;
+	else if (IsKeyPressed(szas::KeyCode::Escape)) return escapeKeyCommand;
 
 	else return NULL;
 }

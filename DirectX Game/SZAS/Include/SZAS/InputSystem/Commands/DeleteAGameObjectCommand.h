@@ -13,6 +13,7 @@ namespace szas
 			explicit DeleteAGameObjectCommand(const InputSystemDescriptor& descriptor);
 			
 			//FUNCTIONS
+			void ExecuteCommand();
 			void ExecuteCommand(AGameObject& gameObject);
 			void UndoCommand(AGameObject& gameObject);
 

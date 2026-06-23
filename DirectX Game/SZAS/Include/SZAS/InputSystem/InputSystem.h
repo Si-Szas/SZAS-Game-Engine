@@ -59,6 +59,9 @@ namespace szas
 			void CenterCursor();
 
 		private:
+			///// WORLD /////
+			World& m_world;
+
 			///// INPUT COMMANDS /////
 			InputCommand* WKeyCommand;
 			InputCommand* AKeyCommand;

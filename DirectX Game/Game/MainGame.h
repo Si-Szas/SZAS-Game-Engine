@@ -15,8 +15,8 @@ class MainGame : public szas::Game
 
 	private:
 		//LIST OF GAME OBJECTS
-		std::vector<szas::AGameObject*> m_objectList{};
+		//std::vector<szas::AGameObject*> m_objectList{};
 		//szas::AGameObject* m_player{};
-		szas::f32 m_position, m_rotation, m_scale{};
+		szas::f32 m_rotation{};
 };
 

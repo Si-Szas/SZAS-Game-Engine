@@ -110,9 +110,8 @@ namespace szas
 			WorldRenderer& m_worldRenderer;
 
 		friend class AGameObject;
-		friend class Cube;
-		friend class Sphere;
-
 		friend class AComponent;
+
+		friend class InputCommand;
 	};
 }

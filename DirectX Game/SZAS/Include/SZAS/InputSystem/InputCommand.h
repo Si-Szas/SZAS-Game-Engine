@@ -13,6 +13,7 @@ namespace szas
 			explicit InputCommand(const InputSystemDescriptor& descriptor);
 
 			//FUNCTION
+			virtual void ExecuteCommand() = 0;
 			virtual void ExecuteCommand(AGameObject& gameObject) = 0;
 			virtual void UndoCommand(AGameObject& gameObject) = 0;
 			//virtual void RedoCommand(AGameObject& gameObject) = 0;
@@ -21,5 +22,6 @@ namespace szas
 			virtual ~InputCommand();
 		protected:
 			BaseDescriptor m_base;
+			World& m_world;
 	};
 }

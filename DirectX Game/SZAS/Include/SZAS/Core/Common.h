@@ -130,6 +130,7 @@ namespace szas
 	struct InputSystemDescriptor
 	{
 		BaseDescriptor base;
+		World& world;
 	};
 
 	enum class KeyCode

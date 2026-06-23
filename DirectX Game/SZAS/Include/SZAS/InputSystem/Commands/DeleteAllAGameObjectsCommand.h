@@ -12,6 +12,8 @@ namespace szas
 			//CONSTRUCTOR
 			explicit DeleteAllAGameObjectsCommand(const InputSystemDescriptor& descriptor);
 
+			//FUNCTIONS
+			void ExecuteCommand();
 			void ExecuteCommand(AGameObject& gameObject);
 			void UndoCommand(AGameObject& gameObject);
 

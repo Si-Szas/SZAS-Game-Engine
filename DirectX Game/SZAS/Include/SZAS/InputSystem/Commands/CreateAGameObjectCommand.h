@@ -8,13 +8,15 @@ namespace szas
 	class CreateAGameObjectCommand final : public InputCommand
 	{
 		szas_typeid(CreateAGameObjectCommand)
-	public:
-		//CONSTRUCTOR
-		explicit CreateAGameObjectCommand(const InputSystemDescriptor& descriptor);
-		//FUNCTIONS
-		void ExecuteCommand(AGameObject& gameObject);
-		void UndoCommand(AGameObject& gameObject);
+		public:
+			//CONSTRUCTOR
+			explicit CreateAGameObjectCommand(const InputSystemDescriptor& descriptor);
+		
+			//FUNCTIONS
+			void ExecuteCommand();
+			void ExecuteCommand(AGameObject& gameObject);
+			void UndoCommand(AGameObject& gameObject);
 
-		~CreateAGameObjectCommand();
+			~CreateAGameObjectCommand();
 	};
 }
