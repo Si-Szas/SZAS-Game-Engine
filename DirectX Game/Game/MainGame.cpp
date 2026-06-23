@@ -1,5 +1,6 @@
 #include "MainGame.h"
 #include "Player/Player.h"
+#include <Windows.h>
 
 #include <random>
 
@@ -76,7 +77,12 @@ void MainGame::OnUpdate(f32 deltaTime)
 			world.DestroyAllAGameObjectsInternal();
 		}
 	}
-
+	
+	if (GetInputSystem().IsKeyPressed(szas::KeyCode::Escape))
+	{
+		PostQuitMessage(0);
+	}
+	
 	m_rotation += deltaTime * 0.707f;
 
 	//Make sure that we are not moving empty objects
