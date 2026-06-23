@@ -7,9 +7,9 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
 	//Defines how smooth the circle looks
-	f32 radius = 1.0f;
-	ui32 sliceCount = radius * 20;
-	ui32 stackCount = radius * 20;
+	f32 radius = 0.25f;
+	ui32 sliceCount = 20;
+	ui32 stackCount = 20;
 
 	std::vector<Vertex> sphereVertices;
 	//Push back the topmost vertex of the sphere

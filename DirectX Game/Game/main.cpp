@@ -5,7 +5,7 @@ int main()
 {
 	try
 	{
-		MainGame game({{1280,720}, szas::Logger::LogLevel::Information });
+		MainGame game({{1024, 768}, szas::Logger::LogLevel::Information });
 		game.Run();
 	} //Catch runtime errors
 	catch(const std::runtime_error&)

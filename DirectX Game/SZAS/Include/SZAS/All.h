@@ -21,3 +21,8 @@
 #include <SZAS/AComponent/CapsuleComponent.h>
 //INPUT SYSTEM HEADER//
 #include <SZAS/InputSystem/InputSystem.h>
+#include <SZAS/InputSystem/InputCommand.h>
+#include <SZAS/InputSystem/Commands/MoveForwardCommand.h>
+#include <SZAS/InputSystem/Commands/MoveBackwardCommand.h>
+#include <SZAS/InputSystem/Commands/MoveLeftCommand.h>
+#include <SZAS/InputSystem/Commands/MoveRightCommand.h>

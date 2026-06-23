@@ -147,7 +147,8 @@ namespace szas
 		Num6, Num7, Num8, 
 		Num9,
 
-		Escape, Shift, Space, Enter,
+		Escape, Shift, Space, 
+		Enter, Backspace, Delete,
 		LeftControl, RightControl,
 
 		Up, Down, Left, Right,

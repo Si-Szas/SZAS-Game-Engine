@@ -296,14 +296,14 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	//}));
 
 	//Create constant buffer
-	m_dsConstantBuffer = device.CreateConstantBuffer
+	m_vsConstantBuffer = device.CreateConstantBuffer
 	({
-		&m_dsConstantBuffer,
+		&m_vsConstantBuffer,
 		sizeof(ConstantData)
 	});
 
 	//We don't have any constant data to pass to the vertex, hull, or pixel shader
-	m_vsConstantBuffer = nullptr;
+	m_dsConstantBuffer = nullptr;
 	m_hsConstantBuffer = nullptr;
 	m_psConstantBuffer = nullptr;
 
@@ -318,6 +318,10 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 {	
 	////////// ORTHOGRAPHIC CAMERA SET-UP //////////
 	auto size = swapChain.GetSize();
+	auto aspect = static_cast<f32>(size.width) / size.height;
+	auto unitsPerScreenHeight = 5.0f;
+	auto viewHeight = unitsPerScreenHeight;
+	auto viewWidth = unitsPerScreenHeight * aspect;
 	
 	////////// DEVICE CONTEXT //////////
 	// - Update the constant buffer before everything
@@ -327,7 +331,7 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 	// - Use Pipeline
 	//	- Bind all objects inside graphics pipeline state (shaders) to actual GPU pipeline
 	auto& context = *m_deviceContext;
-	context.ClearAndSetBackBuffer(swapChain, {0.251f, 0.141f, 0.31f, 1.0f});
+	context.ClearAndSetBackBuffer(swapChain, {0.0f, 0.0f, 0.0f, 1.0f});
 	context.SetGraphicsPipelineState(*m_pipeline);
 	context.SetViewportSize(size);
 
@@ -337,25 +341,18 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 	////////// CONSTANT BUFFER DATA //////////
 	ConstantData data{};
 	{
-		auto cameraComponents = world.GetAComponent<CameraComponent>(numberOfComponents);
-
-		for (auto i : std::views::iota(0u, numberOfComponents))
-		{
-			auto camComponent = cameraComponents[i];
-			data.view = camComponent->GetViewMatrix();
-			camComponent->SetViewportSize(size);
-			data.projection = camComponent->GetProjectionMatrix();
-			break;
-		}
+		data.projection = Matrix4x4::OrthoLH(viewWidth, viewHeight, -10.0f, 10.0f);
 	}
-
 	{
 		auto gameObjects = world.GetAllGameObjects();
 		ui32 totalGameObjects = static_cast<ui32>(gameObjects.size());
 
+		std::cout << totalGameObjects << std::endl;
+
 		for (auto i : std::views::iota(0u, totalGameObjects))
 		{
 			auto object = gameObjects[i];
+			if (!object) continue;
 			auto& transform = object->GetTransform();
 			size_t objectType = object->GetTypeID();
 

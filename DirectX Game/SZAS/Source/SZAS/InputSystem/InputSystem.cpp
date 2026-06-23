@@ -187,6 +187,8 @@ short szas::InputSystem::GetInternalKeyCode(const KeyCode& key)
 		case KeyCode::Down: return VK_DOWN;
 		case KeyCode::Left: return VK_LEFT;
 		case KeyCode::Right: return VK_RIGHT;
+		case KeyCode::Backspace: return VK_BACK;
+		case KeyCode::Delete: return VK_DELETE;
 		default: return 0;
 	}
 }

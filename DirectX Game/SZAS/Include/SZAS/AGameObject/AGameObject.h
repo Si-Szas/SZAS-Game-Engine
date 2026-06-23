@@ -35,7 +35,10 @@ namespace szas
 
 			//Get offset
 			ui32 GetVertexOffset() noexcept;
+			void SetVertexOffset(ui32 newOffset) noexcept;
+
 			ui32 GetIndexLocation() noexcept;
+			void SetIndexLocation(ui32 newLocation) noexcept;
 
 			//Get the transform component
 			TransformComponent& GetTransform() noexcept;

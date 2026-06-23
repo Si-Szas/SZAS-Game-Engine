@@ -10,17 +10,25 @@ struct VS_OUTPUT
     float4 color : COLOR0;
 };
 
+cbuffer ConstantData : register(b0)
+{
+    row_major float4x4 world;
+    //row_major float4x4 view;
+    row_major float4x4 projection;
+   
+}
+
 VS_OUTPUT VS_Main(VS_INPUT input)
 {
     VS_OUTPUT output;
     
     //Using float4 localPosition prevents warnings of implicit truncation
-    //float4 localPosition = float4(input.position, 1.0f);
-    //localPosition = mul(localPosition, world);
+    float4 localPosition = float4(input.position, 1.0f);
+    localPosition = mul(localPosition, world);
     //localPosition = mul(localPosition, view);
-    //localPosition = mul(localPosition, projection);
+    localPosition = mul(localPosition, projection);
     
-    output.position = input.position;
+    output.position = localPosition.xyz;
     output.color = input.color;
     
     return output;

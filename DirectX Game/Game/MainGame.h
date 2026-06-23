@@ -1,5 +1,6 @@
 #pragma once
 #include <SZAS/All.h>
+#include <vector>
 
 //MainGame will mainly hold the game objects (player, camera, etc.) that are present in the game
 class MainGame : public szas::Game
@@ -14,8 +15,8 @@ class MainGame : public szas::Game
 
 	private:
 		//LIST OF GAME OBJECTS
-		//szas::AGameObject* m_objects[9]{};
-		szas::AGameObject* m_player{};
-		szas::f32 m_rotation{}, m_scale{};
+		std::vector<szas::AGameObject*> m_objectList{};
+		//szas::AGameObject* m_player{};
+		szas::f32 m_position, m_rotation, m_scale{};
 };
 

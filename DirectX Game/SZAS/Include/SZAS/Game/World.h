@@ -71,12 +71,19 @@ namespace szas
 			void AddComponentInternal(AComponent& component);
 			void AddDirtyTransformInternal(TransformComponent& transformComponent);
 
+			void DestroyAGameObject(AGameObject* object);
+			void DeleteAllAGameObjects();
+			void DestroyAGameObjectInternal(AGameObject* object);
+			void DestroyAllAGameObjectsInternal();
+
 			void Update(f32 deltaTime);
 
 		private:
 			enum class EventType
 			{
-				Create = 0
+				Create = 0,
+				Destroy,
+				DestroyAll
 			};
 
 			struct AGameObjectEvent

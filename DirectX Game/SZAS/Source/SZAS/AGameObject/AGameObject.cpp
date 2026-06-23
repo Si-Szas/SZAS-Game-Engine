@@ -49,9 +49,19 @@ szas::ui32 szas::AGameObject::GetVertexOffset() noexcept
 	return m_vertexOffset;
 }
 
+void szas::AGameObject::SetVertexOffset(ui32 newOffset) noexcept
+{
+	m_vertexOffset = newOffset;
+}
+
 szas::ui32 szas::AGameObject::GetIndexLocation() noexcept
 {
 	return m_indexLocation;
+}
+
+void szas::AGameObject::SetIndexLocation(ui32 newOffset) noexcept
+{
+	m_indexLocation = newOffset;
 }
 
 szas::TransformComponent& szas::AGameObject::GetTransform() noexcept
