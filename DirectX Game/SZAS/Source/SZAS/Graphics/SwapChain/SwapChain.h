@@ -11,7 +11,7 @@ namespace szas
 		
 			//FUNCTIONS
 			// Enable vsync to match refresh rate of my laptops monitor (60Hz)
-			void Present(bool vsync = true);
+			void Present(bool vsync = false);
 
 			//GETTER
 			Rect GetSize() const noexcept;

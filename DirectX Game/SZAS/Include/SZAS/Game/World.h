@@ -38,16 +38,6 @@ namespace szas
 				UniquePtr<AGameObject> gameObjEvent = std::move(typedPointer);
 
 				return static_cast<Type*>(CreateAGameObjectInternal(gameObjEvent));
-
-				//UniquePtr<AGameObject> gameObjEvent = std::make_unique<Type>(AGameObjectDescriptor
-				//	{
-				//		{m_logger},
-				//		m_gameContext,
-				//		*this,
-				//		*m_worldRenderer
-				//	});
-				//
-				//return static_cast<Type*>(CreateAGameObjectInternal(gameObjEvent));
 			}
 
 			template <typename Type>

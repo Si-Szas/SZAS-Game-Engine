@@ -6,12 +6,6 @@
 szas::Capsule::Capsule(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
-    //Defines how smooth the capsule looks
-    f32 height = 1.0f;
-    f32 radius = 0.5f;
-    ui32 sliceCount = 50 * radius;
-    ui32 stackCount = 10 * height;
-
     std::vector<Vertex> capsuleVertices;
     f32 phiStep = MathUtility::PI / 2;
     f32 thetaStep = MathUtility::PI2 / sliceCount;

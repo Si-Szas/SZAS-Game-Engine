@@ -130,198 +130,24 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	//Create Graphics Pipeline State
 	m_pipeline = device.CreateGraphicsPipelineState({ *vertexShaderSignature, *ps, *hs, *ds });
 
-	////////////// CREATING QUADS //////////////
-	//const Vertex quad1Vertices[] =
-	//{
-	//	/* BL */ { {-0.95f, 0.15f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f} },
-	//	/* TL */ { {-0.95f, 0.85f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
-	//	/* BR */ { {-0.40f, 0.15f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f} },
-	//	/* TP */ { {-0.40f, 0.85f, 0.0f}, {1.0f, 0.0f, 1.0f, 1.0f} }
-	//};
-
-	/// CREATING A 3D OBJECT //
-	//Defines how smooth the circle looks
-	//int radius = 1;
-	//int sliceCount = radius * 20;
-	//int stackCount = radius * 20;
-	//
-	//std::vector<Vertex> sphereVertices;
-	//sphereVertices.push_back(Vertex({ 0.0f, szas::f32(radius), 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
-	//
-	//float phiStep = MathUtility::PI / stackCount;
-	//float thetaStep = MathUtility::PI2 / sliceCount;
-	//
-	//for (int i = 1; i < stackCount; ++i) {
-	//	float phi = i * phiStep;
-	//	for (int j = 0; j <= sliceCount; ++j) {
-	//		f32 theta = j * thetaStep;
-	//
-	//		Vertex v;
-	//
-	//		// Compute positions
-	//		v.position.x = radius * std::sin(phi) * std::cos(theta);
-	//		v.position.y = radius * std::cos(phi);
-	//		v.position.z = radius * std::sin(phi) * std::sin(theta);
-	//
-	//		// Compute colors
-	//		v.color.x = (v.position.x / radius) * 0.5f + 0.5f;
-	//		v.color.y = (v.position.y / radius) * 0.5f + 0.5f;
-	//		v.color.z = (v.position.z / radius) * 0.5f + 0.5f;
-	//		v.color.w = 1.0f;
-	//
-	//		const Vertex* vertexArray = static_cast<const Vertex*>(&v);
-	//
-	//		sphereVertices.push_back(*vertexArray);
-	//	}
-	//}
-	//
-	//sphereVertices.push_back(Vertex({ 0.0f, szas::f32(-radius), 0.0f }, { 0.0f, 0.0f, 0.0f, 1.0f }));
-	//
-	//std::vector<ui32> sphereIndices;
-	//for (int i = 0; i < stackCount; ++i) {
-	//	for (int j = 0; j < sliceCount; ++j) {
-	//		sphereIndices.push_back(0);
-	//		sphereIndices.push_back(0);
-	//		sphereIndices.push_back(static_cast<uint32_t>(1 + j));
-	//		sphereIndices.push_back(static_cast<uint32_t>(1 + j + 1));
-	//	}
-	//}
-	////for (uint32_t i = 1; i <= sliceCount; ++i) {
-	////	sphereIndices.push_back(0);
-	////	sphereIndices.push_back(i + 1);
-	////	sphereIndices.push_back(i);
-	////}
-	//
-	//// Inner ring quads
-	//int baseIndex = 1;
-	//int ringVertexCount = sliceCount + 1;
-	//for (int i = 0; i < stackCount - 2; ++i) {
-	//	for (int j = 0; j < sliceCount; ++j) {
-	//		// Calculate quad corners
-	//		uint32_t topLeft = static_cast<uint32_t>(baseIndex + i * ringVertexCount + j);
-	//		uint32_t topRight = static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1);
-	//		uint32_t bottomLeft = static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j);
-	//		uint32_t bottomRight = static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j + 1);
-	//
-	//		// 4 indices pushed since domain shader working with quad patches
-	//		sphereIndices.push_back(topLeft);
-	//		sphereIndices.push_back(topRight);
-	//		sphereIndices.push_back(bottomLeft);
-	//		sphereIndices.push_back(bottomRight);
-	//	}
-	//}
-	//
-	////for (int i = 0; i < stackCount - 2; ++i) {
-	////	for (int j = 0; j < sliceCount; ++j) {
-	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j));
-	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1));
-	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j));
-	////		
-	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j));
-	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + i * ringVertexCount + j + 1));
-	////		sphereIndices.push_back(static_cast<uint32_t>(baseIndex + (i + 1) * ringVertexCount + j + 1));
-	////	}
-	////}
-	//
-	//// Bottom pole
-	//uint32_t southPoleIndex = (uint32_t)sphereVertices.size() - 1;
-	//baseIndex = southPoleIndex - ringVertexCount;
-	////for (uint32_t i = 0; i < sliceCount; ++i) {
-	////	sphereIndices.push_back(southPoleIndex);
-	////	sphereIndices.push_back(baseIndex + i);
-	////	sphereIndices.push_back(baseIndex + i + 1);
-	////}
-	//for (int j = 0; j < sliceCount; ++j) {
-	//	sphereIndices.push_back(static_cast<uint32_t>(baseIndex + j));
-	//	sphereIndices.push_back(static_cast<uint32_t>(baseIndex + j + 1));
-	//	sphereIndices.push_back(southPoleIndex); 
-	//	sphereIndices.push_back(southPoleIndex); 
-	//}
-
-	//const Vertex quad2Vertices[] =
-	//{
-	//	/* BL */ { {-0.35f, -0.25f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f} },
-	//	/* TL */ { {-0.35f,  0.25f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f} },
-	//	/* BR */ { { 0.35f, -0.25f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f} },
-	//	/* TR */ { { 0.35f,  0.25f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f} }
-	//};
-	//
-	//const Vertex quad3Vertices[] =
-	//{
-	//	/* BL */ { {0.95f, -0.15f, 0.0f}, {1.0f, 1.0f, 0.0f, 1.0f} },
-	//	/* TL */ { {0.95f, -0.85f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
-	//	/* BR */ { {0.40f, -0.15f, 0.0f}, {0.0f, 1.0f, 1.0f, 1.0f} },
-	//	/* TR */ { {0.40f, -0.85f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f} }
-	//};
-	//
-	//m_quadList.push_back(new Quad(quad1Vertices, vertexShaderSignature, ps, hs, ds));
-	//m_quadList.push_back(new Quad(quad2Vertices, vertexShaderSignature, ps, hs, ds));
-	//m_quadList.push_back(new Quad(quad3Vertices, vertexShaderSignature, ps, hs, ds));
-
-	//Gets the vertex data of all of the quads created
-	//std::vector<Vertex> allQuadVertices;
-	//for (size_t i = 0; i < m_quadList.size(); i++)
-	//{
-	//	const void* rawVertexData = m_quadList[i]->GetVertexList();
-	//	const Vertex* vertexArray = static_cast<const Vertex*>(rawVertexData);
-	//
-	//	for (size_t k = 0; k < 4; k++)
-	//	{
-	//		allQuadVertices.push_back(vertexArray[k]);
-	//	}
-	//}
-	////Total vertex count of the quads
-	//UINT totalVertexCount = static_cast<UINT>(allQuadVertices.size());
-
-	//Passes quads' vertices to vertex buffer
-	//m_vertexBuffer = device.CreateVertexBuffer
-	//({
-	//	allQuadVertices.data(),
-	//	totalVertexCount,  
-	//	sizeof(Vertex)
-	//});
-
-	//m_cubeVertexBuffer = device.CreateVertexBuffer
-	//({
-	//	cubeVertices,
-	//	std::size(cubeVertices),
-	//	sizeof(Vertex)
-	//});
-
-	//m_vertexBuffer.push_back(device.CreateVertexBuffer
-	//({
-	//	sphereVertices.data(),					//Vertex List
-	//	static_cast<UINT>(sphereVertices.size()),		//Vertex List Size
-	//	sizeof(Vertex)				//Vertex Size
-	//}));
-
 	//Create constant buffer
-	m_vsConstantBuffer = device.CreateConstantBuffer
+	m_dsConstantBuffer = device.CreateConstantBuffer
 	({
-		&m_vsConstantBuffer,
+		&m_dsConstantBuffer,
 		sizeof(ConstantData)
 	});
 
 	//We don't have any constant data to pass to the vertex, hull, or pixel shader
-	m_dsConstantBuffer = nullptr;
+	m_vsConstantBuffer = nullptr;
 	m_hsConstantBuffer = nullptr;
 	m_psConstantBuffer = nullptr;
 
-	//m_indexBuffer.push_back(device.CreateIndexBuffer
-	//({
-	//	sphereIndices.data(),//Index List
-	//	static_cast<UINT>(sphereIndices.size())//Index List Size
-	//	}));
 }
 
 void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 deltaTime)
 {	
-	////////// ORTHOGRAPHIC CAMERA SET-UP //////////
-	m_swapChainSize = swapChain.GetSize();
-	auto aspect = static_cast<f32>(m_swapChainSize.width) / m_swapChainSize.height;
-	auto unitsPerScreenHeight = 5.0f;
-	auto viewHeight = unitsPerScreenHeight;
-	auto viewWidth = unitsPerScreenHeight * aspect;
+	////////// CAMERA SET-UP //////////
+	m_swapChainSize = swapChain.GetSize();;
 	
 	////////// DEVICE CONTEXT //////////
 	// - Update the constant buffer before everything
@@ -331,7 +157,7 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 	// - Use Pipeline
 	//	- Bind all objects inside graphics pipeline state (shaders) to actual GPU pipeline
 	auto& context = *m_deviceContext;
-	context.ClearAndSetBackBuffer(swapChain, {0.0f, 0.0f, 0.0f, 1.0f});
+	context.ClearAndSetBackBuffer(swapChain, { 0.251f, 0.141f, 0.31f, 1.0f });
 	context.SetGraphicsPipelineState(*m_pipeline);
 	context.SetViewportSize(m_swapChainSize);
 
@@ -341,7 +167,16 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 	////////// CONSTANT BUFFER DATA //////////
 	ConstantData data{};
 	{
-		data.projection = Matrix4x4::OrthoLH(viewWidth, viewHeight, -10.0f, 10.0f);
+		auto cameraComponents = world.GetAComponent<CameraComponent>(numberOfComponents);
+
+		for (auto i : std::views::iota(0u, numberOfComponents))
+		{
+			auto camComponent = cameraComponents[i];
+			data.view = camComponent->GetViewMatrix();
+			camComponent->SetViewportSize(m_swapChainSize);
+			data.projection = camComponent->GetProjectionMatrix();
+			break;
+		}
 	}
 	{
 		auto gameObjects = world.GetAllGameObjects();
@@ -382,7 +217,6 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 			context.Draw4PatchIndexedTriangleList(ib.GetIndexListSize(), 0u, 0u);
 		}
 	}
-	
 
 	//Pass device context where we will extract the commands from
 	m_graphicsDevice.ExecuteCommandList(context);

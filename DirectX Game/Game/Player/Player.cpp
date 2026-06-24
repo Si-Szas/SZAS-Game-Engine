@@ -6,6 +6,10 @@
 #include <SZAS/InputSystem/Commands/MoveRightCommand.h>
 #include <SZAS/InputSystem/Commands/MoveLeftCommand.h>
 #include <SZAS/InputSystem/Commands/MoveBackwardCommand.h>
+#include <SZAS/InputSystem/Commands/CreateAGameObjectCommand.h>
+#include <SZAS/InputSystem/Commands/DeleteAGameObjectCommand.h>
+#include <SZAS/InputSystem/Commands/DeleteAllAGameObjectsCommand.h>
+#include <SZAS/InputSystem/Commands/ExitApplicationCommand.h>
 
 #include <iostream>
 
@@ -21,29 +25,21 @@ void szas::Player::OnCreate()
 
 void szas::Player::OnUpdate(f32 deltaTime)
 {
-	auto& input = GetInputSystem();
+	auto& inputSystem = GetInputSystem();
 
 	auto sensitivity = 0.001f;
 	auto rotation = GetTransform().GetRotation();
-	rotation.x += GetInputSystem().GetMouseDelta().y * sensitivity;
-	rotation.y += GetInputSystem().GetMouseDelta().x * sensitivity;
+	rotation.x += inputSystem.GetMouseDelta().y * sensitivity;
+	rotation.y += inputSystem.GetMouseDelta().x * sensitivity;
 	if (rotation.x > 1.57f) rotation.x = 1.57f;
 	else if (rotation.x < -1.57f) rotation.x = -1.57f;
 	GetTransform().SetRotation(rotation);
 
 	auto position = GetTransform().GetPosition();
-	//auto f = 0.0f;
-	//auto r = 0.0f;
-	//auto s = 3.0f;
-	//
-	//if (GetInputSystem().IsKeyDown(szas::KeyCode::W)) f = 1.0f;
-	//if (GetInputSystem().IsKeyDown(szas::KeyCode::S)) f = -1.0f;
-	//if (GetInputSystem().IsKeyDown(szas::KeyCode::D)) r = 1.0f;
-	//if (GetInputSystem().IsKeyDown(szas::KeyCode::A)) r = -1.0f;
 
 	ResetMovementModifiers();
 
-	InputCommand* command = GetInputSystem().HandleInput();
+	InputCommand* command = inputSystem.HandleInput();
 	if (command) 
 	{
 		size_t commandType = command->GetTypeID();
@@ -52,24 +48,28 @@ void szas::Player::OnUpdate(f32 deltaTime)
 		if (commandType == szas::MoveRightCommand::getTypeId()) command->ExecuteCommand(*this);
 		if (commandType == szas::MoveLeftCommand::getTypeId()) command->ExecuteCommand(*this);
 		if (commandType == szas::MoveBackwardCommand::getTypeId()) command->ExecuteCommand(*this);
+		//if (commandType == szas::CreateAGameObjectCommand::getTypeId()) command->ExecuteCommand();
+		//if (commandType == szas::DeleteAGameObjectCommand::getTypeId()) command->ExecuteCommand();
+		//if (commandType == szas::DeleteAllAGameObjectsCommand::getTypeId()) command->ExecuteCommand();
+		if (commandType == szas::ExitApplicationCommand::getTypeId()) command->ExecuteCommand();
 	
 		//Record the command that was just executed
-		GetInputSystem().RecordCommand(command);
+		inputSystem.RecordCommand(command);
 	}
 
 	/// TEMPORARY ///
-	if (GetInputSystem().IsKeyDown(szas::KeyCode::LeftControl) || GetInputSystem().IsKeyDown(szas::KeyCode::RightControl))
+	if (inputSystem.IsKeyDown(szas::KeyCode::LeftControl) || inputSystem.IsKeyDown(szas::KeyCode::RightControl))
 	{
 		std::cout << "Holding CTRL" << std::endl;
-		if (GetInputSystem().IsKeyPressed(szas::KeyCode::Z)) // Pressed this frame
+		if (inputSystem.IsKeyPressed(szas::KeyCode::Z)) // Pressed this frame
 		{
 			std::cout << "Command Undoed" << std::endl;
-			GetInputSystem().UndoCommand(*this);
+			inputSystem.UndoCommand(*this);
 		}
-		else if (GetInputSystem().IsKeyPressed(szas::KeyCode::Y))
+		else if (inputSystem.IsKeyPressed(szas::KeyCode::Y))
 		{
 			std::cout << "Command Redoed" << std::endl;
-			GetInputSystem().RedoCommand(*this);
+			inputSystem.RedoCommand(*this);
 		}
 	}
 

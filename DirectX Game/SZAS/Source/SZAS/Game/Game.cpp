@@ -15,11 +15,15 @@ szas::Game::Game(const GameDescriptor& descriptor)
 	SZASLogInformation("| Szas | DirectX C++ Game Engine |");
 	SZASLogInformation("|--------------------------------|\n");
 
+	//Since input system needs world and world needs input system, we just set it as null for now then initialize later
+	m_inputSystem = std::make_unique<InputSystem>(InputSystemDescriptor{ { *m_logger }, {nullptr} });
 	m_graphicsDevice = std::make_unique<GraphicsDevice>(GraphicsDeviceDescriptor{ *m_logger });
 	m_display = std::make_unique<Display>(DisplayDescriptor{ {*m_logger, descriptor.windowSize}, *m_graphicsDevice });
 	m_worldRenderer = std::make_unique<WorldRenderer>(WorldRendererDescriptor{ {*m_logger}, *m_graphicsDevice });
+	//Initialize world
 	m_world = std::make_unique<World>(WorldDescriptor{ BaseDescriptor{*m_logger}, GameContext{*m_inputSystem}, {*m_worldRenderer} });
-	m_inputSystem = std::make_unique<InputSystem>(InputSystemDescriptor{ { *m_logger }, { *m_world } });
+	//Set world in input system to be initialized since it was passed as null at first
+	m_inputSystem->SetWorld(*m_world);
 
 	//TEMPORARY CURSOR LOCK
 	m_inputSystem->SetCursorLockArea(m_display->GetClientAreaInScreenSpace());

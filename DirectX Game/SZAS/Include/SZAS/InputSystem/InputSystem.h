@@ -45,6 +45,7 @@ namespace szas
 			Vec2 GetMouseDelta() const noexcept;
 
 			//SETTERS
+			void SetWorld(World& world);
 			void SetCursorVisible(bool visible);
 			void SetCursorLocked(bool locked);
 			void SetCursorLockArea(const Rect& lockedArea);
@@ -60,17 +61,17 @@ namespace szas
 
 		private:
 			///// WORLD /////
-			World& m_world;
+			World* m_world{};
 
 			///// INPUT COMMANDS /////
-			InputCommand* WKeyCommand;
-			InputCommand* AKeyCommand;
-			InputCommand* SKeyCommand;
-			InputCommand* DKeyCommand;
-			InputCommand* spaceKeyCommand;
-			InputCommand* backspaceKeyCommand;
-			InputCommand* deleteKeyCommand;
-			InputCommand* escapeKeyCommand;
+			InputCommand* WKeyCommand{};
+			InputCommand* AKeyCommand{};
+			InputCommand* SKeyCommand{};
+			InputCommand* DKeyCommand{};
+			InputCommand* spaceKeyCommand{};
+			InputCommand* backspaceKeyCommand{};
+			InputCommand* deleteKeyCommand{};
+			InputCommand* escapeKeyCommand{};
 
 			///// UNDO AND REDO QUEUE /////
 			std::vector<InputCommand*> m_undoList;

@@ -201,6 +201,11 @@ szas::Vec2 szas::InputSystem::GetMouseDelta() const noexcept
 	return m_mouseDelta;
 }
 
+void szas::InputSystem::SetWorld(World& world)
+{
+	m_world = &world;
+}
+
 void szas::InputSystem::SetCursorVisible(bool visible)
 {
 	m_cursorVisible = visible;

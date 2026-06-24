@@ -17,7 +17,7 @@ void szas::CreateAGameObjectCommand::ExecuteCommand()
 	static std::mt19937 generator(randDevice());
 	std::uniform_real_distribution<f32> dis(-0.5f, 0.5f);
 
-	auto sphere = m_world.CreateAGameObject<szas::Sphere>();
+	auto sphere = m_world->CreateAGameObject<szas::Sphere>();
 	sphere->GetTransform().SetScale({ 1.0f });
 	sphere->GetTransform().SetPosition({dis(generator), dis(generator), 0.0f});
 	

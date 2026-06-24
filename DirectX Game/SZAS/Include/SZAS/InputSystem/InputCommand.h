@@ -22,6 +22,6 @@ namespace szas
 			virtual ~InputCommand();
 		protected:
 			BaseDescriptor m_base;
-			World& m_world;
+			World* m_world;
 	};
 }

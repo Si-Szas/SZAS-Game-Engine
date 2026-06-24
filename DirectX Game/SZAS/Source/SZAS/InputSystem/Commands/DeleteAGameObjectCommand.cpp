@@ -9,9 +9,9 @@ szas::DeleteAGameObjectCommand::DeleteAGameObjectCommand(const InputSystemDescri
 
 void szas::DeleteAGameObjectCommand::ExecuteCommand()
 {
-	auto gameObjects = m_world.GetAllGameObjects();
+	auto gameObjects = m_world->GetAllGameObjects();
 	//If the list of objects are not empty, then delete
-	if(!gameObjects.empty()) m_world.DestroyAGameObjectInternal(gameObjects.back());
+	if(!gameObjects.empty()) m_world->DestroyAGameObjectInternal(gameObjects.back());
 }
 
 void szas::DeleteAGameObjectCommand::ExecuteCommand(AGameObject& gameObject)
