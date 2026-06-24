@@ -34,7 +34,7 @@ void MainGame::OnCreate()
 	capsule->GetTransform().SetPosition({ 0.0f, 0.0f, 4.0f });
 
 	auto player = world.CreateAGameObject<Player>();
-	player->GetTransform().SetPosition({ 0.0f, 0.75f, -3.0f });
+	player->GetTransform().SetPosition({ 0.0f, 1.0f, -3.0f });
 
 	GetInputSystem().SetCursorLocked(true);
 	GetInputSystem().SetCursorVisible(false);

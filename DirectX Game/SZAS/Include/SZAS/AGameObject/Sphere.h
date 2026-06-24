@@ -21,9 +21,9 @@ namespace szas
 		private:
 			SphereComponent* m_sphereComponent{};
 
-			f32 radius = 0.25f;
-			ui32 sliceCount = 20;
-			ui32 stackCount = 20;
+			f32 radius = 0.5f;
+			ui32 sliceCount = 50 * radius;
+			ui32 stackCount = 50 * radius;
 	};
 }
 

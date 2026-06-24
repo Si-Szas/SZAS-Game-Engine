@@ -42,7 +42,7 @@ DS_OUTPUT DS_Main(
     
     float4 worldPosition = mul(float4(finalPosition, 1.0f), world);
     float4 viewPosition = mul(worldPosition, view);
-    float4 projectionPosition = mul(worldPosition, projection);
+    float4 projectionPosition = mul(viewPosition, projection);
     output.position = projectionPosition;
     
     float4 topColor = lerp(patch[0].color, patch[1].color, domain.x);
