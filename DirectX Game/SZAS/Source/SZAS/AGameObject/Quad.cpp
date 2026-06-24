@@ -5,6 +5,11 @@
 szas::Quad::Quad(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
+}
+
+void szas::Quad::OnCreate() 
+{
+
 	const Vertex quadVertices[] =
 	{
 		/* BR */ { {-1.0f, 0.0f,  -1.0f},  {1.0f, 1.0f, 1.0f, 1.0f} },
@@ -29,19 +34,15 @@ szas::Quad::Quad(const AGameObjectDescriptor& descriptor) :
 		quadVertices,					//Vertex List
 		std::size(quadVertices),		//Vertex List Size
 		sizeof(Vertex)				//Vertex Size
-	}));
+		}));
 
 	worldRenderer.GetIndexBuffer().push_back(device.CreateIndexBuffer
 	({
 		quadIndices,//Index List
 		std::size(quadIndices)//Index List Size
-	}));
+		}));
 
 	m_quadComponent = CreateOrGetComponent<QuadComponent>();
-}
-
-void szas::Quad::OnCreate() {
-
 }
 
 void szas::Quad::OnUpdate(f32 deltaTime) {

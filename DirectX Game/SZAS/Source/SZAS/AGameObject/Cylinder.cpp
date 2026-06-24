@@ -5,6 +5,10 @@
 szas::Cylinder::Cylinder(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
+}
+
+void szas::Cylinder::OnCreate()
+{
     std::vector<Vertex> cylinderVertices;
     //Push bottommost vertex of cylinder
     ui32 bottomCenterIndex = static_cast<ui32>(cylinderVertices.size());
@@ -26,14 +30,14 @@ szas::Cylinder::Cylinder(const AGameObjectDescriptor& descriptor) :
             f32 x = radius * cosf(theta);
             f32 z = radius * sinf(theta);
 
-            f32 r = (x  / (2.0f * radius)) + 0.5f;
+            f32 r = (x / (2.0f * radius)) + 0.5f;
             f32 g = (y / height) + 0.5f;
             f32 b = (z / (2.0f * radius)) + 0.5f;
-            
+
             cylinderVertices.push_back({
                 {x, y, z},
                 {r, g, b, 1.0f}
-            });
+                });
         }
     }
 
@@ -43,7 +47,7 @@ szas::Cylinder::Cylinder(const AGameObjectDescriptor& descriptor) :
         { 0.0f, (height * 0.5f), 0.0f },
         { 1.0f, 1.0f, 1.0f, 1.0f }
         });
-    
+
     //Create indices
     std::vector<ui32> cylinderIndices;
     //Bottom vertex indices
@@ -91,31 +95,26 @@ szas::Cylinder::Cylinder(const AGameObjectDescriptor& descriptor) :
         cylinderIndices.push_back(topCenterIndex);
     }
 
-	auto& worldRenderer = GetWorldRenderer();
-	auto& device = worldRenderer.GetGraphicsDevice();
+    auto& worldRenderer = GetWorldRenderer();
+    auto& device = worldRenderer.GetGraphicsDevice();
 
-	m_vertexOffset = static_cast<ui32>(worldRenderer.GetVertexBuffer().size());
-	m_indexLocation = static_cast<ui32>(worldRenderer.GetIndexBuffer().size());
+    m_vertexOffset = static_cast<ui32>(worldRenderer.GetVertexBuffer().size());
+    m_indexLocation = static_cast<ui32>(worldRenderer.GetIndexBuffer().size());
 
-	worldRenderer.GetVertexBuffer().push_back(device.CreateVertexBuffer
-	({
-		cylinderVertices.data(),				
-		static_cast<UINT>(cylinderVertices.size()),
-		sizeof(Vertex)
-	}));
+    worldRenderer.GetVertexBuffer().push_back(device.CreateVertexBuffer
+    ({
+        cylinderVertices.data(),
+        static_cast<UINT>(cylinderVertices.size()),
+        sizeof(Vertex)
+        }));
 
-	worldRenderer.GetIndexBuffer().push_back(device.CreateIndexBuffer
-	({
-		cylinderIndices.data(),
-		static_cast<UINT>(cylinderIndices.size())
-	}));
+    worldRenderer.GetIndexBuffer().push_back(device.CreateIndexBuffer
+    ({
+        cylinderIndices.data(),
+        static_cast<UINT>(cylinderIndices.size())
+        }));
 
-	m_cylinderComponent = CreateOrGetComponent<CylinderComponent>();
-}
-
-void szas::Cylinder::OnCreate()
-{
-
+    m_cylinderComponent = CreateOrGetComponent<CylinderComponent>();
 }
 
 void szas::Cylinder::OnUpdate(f32 deltaTime)

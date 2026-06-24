@@ -6,6 +6,10 @@
 szas::Capsule::Capsule(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
+}
+
+void szas::Capsule::OnCreate()
+{
     std::vector<Vertex> capsuleVertices;
     f32 phiStep = MathUtility::PI / 2;
     f32 thetaStep = MathUtility::PI2 / sliceCount;
@@ -35,7 +39,7 @@ szas::Capsule::Capsule(const AGameObjectDescriptor& descriptor) :
                 });
         }
     }
-    
+
     //Capsule body / ring
     //Uses the same algorithm as making the body of the cylinder
     for (ui32 i = 0; i <= stackCount; i++)
@@ -57,7 +61,7 @@ szas::Capsule::Capsule(const AGameObjectDescriptor& descriptor) :
             capsuleVertices.push_back({
                 {x, y, z},
                 {r, g, b, 1.0f}
-            });
+                });
         }
     }
 
@@ -81,7 +85,7 @@ szas::Capsule::Capsule(const AGameObjectDescriptor& descriptor) :
             capsuleVertices.push_back({
                 {x, y, z},
                 {r, g, b, 1.0f}
-            });
+                });
         }
     }
 
@@ -105,31 +109,26 @@ szas::Capsule::Capsule(const AGameObjectDescriptor& descriptor) :
         }
     }
 
-	auto& worldRenderer = GetWorldRenderer();
-	auto& device = worldRenderer.GetGraphicsDevice();
+    auto& worldRenderer = GetWorldRenderer();
+    auto& device = worldRenderer.GetGraphicsDevice();
 
-	m_vertexOffset = static_cast<ui32>(worldRenderer.GetVertexBuffer().size());
-	m_indexLocation = static_cast<ui32>(worldRenderer.GetIndexBuffer().size());
+    m_vertexOffset = static_cast<ui32>(worldRenderer.GetVertexBuffer().size());
+    m_indexLocation = static_cast<ui32>(worldRenderer.GetIndexBuffer().size());
 
-	worldRenderer.GetVertexBuffer().push_back(device.CreateVertexBuffer
-	({
-		capsuleVertices.data(),					//Vertex List
-		static_cast<UINT>(capsuleVertices.size()),		//Vertex List Size
-		sizeof(Vertex)				//Vertex Size
-		}));
+    worldRenderer.GetVertexBuffer().push_back(device.CreateVertexBuffer
+    ({
+        capsuleVertices.data(),					//Vertex List
+        static_cast<UINT>(capsuleVertices.size()),		//Vertex List Size
+        sizeof(Vertex)				//Vertex Size
+        }));
 
-	worldRenderer.GetIndexBuffer().push_back(device.CreateIndexBuffer
-	({
+    worldRenderer.GetIndexBuffer().push_back(device.CreateIndexBuffer
+    ({
         capsuleIndices.data(),//Index List
-		static_cast<UINT>(capsuleIndices.size())//Index List Size
-		}));
+        static_cast<UINT>(capsuleIndices.size())//Index List Size
+        }));
 
-	m_capsuleComponent = CreateOrGetComponent<CapsuleComponent>();
-}
-
-void szas::Capsule::OnCreate()
-{
-
+    m_capsuleComponent = CreateOrGetComponent<CapsuleComponent>();
 }
 
 void szas::Capsule::OnUpdate(f32 deltaTime)

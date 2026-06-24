@@ -9,12 +9,16 @@
 szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
+}
+
+void szas::Sphere::OnCreate()
+{
 	std::vector<Vertex> sphereVertices;
 	//Push back the topmost vertex of the sphere
 	sphereVertices.push_back(
-		{ { 0.0f, radius, 0.0f }, 
-		{ 1.0f, 1.0f, 1.0f, 1.0f } 
-	});
+		{ { 0.0f, radius, 0.0f },
+		{ 1.0f, 1.0f, 1.0f, 1.0f }
+		});
 
 	f32 phiStep = MathUtility::PI / stackCount;
 	f32 thetaStep = MathUtility::PI2 / sliceCount;
@@ -36,14 +40,14 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 			sphereVertices.push_back({
 				{x, y, z},
 				{r, g, b, 1.0f}
-			});
+				});
 		}
 	}
 	//Push back the bottommost vertex of the sphere
 	sphereVertices.push_back(
 		{ { 0.0f, -radius, 0.0f },
 		{ 0.0f, 0.0f, 0.0f, 1.0f }
-	});
+		});
 
 	//Create index buffer
 	std::vector<ui32> sphereIndices;
@@ -96,20 +100,15 @@ szas::Sphere::Sphere(const AGameObjectDescriptor& descriptor) :
 		sphereVertices.data(),					//Vertex List
 		static_cast<UINT>(sphereVertices.size()),		//Vertex List Size
 		sizeof(Vertex)				//Vertex Size
-	}));
+		}));
 
 	worldRenderer.GetIndexBuffer().push_back(device.CreateIndexBuffer
 	({
 		sphereIndices.data(),//Index List
 		static_cast<UINT>(sphereIndices.size())//Index List Size
-	}));
-	
+		}));
+
 	m_sphereComponent = CreateOrGetComponent<SphereComponent>();
-}
-
-void szas::Sphere::OnCreate()
-{
-
 }
 
 void szas::Sphere::OnUpdate(f32 deltaTime)

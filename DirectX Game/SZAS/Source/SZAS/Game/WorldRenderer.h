@@ -29,13 +29,6 @@ namespace szas
 			//DESTRUCTOR
 			virtual ~WorldRenderer() override;
 
-			//private:
-			//	struct Vertex
-			//	{
-			//		Vec3 position;
-			//		Vec4 color;
-			//	};
-			//
 			struct alignas(16) ConstantData
 			{
 				Matrix4x4 world{};

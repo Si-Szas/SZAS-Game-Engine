@@ -5,6 +5,10 @@
 szas::Cube::Cube(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
 {
+}
+
+void szas::Cube::OnCreate() 
+{
 	const Vertex cubeVertices[] =
 	{
 		{ {-0.5f,-0.5f,-0.5f},	{1,0,0,1}},
@@ -52,13 +56,9 @@ szas::Cube::Cube(const AGameObjectDescriptor& descriptor) :
 	({
 		cubeIndices,//Index List
 		std::size(cubeIndices)//Index List Size
-	}));
+		}));
 
 	m_cubeComponent = CreateOrGetComponent<CubeComponent>();
-}
-
-void szas::Cube::OnCreate() 
-{
 }
 
 void szas::Cube::OnUpdate(f32 deltaTime)
