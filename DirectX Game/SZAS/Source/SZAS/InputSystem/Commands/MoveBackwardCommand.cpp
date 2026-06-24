@@ -7,7 +7,7 @@ szas::MoveBackwardCommand::MoveBackwardCommand(const InputSystemDescriptor& desc
 {
 }
 
-void szas::MoveBackwardCommand::ExecuteCommand(AGameObject& gameObject)
+void szas::MoveBackwardCommand::ExecuteCommand(AGameObject& gameObject, World& world)
 {
 	m_previousPosition = gameObject.GetTransform().GetPosition();
 

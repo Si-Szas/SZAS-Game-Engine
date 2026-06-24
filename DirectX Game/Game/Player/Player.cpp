@@ -1,4 +1,6 @@
 #include "Player.h"
+#include <SZAS/Game/WorldRenderer.h>
+#include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
 #include <SZAS/AComponent/TransformComponent.h>
 #include <SZAS/InputSystem/InputSystem.h>
 #include <SZAS/InputSystem/InputCommand.h>
@@ -25,6 +27,7 @@ void szas::Player::OnCreate()
 
 void szas::Player::OnUpdate(f32 deltaTime)
 {
+	auto& world = GetWorld();
 	auto& inputSystem = GetInputSystem();
 
 	auto sensitivity = 0.001f;
@@ -44,13 +47,13 @@ void szas::Player::OnUpdate(f32 deltaTime)
 	{
 		size_t commandType = command->GetTypeID();
 
-		if (commandType == szas::MoveForwardCommand::getTypeId()) command->ExecuteCommand(*this);
-		if (commandType == szas::MoveRightCommand::getTypeId()) command->ExecuteCommand(*this);
-		if (commandType == szas::MoveLeftCommand::getTypeId()) command->ExecuteCommand(*this);
-		if (commandType == szas::MoveBackwardCommand::getTypeId()) command->ExecuteCommand(*this);
-		//if (commandType == szas::CreateAGameObjectCommand::getTypeId()) command->ExecuteCommand();
-		//if (commandType == szas::DeleteAGameObjectCommand::getTypeId()) command->ExecuteCommand();
-		//if (commandType == szas::DeleteAllAGameObjectsCommand::getTypeId()) command->ExecuteCommand();
+		if (commandType == szas::MoveForwardCommand::getTypeId()) command->ExecuteCommand(*this, world);
+		if (commandType == szas::MoveRightCommand::getTypeId()) command->ExecuteCommand(*this, world);
+		if (commandType == szas::MoveLeftCommand::getTypeId()) command->ExecuteCommand(*this, world);
+		if (commandType == szas::MoveBackwardCommand::getTypeId()) command->ExecuteCommand(*this, world);
+		if (commandType == szas::CreateAGameObjectCommand::getTypeId()) command->ExecuteCommand(*this, world);
+		if (commandType == szas::DeleteAGameObjectCommand::getTypeId()) command->ExecuteCommand(*this, world);
+		//if (commandType == szas::DeleteAllAGameObjectsCommand::getTypeId()) command->ExecuteCommand(*this, world);
 		if (commandType == szas::ExitApplicationCommand::getTypeId()) command->ExecuteCommand();
 	
 		//Record the command that was just executed
@@ -58,20 +61,20 @@ void szas::Player::OnUpdate(f32 deltaTime)
 	}
 
 	/// TEMPORARY ///
-	if (inputSystem.IsKeyDown(szas::KeyCode::LeftControl) || inputSystem.IsKeyDown(szas::KeyCode::RightControl))
-	{
-		std::cout << "Holding CTRL" << std::endl;
-		if (inputSystem.IsKeyPressed(szas::KeyCode::Z)) // Pressed this frame
-		{
-			std::cout << "Command Undoed" << std::endl;
-			inputSystem.UndoCommand(*this);
-		}
-		else if (inputSystem.IsKeyPressed(szas::KeyCode::Y))
-		{
-			std::cout << "Command Redoed" << std::endl;
-			inputSystem.RedoCommand(*this);
-		}
-	}
+	//if (inputSystem.IsKeyDown(szas::KeyCode::LeftControl) || inputSystem.IsKeyDown(szas::KeyCode::RightControl))
+	//{
+	//	std::cout << "Holding CTRL" << std::endl;
+	//	if (inputSystem.IsKeyPressed(szas::KeyCode::Z)) // Pressed this frame
+	//	{
+	//		std::cout << "Command Undoed" << std::endl;
+	//		inputSystem.UndoCommand(*this);
+	//	}
+	//	else if (inputSystem.IsKeyPressed(szas::KeyCode::Y))
+	//	{
+	//		std::cout << "Command Redoed" << std::endl;
+	//		inputSystem.RedoCommand(*this);
+	//	}
+	//}
 
 	auto forwardDir = GetTransform().Forward() * GetForwardModifier();
 	auto rightDir = GetTransform().Right() * GetRightModifier();

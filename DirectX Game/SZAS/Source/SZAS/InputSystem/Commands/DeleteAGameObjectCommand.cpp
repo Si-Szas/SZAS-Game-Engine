@@ -9,14 +9,15 @@ szas::DeleteAGameObjectCommand::DeleteAGameObjectCommand(const InputSystemDescri
 
 void szas::DeleteAGameObjectCommand::ExecuteCommand()
 {
-	auto gameObjects = m_world->GetAllGameObjects();
-	//If the list of objects are not empty, then delete
-	if(!gameObjects.empty()) m_world->DestroyAGameObjectInternal(gameObjects.back());
+
 }
 
-void szas::DeleteAGameObjectCommand::ExecuteCommand(AGameObject& gameObject)
+void szas::DeleteAGameObjectCommand::ExecuteCommand(AGameObject& gameObject, World& world)
 {
-
+	auto gameObjects = world.GetAllGameObjects();
+	//If the list of objects are not empty, then delete, and if its not the player (since player at index 0)
+	//Player: Index 0, Floor: Index 1
+	if (static_cast<ui32>(gameObjects.size()) > 2) world.DestroyAGameObjectInternal(gameObjects.back());
 }
 
 void szas::DeleteAGameObjectCommand::UndoCommand(AGameObject& gameObject)

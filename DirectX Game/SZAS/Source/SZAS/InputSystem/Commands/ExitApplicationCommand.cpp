@@ -12,9 +12,9 @@ void szas::ExitApplicationCommand::ExecuteCommand()
 	PostQuitMessage(0);
 }
 
-void szas::ExitApplicationCommand::ExecuteCommand(AGameObject & gameObject)
+void szas::ExitApplicationCommand::ExecuteCommand(AGameObject& gameObject, World& world)
 {
-
+	PostQuitMessage(0);
 }
 
 void szas::ExitApplicationCommand::UndoCommand(AGameObject& gameObject)

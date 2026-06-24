@@ -7,7 +7,7 @@ szas::MoveRightCommand::MoveRightCommand(const InputSystemDescriptor& descriptor
 {
 }
 
-void szas::MoveRightCommand::ExecuteCommand(AGameObject& gameObject)
+void szas::MoveRightCommand::ExecuteCommand(AGameObject& gameObject, World& world)
 {
 	m_previousPosition = gameObject.GetTransform().GetPosition();
 

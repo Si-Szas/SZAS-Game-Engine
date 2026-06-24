@@ -14,7 +14,7 @@ namespace szas
 
 			//FUNCTION
 			virtual void ExecuteCommand() = 0;
-			virtual void ExecuteCommand(AGameObject& gameObject) = 0;
+			virtual void ExecuteCommand(AGameObject& gameObject, World& world) = 0;
 			virtual void UndoCommand(AGameObject& gameObject) = 0;
 			//virtual void RedoCommand(AGameObject& gameObject) = 0;
 

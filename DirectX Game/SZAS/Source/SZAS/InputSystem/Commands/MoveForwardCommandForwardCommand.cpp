@@ -9,7 +9,7 @@ szas::MoveForwardCommand::MoveForwardCommand(const InputSystemDescriptor& descri
 {
 }
 
-void szas::MoveForwardCommand::ExecuteCommand(AGameObject& gameObject)
+void szas::MoveForwardCommand::ExecuteCommand(AGameObject& gameObject, World& world)
 {
 	m_previousPosition = gameObject.GetTransform().GetPosition();
 

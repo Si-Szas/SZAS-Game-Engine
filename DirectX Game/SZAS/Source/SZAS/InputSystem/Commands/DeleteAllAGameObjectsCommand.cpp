@@ -9,14 +9,16 @@ szas::DeleteAllAGameObjectsCommand::DeleteAllAGameObjectsCommand(const InputSyst
 
 void szas::DeleteAllAGameObjectsCommand::ExecuteCommand()
 {
-	auto gameObjects = m_world->GetAllGameObjects();
-
-	if (!gameObjects.empty()) m_world->DestroyAllAGameObjectsInternal();
+	//auto gameObjects = m_world->GetAllGameObjects();
+	//
+	//if (!gameObjects.empty()) m_world->DestroyAllAGameObjectsInternal();
 }
 
-void szas::DeleteAllAGameObjectsCommand::ExecuteCommand(AGameObject& gameObject)
+void szas::DeleteAllAGameObjectsCommand::ExecuteCommand(AGameObject& gameObject, World& world)
 {
-
+	auto gameObjects = world.GetAllGameObjects();
+	
+	if (!gameObjects.empty()) world.DestroyAllAGameObjectsInternal();
 }
 
 void szas::DeleteAllAGameObjectsCommand::UndoCommand(AGameObject& gameObject)

@@ -96,9 +96,6 @@
     <ClCompile Include="SZAS\Source\SZAS\AComponent\CameraComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Player\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SZAS\Source\SZAS\Game\WorldRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -136,6 +133,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\MoveBackwardCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\CreateAGameObjectCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\DeleteAGameObjectCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\DeleteAllAGameObjectsCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\ExitApplicationCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Player\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -254,9 +266,6 @@
     <ClInclude Include="SZAS\Include\SZAS\Math\MathUtility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Player\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SZAS\Source\SZAS\Game\WorldRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -294,6 +303,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\MoveBackwardCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\CreateAGameObjectCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\DeleteAGameObjectCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\DeleteAllAGameObjectsCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\ExitApplicationCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Player\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

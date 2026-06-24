@@ -14,7 +14,7 @@ namespace szas
 			explicit MoveRightCommand(const InputSystemDescriptor& descriptor);
 			//FUNCTIONS
 			void ExecuteCommand() {}
-			void ExecuteCommand(AGameObject& gameObject);
+			void ExecuteCommand(AGameObject& gameObject, World& world);
 			void UndoCommand(AGameObject& gameObject);
 
 			~MoveRightCommand();

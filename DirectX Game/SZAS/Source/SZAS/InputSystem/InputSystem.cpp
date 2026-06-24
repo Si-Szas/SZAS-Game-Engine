@@ -60,22 +60,22 @@ szas::InputCommand* szas::InputSystem::HandleInput()
 
 	else if (IsKeyPressed(szas::KeyCode::Space))
 	{
-		SZASLogInformation("Space Key Pressed");
+		//SZASLogInformation("Space Key Pressed");
 		return spaceKeyCommand;
 	}
 	else if (IsKeyPressed(szas::KeyCode::Backspace))
 	{
-		SZASLogInformation("Backspace Key Pressed");
+		//SZASLogInformation("Backspace Key Pressed");
 		return backspaceKeyCommand;
 	}
 	else if (IsKeyPressed(szas::KeyCode::Delete))
 	{
-		SZASLogInformation("Delete Key Pressed");
+		//SZASLogInformation("Delete Key Pressed");
 		return deleteKeyCommand;
 	}
 	else if (IsKeyPressed(szas::KeyCode::Escape))
 	{
-		SZASLogInformation("Escape Key Pressed");
+		//SZASLogInformation("Escape Key Pressed");
 		return escapeKeyCommand;
 	}
 
@@ -112,7 +112,7 @@ void szas::InputSystem::RedoCommand(AGameObject& gameObject)
 	InputCommand* command = m_redoList.back();
 	m_redoList.pop_back();
 	//Reexecute the command
-	command->ExecuteCommand(gameObject);
+	command->ExecuteCommand(gameObject, *m_world);
 	//Add redoed command to undo list
 	m_undoList.push_back(command);
 }
