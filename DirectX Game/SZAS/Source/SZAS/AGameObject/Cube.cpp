@@ -1,6 +1,11 @@
 #include <SZAS/AGameObject/Cube.h>
+#include <SZAS/AComponent/TransformComponent.h>
 #include <SZAS/Game/WorldRenderer.h>
 #include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
+
+#include <iostream>
+#include <algorithm>
+#include <cmath>
 
 szas::Cube::Cube(const AGameObjectDescriptor& descriptor) :
 	AGameObject(descriptor)
@@ -59,10 +64,59 @@ void szas::Cube::OnCreate()
 		}));
 
 	m_cubeComponent = CreateOrGetComponent<CubeComponent>();
+
+	m_originalPosition = GetTransform().GetPosition();
+	m_originalScale = GetTransform().GetScale();
 }
 
 void szas::Cube::OnUpdate(f32 deltaTime)
 {
+	//Get the position & scale of the cube
+	auto position = GetTransform().GetPosition();
+	auto scale = GetTransform().GetScale();
+
+	//Clamp the lerp so it doesnt go above 1
+	if (lerpValue >= 1.0f) {
+		lerpValue = 1.0f;
+		reverseLerp = true;
+	} // Or below 0
+	else if (lerpValue <= 0.0f) {
+		lerpValue = 0.0f;
+		reverseLerp = false;
+	}
+	//If lerp = 1, then at means it needs to go backwards (subtract)
+	if (reverseLerp)
+	{
+		lerpValue -= 0.5f * deltaTime;
+	} //Else, add to lerpValue
+	else 
+	{ 
+		lerpValue += 0.5f * deltaTime;
+	}
+
+	//Get the lerp of the position and scale components (x, y, z)
+	auto lerpPosX = std::lerp(m_originalPosition.x, m_position2.x, lerpValue);
+	auto lerpPosY = std::lerp(m_originalPosition.y, m_position2.y, lerpValue);
+	auto lerpPosZ = std::lerp(m_originalPosition.z, m_position2.z, lerpValue);
+	auto lerpScaleX = std::lerp(m_originalScale.x, m_scale2.x, lerpValue);
+	auto lerpScaleY = std::lerp(m_originalScale.y, m_scale2.y, lerpValue);
+	auto lerpScaleZ = std::lerp(m_originalScale.z, m_scale2.z, lerpValue);
+	
+	//Create a Vec3 out of those components
+	Vec3 lerpPos = { 
+		szas::f32(lerpPosX), 
+		szas::f32(lerpPosY), 
+		szas::f32(lerpPosZ) 
+	};
+
+	Vec3 lerpScale = { 
+		szas::f32(lerpScaleX), 
+		szas::f32(lerpScaleY), 
+		szas::f32(lerpScaleZ) };
+
+	//Set the new position and scale
+	GetTransform().SetPosition(lerpPos);
+	GetTransform().SetScale(lerpScale);
 }
 
 szas::Cube::~Cube()
