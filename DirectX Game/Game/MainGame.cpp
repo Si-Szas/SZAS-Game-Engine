@@ -14,12 +14,12 @@ void MainGame::OnCreate()
 	auto& world = GetWorld();
 
 	auto player = world.CreateAGameObject<Player>();
-	player->GetTransform().SetPosition({ 0.0f, 0.0f, -5.0f });
-
+	player->GetTransform().SetPosition({ 0.0f, 1.0f, -8.0f });
+	
 	auto cube = world.CreateAGameObject<szas::Cube>();
-	//Set original scale and original position
-	cube->GetTransform().SetScale({ 1.0f });
-	cube->GetTransform().SetPosition({ 5.0f, -3.0f, 0.0f });
+	//Set original scale
+	cube->GetTransform().SetScale({ 2.5f });
+	cube->GetTransform().SetPosition({0.0f, 0.0f, 0.0f });
 	
 	GetInputSystem().SetCursorLocked(true);
 	GetInputSystem().SetCursorVisible(false);

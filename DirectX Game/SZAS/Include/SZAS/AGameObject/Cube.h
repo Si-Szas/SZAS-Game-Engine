@@ -21,16 +21,14 @@ namespace szas
 		private:
 			CubeComponent* m_cubeComponent{};
 
-			//Will get original values on instantiation
-			Vec3 m_originalPosition{};
+			//Original scale value of the cube
 			Vec3 m_originalScale{};
-
-			//Second position & scale
-			Vec3 m_position2 = { -5.0f, 3.0f, 0.0f };
-			Vec3 m_scale2 = { 0.25f };
-
+			//Scale value to make it look like a plane
+			Vec3 m_scale2 = {10.0f, 0.001f, 7.5f };
+			//Lerp value for animating
 			d64 lerpValue = 0.0;
-			bool reverseLerp = false;
+			//Place an animation delay, just so that the cube can be seen in the beginning
+			f32 animationDelay = 2.0f;
 	};
 }
 
