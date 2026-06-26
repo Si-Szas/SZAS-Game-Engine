@@ -55,6 +55,8 @@ namespace szas
 			{
 				Matrix4x4 matrix{};
 
+				xRotation = MathUtility::ToRadians(xRotation);
+
 				matrix.m_data[0][0] = 1;
 				matrix.m_data[1][1] = std::cos(xRotation);
 				matrix.m_data[1][2] = std::sin(xRotation);
@@ -69,6 +71,8 @@ namespace szas
 			{
 				Matrix4x4 matrix{};
 
+				yRotation = MathUtility::ToRadians(yRotation);
+
 				matrix.m_data[0][0] = std::cos(yRotation);
 				matrix.m_data[0][2] = -std::sin(yRotation);
 				matrix.m_data[1][1] = 1;
@@ -82,6 +86,8 @@ namespace szas
 			static Matrix4x4 RotateAlongZ(f32 zRotation) noexcept
 			{
 				Matrix4x4 matrix{};
+
+				zRotation = MathUtility::ToRadians(zRotation);
 
 				matrix.m_data[0][0] = std::cos(zRotation);
 				matrix.m_data[0][1] = std::sin(zRotation);
