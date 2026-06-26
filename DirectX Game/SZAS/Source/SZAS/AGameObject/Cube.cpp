@@ -64,11 +64,6 @@ void szas::Cube::OnCreate()
 
 void szas::Cube::OnUpdate(f32 deltaTime)
 {
-	auto rotation = GetTransform().GetRotation();
-
-	rotation += deltaTime * 2.5f;
-
-	GetTransform().SetRotation(rotation);
 }
 
 szas::Cube::~Cube()

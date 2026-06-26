@@ -1,8 +1,6 @@
 #include "MainGame.h"
 #include "Player/Player.h"
 
-#include <random>
-
 using namespace szas;
 
 MainGame::MainGame(const GameDescriptor& descriptor) :
@@ -15,18 +13,58 @@ void MainGame::OnCreate()
 	Game::OnCreate();
 	auto& world = GetWorld();
 
-	static std::random_device randDevice;
-	static std::mt19937 generator(randDevice());
-	std::uniform_real_distribution<f32> dis(-5.0f, 5.0f);
-
 	auto player = world.CreateAGameObject<Player>();
-	player->GetTransform().SetPosition({ 0.0f, 0.0f, -12.0f });
+	player->GetTransform().SetPosition({ 3.62394f, 3.0427f, -4.26524f });
+	player->GetTransform().SetRotation({ 0.18f, -0.551999f, 0.0f });
 
-	//Create 50 cubes in random positions from -5 to 5
-	for(ui32 i = 0; i < 50; i++){
+	//// FIRST (BOTTOM) ROW OF CARDS - 6 ////
+	for(ui32 i = 0; i < 6; i++){
 		auto cube = world.CreateAGameObject<szas::Cube>();
-		cube->GetTransform().SetScale({ 1.0f });
-		cube->GetTransform().SetPosition({ dis(generator), dis(generator), dis(generator) });
+
+		cube->GetTransform().SetScale({ 0.05f, 2.5f, 1.5f });
+		cube->GetTransform().SetPosition({(i * 0.80f) - 2.0f, 0.0f, 0.0f });
+
+		if(i%2 != 0) cube->GetTransform().SetRotation({ 0.0f, 0.0f, 0.314159f });
+		else cube->GetTransform().SetRotation({ 0.0f, 0.0f, -0.314159f });
+	}
+
+	//// SECOND FLAT ROW OF CARDS - 2 ////
+	for (ui32 i = 0; i < 2; i++) {
+		auto cube = world.CreateAGameObject<szas::Cube>();
+
+		cube->GetTransform().SetScale({ 0.05f, 2.5f, 1.5f });
+		cube->GetTransform().SetPosition({(i * 2.25f) - 1.25f, 1.2f, 0.0f });
+		cube->GetTransform().SetRotation({ 0.0f, 0.0f, 1.5708f});
+	}
+
+	//// THIRD ROW OF CARDS - 4 ////
+	for (ui32 i = 0; i < 4; i++) {
+		auto cube = world.CreateAGameObject<szas::Cube>();
+
+		cube->GetTransform().SetScale({ 0.05f, 2.5f, 1.5f });
+		cube->GetTransform().SetPosition({(i * 0.80f) - 1.25f, 2.40f, 0.0f });
+		
+		if (i % 2 != 0) cube->GetTransform().SetRotation({ 0.0f, 0.0f, 0.314159f });
+		else cube->GetTransform().SetRotation({ 0.0f, 0.0f, -0.314159f });
+	}
+
+	//// FOURTH ROW OF CARDS - 1 ////
+	auto cube = world.CreateAGameObject<szas::Cube>();
+	
+	cube->GetTransform().SetScale({ 0.05f, 2.5f, 1.5f });
+	cube->GetTransform().SetPosition({ -0.08f, 3.6f, 0.0f });
+	cube->GetTransform().SetRotation({ 0.0f, 0.0f, 1.5708f });
+
+
+	//// FIFTH (TOP) ROW OF CARDS - 1 ////
+	for (ui32 i = 0; i < 2; i++) {
+		auto cube = world.CreateAGameObject<szas::Cube>();
+
+		cube->GetTransform().SetScale({ 0.05f, 2.5f, 1.5f });
+		cube->GetTransform().SetPosition({ (i * 0.80f) - 0.45f, 4.8f, 0.0f });
+
+		if (i % 2 != 0) cube->GetTransform().SetRotation({ 0.0f, 0.0f, 0.314159f });
+		else cube->GetTransform().SetRotation({ 0.0f, 0.0f, -0.314159f });
 	}
 	
 	GetInputSystem().SetCursorLocked(true);
