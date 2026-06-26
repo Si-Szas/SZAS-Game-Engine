@@ -51,8 +51,8 @@ void szas::Player::OnUpdate(f32 deltaTime)
 		if (commandType == szas::MoveRightCommand::getTypeId()) command->ExecuteCommand(*this, world);
 		if (commandType == szas::MoveLeftCommand::getTypeId()) command->ExecuteCommand(*this, world);
 		if (commandType == szas::MoveBackwardCommand::getTypeId()) command->ExecuteCommand(*this, world);
-		if (commandType == szas::CreateAGameObjectCommand::getTypeId()) command->ExecuteCommand(*this, world);
-		if (commandType == szas::DeleteAGameObjectCommand::getTypeId()) command->ExecuteCommand(*this, world);
+		//if (commandType == szas::CreateAGameObjectCommand::getTypeId()) command->ExecuteCommand(*this, world);
+		//if (commandType == szas::DeleteAGameObjectCommand::getTypeId()) command->ExecuteCommand(*this, world);
 		//if (commandType == szas::DeleteAllAGameObjectsCommand::getTypeId()) command->ExecuteCommand(*this, world);
 		if (commandType == szas::ExitApplicationCommand::getTypeId()) command->ExecuteCommand();
 	
