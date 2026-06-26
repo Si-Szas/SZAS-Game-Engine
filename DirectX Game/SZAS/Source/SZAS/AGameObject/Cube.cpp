@@ -71,10 +71,6 @@ void szas::Cube::OnCreate()
 
 void szas::Cube::OnUpdate(f32 deltaTime)
 {
-	//Get the position & scale of the cube
-	auto position = GetTransform().GetPosition();
-	auto scale = GetTransform().GetScale();
-
 	//Clamp the lerp so it doesnt go above 1
 	if (lerpValue >= 1.0f) {
 		lerpValue = 1.0f;
@@ -95,25 +91,9 @@ void szas::Cube::OnUpdate(f32 deltaTime)
 	}
 
 	//Get the lerp of the position and scale components (x, y, z)
-	auto lerpPosX = std::lerp(m_originalPosition.x, m_position2.x, lerpValue);
-	auto lerpPosY = std::lerp(m_originalPosition.y, m_position2.y, lerpValue);
-	auto lerpPosZ = std::lerp(m_originalPosition.z, m_position2.z, lerpValue);
-	auto lerpScaleX = std::lerp(m_originalScale.x, m_scale2.x, lerpValue);
-	auto lerpScaleY = std::lerp(m_originalScale.y, m_scale2.y, lerpValue);
-	auto lerpScaleZ = std::lerp(m_originalScale.z, m_scale2.z, lerpValue);
+	Vec3 lerpPos = Vec3::Lerp(m_originalPosition, m_position2, lerpValue);
+	Vec3 lerpScale = Vec3::Lerp(m_originalScale, m_scale2, lerpValue);
 	
-	//Create a Vec3 out of those components
-	Vec3 lerpPos = { 
-		szas::f32(lerpPosX), 
-		szas::f32(lerpPosY), 
-		szas::f32(lerpPosZ) 
-	};
-
-	Vec3 lerpScale = { 
-		szas::f32(lerpScaleX), 
-		szas::f32(lerpScaleY), 
-		szas::f32(lerpScaleZ) };
-
 	//Set the new position and scale
 	GetTransform().SetPosition(lerpPos);
 	GetTransform().SetScale(lerpScale);
