@@ -30,12 +30,12 @@ void szas::Player::OnUpdate(f32 deltaTime)
 	auto& world = GetWorld();
 	auto& inputSystem = GetInputSystem();
 
-	auto sensitivity = 0.001f;
+	auto sensitivity = 0.1f;
 	auto rotation = GetTransform().GetRotation();
 	rotation.x += inputSystem.GetMouseDelta().y * sensitivity;
 	rotation.y += inputSystem.GetMouseDelta().x * sensitivity;
-	if (rotation.x > 1.57f) rotation.x = 1.57f;
-	else if (rotation.x < -1.57f) rotation.x = -1.57f;
+	if (rotation.x > 100.0f) rotation.x = 100.0f;
+	else if (rotation.x < -100.0f) rotation.x = -100.0f;
 	GetTransform().SetRotation(rotation);
 
 	auto position = GetTransform().GetPosition();
@@ -43,7 +43,7 @@ void szas::Player::OnUpdate(f32 deltaTime)
 	ResetMovementModifiers();
 
 	InputCommand* command = inputSystem.HandleInput();
-	if (command) 
+	if (command)
 	{
 		size_t commandType = command->GetTypeID();
 
@@ -55,7 +55,7 @@ void szas::Player::OnUpdate(f32 deltaTime)
 		if (commandType == szas::DeleteAGameObjectCommand::getTypeId()) command->ExecuteCommand(*this, world);
 		//if (commandType == szas::DeleteAllAGameObjectsCommand::getTypeId()) command->ExecuteCommand(*this, world);
 		if (commandType == szas::ExitApplicationCommand::getTypeId()) command->ExecuteCommand();
-	
+
 		//Record the command that was just executed
 		inputSystem.RecordCommand(command);
 	}
@@ -79,13 +79,13 @@ void szas::Player::OnUpdate(f32 deltaTime)
 	auto forwardDir = GetTransform().Forward() * GetForwardModifier();
 	auto rightDir = GetTransform().Right() * GetRightModifier();
 	auto directionSum = forwardDir + rightDir;
-	
+
 	if (szas::Vec3::LengthSquared(directionSum) > 0.001f)
 	{
 		auto direction = szas::Vec3::Normalize(directionSum);
 		position = position + direction * GetSpeedModifier() * deltaTime;
 	}
-	
+
 	GetTransform().SetPosition(position);
 }
 

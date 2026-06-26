@@ -15,7 +15,7 @@ namespace szas
 		{
 		}
 
-		Vec3 operator+=(const Vec3& rightHandSide) 
+		Vec3 operator+=(const Vec3& rightHandSide)
 		{
 			x += rightHandSide.x;
 			y += rightHandSide.y;
@@ -24,7 +24,16 @@ namespace szas
 			return *this;
 		}
 
-		Vec3 operator*=(const Vec3 & rightHandSide) 
+		Vec3 operator-=(const Vec3& rightHandSide)
+		{
+			x -= rightHandSide.x;
+			y -= rightHandSide.y;
+			z -= rightHandSide.z;
+
+			return *this;
+		}
+
+		Vec3 operator*=(const Vec3& rightHandSide)
 		{
 			x *= rightHandSide.x;
 			y *= rightHandSide.y;
@@ -57,9 +66,24 @@ namespace szas
 				vector.z * vector.z;
 		}
 
+		static Vec3 Lerp(const Vec3& vector1, const Vec3& vector2, float t)
+		{
+			//Clamp the lerp value
+			if (t >= 1.0f) t = 1.0f;
+			else if (t <= 0.0f) t = 0.0f;
+			//Linear interpolation formula
+			return vector1 + (vector2 - vector1) * t;
+		}
+
 		friend Vec3 operator+(Vec3 leftHandSide, const Vec3& rightHandSide)
 		{
 			leftHandSide += rightHandSide;
+			return leftHandSide;
+		}
+
+		friend Vec3 operator-(Vec3 leftHandSide, const Vec3& rightHandSide)
+		{
+			leftHandSide -= rightHandSide;
 			return leftHandSide;
 		}
 
