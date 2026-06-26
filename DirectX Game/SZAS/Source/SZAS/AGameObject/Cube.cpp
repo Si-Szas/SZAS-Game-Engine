@@ -1,5 +1,6 @@
 #include <SZAS/AGameObject/Cube.h>
 #include <SZAS/Game/WorldRenderer.h>
+#include <SZAS/AComponent/TransformComponent.h>
 #include <SZAS/Graphics/GraphicsDevice/GraphicsDevice.h>
 
 szas::Cube::Cube(const AGameObjectDescriptor& descriptor) :
@@ -63,6 +64,11 @@ void szas::Cube::OnCreate()
 
 void szas::Cube::OnUpdate(f32 deltaTime)
 {
+	auto rotation = GetTransform().GetRotation();
+
+	rotation += deltaTime * 1.5f;
+
+	GetTransform().SetRotation(rotation);
 }
 
 szas::Cube::~Cube()

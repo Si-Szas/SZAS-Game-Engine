@@ -34,10 +34,10 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 
 	//Define the Shader File Path
 		// Relative paths are relative to the root of project folder (DirectX Game Folder)
-	constexpr char vertexShaderFilePath[] = "SZAS/Assets/Shaders/VertexShader.hlsl";
+	constexpr char vertexShaderFilePath[] = "SZAS/Assets/Shaders/Default/DefaultTessellation.hlsl";
 	//Read the contents of the shader file
 	std::ifstream vertexShaderStream(vertexShaderFilePath);
-	if (!vertexShaderStream) SZASLogThrowError("Failed to open VertexShader.hlsl file.");
+	if (!vertexShaderStream) SZASLogThrowError("Failed to open DefaultTessellation.hlsl file.");
 	//Retrieve file data. So calling Range would call the entire shader into a string
 	std::string vertexShaderFileData{
 		std::istreambuf_iterator<char>(vertexShaderStream),	//Beginning of the file
@@ -59,9 +59,9 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 		});
 
 	//Define Shader File Path for Hull Shader
-	constexpr char hullShaderFilePath[] = "SZAS/Assets/Shaders/HullShader.hlsl";
+	constexpr char hullShaderFilePath[] = "SZAS/Assets/Shaders/Default/DefaultTessellation.hlsl";
 	std::ifstream hullShaderStream(hullShaderFilePath);
-	if (!hullShaderStream) SZASLogThrowError("Failed to open HullShader.hlsl file.");
+	if (!hullShaderStream) SZASLogThrowError("Failed to open DefaultTessellation.hlsl file.");
 
 	std::string hullShaderFileData{
 		std::istreambuf_iterator<char>(hullShaderStream),	//Beginning of the file
@@ -81,9 +81,9 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 		});
 
 	//Define Shader File Path for Domain Shader
-	constexpr char domainShaderFilePath[] = "SZAS/Assets/Shaders/DomainShader.hlsl";
+	constexpr char domainShaderFilePath[] = "SZAS/Assets/Shaders/Default/DefaultTessellation.hlsl";
 	std::ifstream domainShaderStream(domainShaderFilePath);
-	if (!domainShaderStream) SZASLogThrowError("Failed to open DomainShader.hlsl file.");
+	if (!domainShaderStream) SZASLogThrowError("Failed to open DefaultTessellation.hlsl file.");
 
 	std::string domainShaderFileData{
 		std::istreambuf_iterator<char>(domainShaderStream),	//Beginning of the file
@@ -102,10 +102,10 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 		ShaderType::DomainShader
 		});
 
-	constexpr char pixelShaderFilePath[] = "SZAS/Assets/Shaders/PixelShader.hlsl";
+	constexpr char pixelShaderFilePath[] = "SZAS/Assets/Shaders/Default/DefaultTessellation.hlsl";
 	//Read the contents of the shader file
 	std::ifstream pixelShaderStream(pixelShaderFilePath);
-	if (!pixelShaderStream) SZASLogThrowError("Failed to open PixelShader.hlsl file.");
+	if (!pixelShaderStream) SZASLogThrowError("Failed to open DefaultTessellation.hlsl file.");
 	//Retrieve file data. So calling Range would call the entire shader into a string
 	std::string pixelShaderFileData{
 		std::istreambuf_iterator<char>(pixelShaderStream),	//Beginning of the file
@@ -135,7 +135,7 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 	({
 		&m_dsConstantBuffer,
 		sizeof(ConstantData)
-	});
+		});
 
 	//We don't have any constant data to pass to the vertex, hull, or pixel shader
 	m_vsConstantBuffer = nullptr;
@@ -145,10 +145,10 @@ szas::WorldRenderer::WorldRenderer(const WorldRendererDescriptor& descriptor) :
 }
 
 void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 deltaTime)
-{	
+{
 	////////// CAMERA SET-UP //////////
 	m_swapChainSize = swapChain.GetSize();;
-	
+
 	////////// DEVICE CONTEXT //////////
 	// - Update the constant buffer before everything
 	// - context.UpdateConstantBuffer(vsConstantBuffer, &data);
@@ -163,7 +163,7 @@ void szas::WorldRenderer::Render(const World& world, SwapChain& swapChain, f32 d
 
 	////////// ACOMPONENTS //////////
 	auto numberOfComponents = 0u;
-	
+
 	////////// CONSTANT BUFFER DATA //////////
 	ConstantData data{};
 	{
