@@ -1,8 +1,8 @@
 # SZAS Game Engine for GDENG03
-This repository contains the SZAS Game Engine. It is a game engine project for GDENG03 currently being developed by Megan Florence Sophia C. Sadio.
+This repository contains the SZAS Game Engine. It is a game engine project for GDENG03 currently being developed by <u>**Megan Florence Sophia C. Sadio**</u>.
 ## Entry Point (Main Function)
-- The entry point of the engine, the main function, is found in the **Game** folder in **main.cpp**. In other words, go to **DirectX Game/Game/main.cpp**.
-## Rendering System Instructions:
+The entry point of the engine, the main function, is found in the **Game** folder in **main.cpp**. In other words, go to **DirectX Game/Game/main.cpp**.
+## Rendering System Instructions
 ### How to Run the Program for Test Cases
 1. Download the code .zip file on the branch's test case that you want to view
 2. Open the **DirectX Game** folder and open the project solution, **DirectX Game.sln**
