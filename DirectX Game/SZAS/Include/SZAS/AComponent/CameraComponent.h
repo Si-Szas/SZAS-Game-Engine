@@ -17,7 +17,7 @@ namespace szas
 			Matrix4x4 GetViewMatrix() noexcept;
 			Matrix4x4 GetProjectionMatrix() const noexcept;
 
-			void SetFarPlan(f32 farPlane) noexcept;
+			void SetFarPlane(f32 farPlane) noexcept;
 			f32 GetFarPlane() const noexcept;
 
 			void SetNearPlane(f32 nearPlane) noexcept;

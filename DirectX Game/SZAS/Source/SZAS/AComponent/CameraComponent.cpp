@@ -18,7 +18,7 @@ szas::Matrix4x4 szas::CameraComponent::GetProjectionMatrix() const noexcept
 	return m_projection;
 }
 
-void szas::CameraComponent::SetFarPlan(f32 farPlane) noexcept
+void szas::CameraComponent::SetFarPlane(f32 farPlane) noexcept
 {
 	if (farPlane <= m_nearPlane) return;
 	m_farPlane = farPlane;
