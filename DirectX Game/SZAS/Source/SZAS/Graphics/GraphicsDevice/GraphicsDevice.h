@@ -24,8 +24,11 @@ namespace szas
 			RefPtr<ConstantBuffer> CreateConstantBuffer(const ConstantBufferDescriptor& descriptor);
 			RefPtr<IndexBuffer> CreateIndexBuffer(const IndexBufferDescriptor& descriptor);
 
-
 			void ExecuteCommandList(DeviceContext& context);
+
+			//GETTERS
+			const Microsoft::WRL::ComPtr<ID3D11Device>& GetD3DDevice();
+			const Microsoft::WRL::ComPtr<ID3D11DeviceContext>& GetD3DDeviceContext();
 
 			//DESTRUCTOR
 			virtual ~GraphicsDevice() override;

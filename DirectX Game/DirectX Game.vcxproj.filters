@@ -168,6 +168,9 @@
     <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui_impl_win32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SZAS\Include\SZAS\Core\Base.h">

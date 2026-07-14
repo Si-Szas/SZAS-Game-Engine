@@ -5,6 +5,8 @@
 #include <SZAS/Graphics/ConstantBuffer/ConstantBuffer.h>
 #include <SZAS/Graphics/IndexBuffer/IndexBuffer.h>
 
+#include <wrl.h>
+
 szas::DeviceContext::DeviceContext(const GraphicsResourceDescriptor& descriptor) :
 	GraphicsResource(descriptor)
 {
@@ -44,6 +46,30 @@ void szas::DeviceContext::ClearAndSetBackBuffer(const SwapChain& swapChain, cons
 		&RTV,		//An array of pointers to the views (we simulate an array using &)
 		DSV		//Depth Stencil View
 	);
+}
+
+void szas::DeviceContext::ExecuteCommandList(const Microsoft::WRL::ComPtr<ID3D11DeviceContext>& immediateContext)
+{
+	Microsoft::WRL::ComPtr<ID3D11CommandList> commandList{};
+
+	//Retrieve command list from passed in device context
+	auto hr =
+		m_context->FinishCommandList
+		(
+			false,			//Bool flag whether to restore previous graphics pipeline state. Pass false to optimize
+			&commandList	//Output parameter where we retrieve command list
+		);
+
+	if (FAILED(hr))
+	{
+		SZASLogError("FinishCommandList() failed.");
+		return;
+	} 
+	
+	if (SUCCEEDED(hr) && commandList)
+	{
+		immediateContext->ExecuteCommandList(commandList.Get(), FALSE);
+	}
 }
 
 void szas::DeviceContext::SetGraphicsPipelineState(const GraphicsPipelineState& pipeline)

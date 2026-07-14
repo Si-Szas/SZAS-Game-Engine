@@ -8,6 +8,9 @@
 #include <SZAS/Math/Matrix4x4.h>
 #include <vector>
 
+#include <SZAS/Graphics/ImGui/imgui_impl_dx11.h>
+#include <SZAS/Graphics/ImGui/imgui_impl_win32.h>
+
 namespace szas
 {
 	//We don't want the graphics engine to be further dervied by other classes
@@ -51,6 +54,10 @@ namespace szas
 			RefPtr<ConstantBuffer> m_hsConstantBuffer{};
 			RefPtr<ConstantBuffer> m_dsConstantBuffer{};
 			RefPtr<ConstantBuffer> m_psConstantBuffer{};
+
+			bool show_demo_window = true;
+			bool show_another_window = false;
+			ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	};
 }
 

@@ -12,6 +12,7 @@ namespace szas {
 		
 			//FUNCTION
 			void ClearAndSetBackBuffer(const SwapChain& swapChain, const Vec4& color);
+			void ExecuteCommandList(const Microsoft::WRL::ComPtr<ID3D11DeviceContext>& immediateContext);
 
 			//SETTER
 			void SetGraphicsPipelineState(const GraphicsPipelineState& pipeline);

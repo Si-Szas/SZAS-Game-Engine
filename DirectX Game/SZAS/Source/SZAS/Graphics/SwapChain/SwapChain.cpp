@@ -61,6 +61,16 @@ szas::Rect szas::SwapChain::GetSize() const noexcept
 	return m_size;
 }
 
+ID3D11RenderTargetView* szas::SwapChain::GetRenderTargetView() const noexcept
+{
+	return m_renderTargetView.Get();
+}
+
+ID3D11DepthStencilView* szas::SwapChain::GetDepthStencilView() const noexcept
+{
+	return m_depthStencilView.Get();
+}
+
 void szas::SwapChain::ReloadBuffers()
 {
 	//Retrieve the back buffer and 

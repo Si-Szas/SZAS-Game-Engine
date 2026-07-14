@@ -15,6 +15,9 @@ namespace szas
 
 			//GETTER
 			Rect GetSize() const noexcept;
+			ID3D11RenderTargetView* GetRenderTargetView() const noexcept;
+			ID3D11DepthStencilView* GetDepthStencilView() const noexcept;
+
 	private:
 			//FUNCTIONS
 			void ReloadBuffers();

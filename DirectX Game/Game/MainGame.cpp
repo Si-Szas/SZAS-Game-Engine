@@ -36,8 +36,8 @@ void MainGame::OnCreate()
 	capsule->GetTransform().SetScale({ 1.0f });
 	capsule->GetTransform().SetPosition({ 0.0f, 0.0f, 4.0f });
 
-	GetInputSystem().SetCursorLocked(true);
-	GetInputSystem().SetCursorVisible(false);
+	//GetInputSystem().SetCursorLocked(true);
+	//GetInputSystem().SetCursorVisible(false);
 }
 
 void MainGame::OnUpdate(f32 deltaTime)

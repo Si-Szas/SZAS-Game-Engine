@@ -28,6 +28,20 @@ szas::Game::Game(const GameDescriptor& descriptor)
 	//TEMPORARY CURSOR LOCK
 	m_inputSystem->SetCursorLockArea(m_display->GetClientAreaInScreenSpace());
 
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	ImGui_ImplWin32_Init(static_cast<HWND>(m_display->GetHandle()));
+	ImGui_ImplDX11_Init(
+		m_graphicsDevice.get()->GetD3DDevice().Get(), 
+		m_graphicsDevice.get()->GetD3DDeviceContext().Get()
+	);
+	ImGui::StyleColorsDark();
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+
 	SZASLogInformation("Game successfully initialized.");
 }
 

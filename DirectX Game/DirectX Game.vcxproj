@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui_demo.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui_draw.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui_impl_dx11.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui_impl_win32.cpp" />

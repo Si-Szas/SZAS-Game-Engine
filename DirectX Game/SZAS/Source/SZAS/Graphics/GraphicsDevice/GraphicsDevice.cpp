@@ -52,6 +52,8 @@ GraphicsDevice::GraphicsDevice(const GraphicsDeviceDescriptor& descriptor): Base
 		m_dxgiAdapter->GetParent(IID_PPV_ARGS(&m_dxgiFactory)
 		), "GetParent() failed to retrieve IDXGI Factory."
 	);
+
+	//ImGui_ImplDX11_Init(m_d3dDevice.Get(), m_d3dContext.Get());
 }
 
 GraphicsDevice::~GraphicsDevice()
@@ -124,6 +126,16 @@ void GraphicsDevice::ExecuteCommandList(DeviceContext& context)
 		commandList.Get(), //Row pointer to command list
 		false			   //Restore context state. Decide if we restore all context states to date valyes before it is executed. False for optimization
 	);
+}
+
+const Microsoft::WRL::ComPtr<ID3D11Device>& szas::GraphicsDevice::GetD3DDevice()
+{
+	return m_d3dDevice;
+}
+
+const Microsoft::WRL::ComPtr<ID3D11DeviceContext>& szas::GraphicsDevice::GetD3DDeviceContext()
+{
+	return m_d3dContext;
 }
 
 GraphicsResourceDescriptor szas::GraphicsDevice::GetGraphicsResourceDescriptor() const noexcept
