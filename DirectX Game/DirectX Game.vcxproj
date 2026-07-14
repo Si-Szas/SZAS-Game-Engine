@@ -141,6 +141,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="SZAS\Source\SZAS\Graphics\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\CreateAGameObjectCommand.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\DeleteAGameObjectCommand.cpp" />
     <ClCompile Include="SZAS\Source\SZAS\InputSystem\Commands\DeleteAllAGameObjectsCommand.cpp" />
@@ -188,6 +194,14 @@
     <ClCompile Include="SZAS\Source\SZAS\AComponent\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SZAS\Include\SZAS\Graphics\ImGui\imconfig.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Graphics\ImGui\imgui.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Graphics\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Graphics\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Graphics\ImGui\imgui_internal.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Graphics\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Graphics\ImGui\imstb_textedit.h" />
+    <ClInclude Include="SZAS\Include\SZAS\Graphics\ImGui\imstb_truetype.h" />
     <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\CreateAGameObjectCommand.h" />
     <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\DeleteAGameObjectCommand.h" />
     <ClInclude Include="SZAS\Include\SZAS\InputSystem\Commands\DeleteAllAGameObjectsCommand.h" />
