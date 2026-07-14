@@ -11,6 +11,7 @@ namespace szas
 
 			//GETTER
 			SwapChain& GetSwapChain() noexcept;
+			void* GetHandle() noexcept;
 
 		private:
 			RefPtr<SwapChain> m_swapChain{};
