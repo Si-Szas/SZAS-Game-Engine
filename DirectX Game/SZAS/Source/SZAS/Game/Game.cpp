@@ -47,6 +47,14 @@ szas::Game::Game(const GameDescriptor& descriptor)
 
 szas::Game::~Game()
 {
+	//For proper clean up, including IMGUI
+	if (ImGui::GetCurrentContext() != nullptr)
+	{
+		ImGui_ImplDX11_Shutdown();
+		ImGui_ImplWin32_Shutdown();
+		ImGui::DestroyContext();
+	}
+
 	SZASLogInformation("Game is shutting down...");
 }
 
